@@ -1,0 +1,175 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.icon {
+  font-size: 18px;
+  color: var(--accent-red);
+}
+
+.title {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00FF00;
+  box-shadow: 0 0 6px #00FF00;
+}
+
+.statusText {
+  font-size: 11px;
+  color: #00FF00;
+  letter-spacing: 0.1em;
+  flex: 1;
+}
+
+.nodeCount {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.mapArea {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  position: relative;
+  min-height: 200px;
+}
+
+.graphContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.node:hover {
+  border-color: var(--accent-red);
+}
+
+.nodeLabel {
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.edgeSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.legend {
+  padding: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+.legendTitle {
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+}
+
+.table {
+  border: 1px solid var(--border-color);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr 60px;
+  padding: 6px 8px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 60px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow span:last-child {
+  text-align: right;
+  color: var(--text-primary);
+}
+
+.empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}

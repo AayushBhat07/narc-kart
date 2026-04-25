@@ -1,0 +1,38 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+}
+
+.closeBtn {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  background: transparent;
+  border: 1px solid #E83D3D;
+  color: #E83D3D;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 0, 64, 0.2);
+}

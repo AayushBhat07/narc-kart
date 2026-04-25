@@ -1,0 +1,93 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.icon {
+  font-size: 20px;
+  color: var(--accent-red);
+}
+
+.title {
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+}
+
+.content {
+  display: flex;
+  gap: 12px;
+}
+
+.box {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.value {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.description {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-color);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: auto;
+}
+
+.gridCell {
+  padding: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cellLabel {
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.cellStatus {
+  font-size: 11px;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,33 @@
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(232, 61, 61, 0.1);
+  border: 1px solid var(--accent-red);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.text {
+  color: var(--accent-red);
+  font-weight: bold;
+}
+
+.time {
+  color: var(--text-muted);
+  font-size: 10px;
+}

@@ -1,0 +1,41 @@
+.footer {
+  background: #050505;
+  border-top: 1px solid #7A7A70;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-size: 9px;
+  color: #7A7A70;
+  letter-spacing: 0.1em;
+}
+
+.value {
+  font-size: 10px;
+  color: #EFEFE2;
+  letter-spacing: 0.05em;
+}
+
+.online {
+  font-size: 10px;
+  color: #EFEFE2;
+  letter-spacing: 0.1em;
+  animation: pulse-online 2s infinite;
+}
+
+@keyframes pulse-online {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

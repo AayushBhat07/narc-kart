@@ -1,0 +1,207 @@
+:root {
+  --bg-primary: #1A1A1A;
+  --bg-secondary: #0F0F0F;
+  --bg-tertiary: #252525;
+  --text-primary: #EFEFE2;
+  --text-secondary: #C8C8BC;
+  --text-muted: #7A7A70;
+  --accent-red: #E83D3D;
+  --accent-orange: #FF8C42;
+  --accent-yellow: #F5D76E;
+  --accent-cyan: #5DADE2;
+  --accent-blue: #5499C7;
+  --accent-magenta: #E83D3D;
+  --border-color: rgba(239, 239, 226, 0.15);
+  --border-glow: rgba(232, 61, 61, 0.25);
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-mono);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* CRT Scanlines */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow: 0 0 10px var(--text-primary), 0 0 20px rgba(239, 239, 226, 0.3);
+}
+
+/* Border glow */
+.border-glow {
+  box-shadow: 0 0 20px var(--border-glow), inset 0 0 10px rgba(232, 61, 61, 0.05);
+}
+
+/* CLASSIFIED watermark */
+.classified-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 8vw;
+  font-weight: bold;
+  color: rgba(232, 61, 61, 0.04);
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+  letter-spacing: 0.2em;
+}
+
+/* Blinking cursor */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink-cursor 1s infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  background: var(--bg-primary) !important;
+  font-family: var(--font-mono) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 20px var(--border-glow) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-mono) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 0 10px var(--border-glow) !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 0 !important;
+}
+
+.leaflet-control-zoom a {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: var(--bg-tertiary) !important;
+}
+
+/* Input styling */
+input, select {
+  font-family: var(--font-mono);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 10px var(--border-glow);
+}
+
+select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Button base */
+button {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* Pulse animation for major markers */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+/* Radar sweep */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

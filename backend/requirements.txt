@@ -1,0 +1,32 @@
+# Narc Kart Backend - Python Dependencies
+
+# Web Scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+httpx>=0.25.0
+
+# JavaScript Rendering (optional, for JS-heavy sites)
+playwright>=1.40.0
+
+# Database
+# (built-in, no external dependency)
+
+# AI / LLM
+# Ollama - connect to local Ollama instance
+
+# Utilities
+python-dateutil>=2.8.0
+
+# API Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+httpx>=0.25.0  # For testing
+
+# Optional: for rate limiting visualization
+# APScheduler>=3.10.0

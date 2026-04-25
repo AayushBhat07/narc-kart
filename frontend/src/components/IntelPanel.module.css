@@ -1,0 +1,138 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.icon {
+  font-size: 18px;
+  color: var(--accent-red);
+}
+
+.title {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardLabel {
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.cardValue {
+  font-size: 18px;
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sectionTitle {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barLabel {
+  font-size: 10px;
+  color: var(--text-secondary);
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-tertiary);
+  position: relative;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: var(--accent-red);
+  transition: width 0.3s ease;
+}
+
+.barCount {
+  font-size: 10px;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: right;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.listLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.listValue {
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.empty {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
