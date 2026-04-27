@@ -48,6 +48,9 @@ async def list_seizures(
         offset=offset,
     )
 
+    # Cap returned seizures to exactly 'limit' to prevent abuse
+    seizures = seizures[:limit]
+
     return SeizureListResponse(
         total=total,
         seizures=seizures,
