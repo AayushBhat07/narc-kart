@@ -3,9 +3,10 @@ Narc Kart API - FastAPI Application Entry Point.
 India Drug Seizure Tracker - Matrix/Military Intelligence Style.
 """
 
-import asyncio
+import os
 from contextlib import asynccontextmanager
 from datetime import datetime
+from typing import Optional
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -23,6 +24,26 @@ from .routes import (
 from .models import HealthResponse
 
 __version__ = "1.0.0"
+
+
+def _get_allowlist() -> list[str]:
+    """Build CORS allowlist from environment/app settings."""
+    origins = [
+        # Local dev
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:3000",
+    ]
+    # Vercel frontend
+    vercel_url = os.getenv("VERCEL_FRONTEND_URL")
+    if vercel_url:
+        origins.append(f"https://{vercel_url}")
+    # Cloudflare tunnels (if known)
+    cf_tunnel = os.getenv("CLOUDFLARE_TUNNEL_URL")
+    if cf_tunnel:
+        origins.append(cf_tunnel)
+    return origins
 
 
 @asynccontextmanager
@@ -54,23 +75,14 @@ app = FastAPI(
 
 
 # ─── CORS Configuration ────────────────────────────────────
-# Allow frontend (Vite dev server), production Vercel, and Cloudflare tunnels
+ALLOWED_ORIGINS = _get_allowlist()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",      # Vite dev
-        "http://localhost:3000",      # React dev
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-        "https://dist-dbgpov1vu-aayushbhat07s-projects.vercel.app",
-        "https://frontend-8fk4gwfgt-aayushbhat07s-projects.vercel.app",
-        "https://dist-*.vercel.app",
-        "https://*.trycloudflare.com",
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-Requested-With"],
+    expose_headers=["X-Request-ID"],
 )
 
 
@@ -97,7 +109,6 @@ async def validation_exception_handler(
             "error": "VALIDATION_ERROR",
             "message": "Request validation failed",
             "errors": errors,
-            "body": str(exc.body) if hasattr(exc, "body") else None,
         }
     )
 
@@ -107,13 +118,12 @@ async def general_exception_handler(
     request: Request,
     exc: Exception
 ):
-    """Catch-all handler for unexpected server errors."""
+    """Catch-all handler for unexpected server errors. Hide internal details."""
     return JSONResponse(
         status_code=500,
         content={
             "error": "INTERNAL_SERVER_ERROR",
-            "message": str(exc),
-            "type": type(exc).__name__,
+            "message": "An unexpected error occurred. Please try again later.",
         }
     )
 
