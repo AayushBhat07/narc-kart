@@ -1,0 +1,16 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/seizures", "destination": "/api/seizures/index.js" },
+    { "source": "/api/stats", "destination": "/api/stats/index.js" },
+    { "source": "/api/scrape", "destination": "/api/scrape/index.js" }
+  ],
+  "crons": [
+    {
+      "path": "/api/scrape",
+      "schedule": "0 */6 * * *"
+    }
+  ]
+}

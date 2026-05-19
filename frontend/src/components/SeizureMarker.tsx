@@ -9,8 +9,8 @@ interface Props {
 }
 
 function getSeverityColor(quantityKg: number): string {
-  if (quantityKg > 100) return '#FF0040';
-  if (quantityKg > 10) return '#FF6600';
+  if (quantityKg > 100) return '#E83D3D';
+  if (quantityKg > 10) return '#FF8C42';
   return '#FFCC00';
 }
 

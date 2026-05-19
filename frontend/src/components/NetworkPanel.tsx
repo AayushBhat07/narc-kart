@@ -43,7 +43,7 @@ export function NetworkPanel() {
                     height: size,
                     left: cx - size / 2,
                     top: cy - size / 2,
-                    borderColor: node.weight > 100 ? 'var(--accent-red)' : 'var(--border-color)',
+                    borderColor: node.weight > 100 ? 'var(--accent)' : 'var(--border-medium)',
                   }}
                   title={`${node.label}, ${node.state} — ${node.weight.toFixed(0)} KG`}
                 >
@@ -64,7 +64,7 @@ export function NetworkPanel() {
             const y2 = 160 + r * Math.sin(angleB);
             return (
               <svg key={i} className={styles.edgeSvg}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--border-color)" strokeWidth="1" />
+                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--border-medium)" strokeWidth="1" />
               </svg>
             );
           })}
@@ -74,7 +74,7 @@ export function NetworkPanel() {
       <div className={styles.legend}>
         <span className={styles.legendTitle}>CONNECTIONS</span>
         <div className={styles.legendRow}>
-          <span className={styles.legendDot} style={{ borderColor: 'var(--accent-red)' }} />
+          <span className={styles.legendDot} style={{ borderColor: 'var(--accent)' }} />
           <span>Major Hub ({'>'}100KG)</span>
         </div>
         <div className={styles.legendRow}>
