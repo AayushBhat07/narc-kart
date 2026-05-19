@@ -43,7 +43,6 @@ export function App() {
   return (
     <div className={styles.app}>
       <div className={styles.classifiedWatermark}>CLASSIFIED</div>
-      <div className={styles.scanlines} />
 
       <Header onRefresh={refresh} onFilterToggle={() => setFilterOpen(true)} />
 

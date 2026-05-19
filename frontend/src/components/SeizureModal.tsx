@@ -17,18 +17,19 @@ export function SeizureModal({ seizure, onClose }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
           onClick={onClose}
         >
           <motion.div
             className={styles.modal}
-            initial={{ scale: 0.9, y: 20 }}
+            initial={{ scale: 0.95, y: 10 }}
             animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            onClick={(e) => e.stopPropagation()}
+            exit={{ scale: 0.95, y: 10 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <button className={styles.closeBtn} onClick={onClose}>
-              [X] CLOSE
+              ✕
             </button>
             <SeizurePopup seizure={seizure} />
           </motion.div>

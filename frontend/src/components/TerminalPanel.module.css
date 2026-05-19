@@ -13,29 +13,31 @@
   align-items: center;
   gap: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .icon {
-  font-size: 18px;
-  color: var(--accent-red);
+  font-size: 16px;
+  color: var(--accent);
 }
 
 .title {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   color: var(--text-primary);
+  font-weight: bold;
 }
 
 .output {
   flex: 1;
   background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
   padding: 12px;
   overflow-y: auto;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.6;
+  border-radius: var(--radius-sm);
 }
 
 .line {
@@ -46,7 +48,7 @@
 }
 
 .prompt {
-  color: var(--accent-red);
+  color: var(--accent);
   flex-shrink: 0;
   font-weight: bold;
 }
@@ -60,14 +62,24 @@
   white-space: pre-wrap;
 }
 
+.error {
+  color: var(--accent);
+}
+
 .input {
-  background: transparent;
-  border: none;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 12px;
   flex: 1;
   outline: none;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.input:focus {
+  border-color: var(--border-medium);
 }
 
 .input::placeholder {
@@ -80,9 +92,12 @@
   gap: 8px;
   padding: 8px 12px;
   background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
 }
 
 .inputRow:focus-within {
-  border-color: var(--accent-red);
+  border-color: var(--border-medium);
 }

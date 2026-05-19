@@ -38,10 +38,6 @@ export function IndiaMap({ seizures, onSeizureSelect }: Props) {
           />
         ))}
       </MapContainer>
-      <div className={styles.radarOverlay}>
-        <div className={styles.radarSweep} />
-        <div className={styles.radarCenter} />
-      </div>
     </div>
   );
 }
