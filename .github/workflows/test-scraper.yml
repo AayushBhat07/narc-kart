@@ -1,0 +1,37 @@
+name: Test Scraper (Manual)
+
+on:
+  workflow_dispatch:  # Manual trigger only from GitHub Actions tab
+
+jobs:
+  test-scraper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'backend/scraper/requirements.txt'
+      
+      - name: Install dependencies
+        run: |
+          pip install -q -r backend/scraper/requirements.txt
+          pip install -q beautifulsoup4 lxml html2text tenacity python-dateutil
+      
+      - name: Run scraper (dry run first)
+        run: |
+          python run_scraper.py --dry-run
+        env:
+          PYTHONUNBUFFERED: '1'
+      
+      - name: Quick source health check
+        run: |
+          python backend/scraper/test_sources.py

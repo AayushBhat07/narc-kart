@@ -1,0 +1,61 @@
+name: Weekly Drug Seizure Data Update
+
+on:
+  schedule:
+    # Every Sunday at 6 PM IST = 12:30 UTC on Sunday (day 0)
+    - cron: '30 12 * * 0'
+  workflow_dispatch:  # Allow manual trigger from GitHub Actions tab
+    inputs:
+      force:
+        description: 'Force run even if no new data'
+        required: false
+        default: 'false'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'backend/scraper/requirements.txt'
+      
+      - name: Install dependencies
+        run: |
+          pip install -q -r backend/scraper/requirements.txt
+          pip install -q beautifulsoup4 lxml html2text tenacity python-dateutil
+      
+      - name: Run scraper
+        run: |
+          python run_scraper.py
+        env:
+          PYTHONUNBUFFERED: '1'
+      
+      - name: Check for changes
+        id: changed
+        run: |
+          if git diff --stat | grep -q "frontend/public/data.json"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push if changed
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          git config user.name "shawn-bot"
+          git config user.email "shawn@openclaw.ai"
+          git add frontend/public/data.json
+          git commit -m "chore: update drug seizure data $(date -I)"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
