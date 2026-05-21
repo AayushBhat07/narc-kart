@@ -47,4 +47,4 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         run: |
           echo "=== data.json generated ==="
-          python -c "import json; d=json.load(open('frontend/public/data.json')); print('Records:', d['meta']['total_records'], '/ Generated:', d['meta']['generated_at'], '/ Total seizures:', d['stats']['total_seizures'], '/ This week:', d['stats']['raids_this_week'])"
+          python -c "import json; d=json.load(open('frontend/public/data.json')); print('Records:', len(d.get('seizures', d.get('meta', {}).get('total_records', 'unknown'))), '/ Generated:', d.get('meta', {}).get('generated_at', 'N/A'))"
