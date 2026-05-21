@@ -36,7 +36,8 @@ jobs:
       
       - name: Run scraper
         run: |
-          python run_scraper.py
+          cd backend/scraper && python run_scraper.py
+        working-directory: /home/runner/work/narc-kart/narc-kart
         env:
           PYTHONUNBUFFERED: '1'
       
