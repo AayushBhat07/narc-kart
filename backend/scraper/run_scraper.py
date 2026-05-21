@@ -311,7 +311,7 @@ def make_request(url: str, timeout: int = 30, params: Optional[Dict] = None) -> 
         retry=retry_if_exception_type((requests.RequestException,))
     )
     def _request():
-        return requests.get(url, headers=HEADERS, timeout=timeout, params=params)
+        return requests.get(url, headers=HEADERS, timeout=timeout, params=params, verify=False)
 
     try:
         return _request()
