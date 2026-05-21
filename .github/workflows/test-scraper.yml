@@ -30,7 +30,8 @@ jobs:
 
       - name: Run scraper
         run: |
-          cd backend/scraper && python run_scraper.py
+          python backend/scraper/run_scraper.py
+        working-directory: /home/runner/work/narc-kart/narc-kart
         env:
           PYTHONUNBUFFERED: '1'
 
@@ -43,8 +44,13 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Show data.json summary
+      - name: Commit and push if changed
         if: steps.changed.outputs.changed == 'true'
         run: |
-          echo "=== data.json generated ==="
-          python -c "import json; d=json.load(open('frontend/public/data.json')); print('Records:', len(d.get('seizures', d.get('meta', {}).get('total_records', 'unknown'))), '/ Generated:', d.get('meta', {}).get('generated_at', 'N/A'))"
+          git config user.name "shawn-bot"
+          git config user.email "shawn@openclaw.ai"
+          git add frontend/public/data.json
+          git commit -m "chore: update drug seizure data $(date -I)"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
