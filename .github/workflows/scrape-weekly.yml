@@ -15,7 +15,9 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
