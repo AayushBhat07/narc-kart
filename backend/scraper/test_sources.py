@@ -5,13 +5,8 @@ No rate limiting, just quick status checks. Prints a table.
 """
 
 import sys
-from pathlib import Path
-
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
-from backend.scraper.news_sources import ENABLED_SOURCES
 import requests
+from pathlib import Path
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",

@@ -4,3 +4,5 @@ lxml
 html2text
 tenacity
 python-dateutil
+httpx
+playwright
