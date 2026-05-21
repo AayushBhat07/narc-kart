@@ -8,9 +8,55 @@ function getApiBase(): string {
   if (typeof window !== 'undefined') {
     const base = import.meta.env.VITE_API_BASE;
     if (base) return base;
-    // If no env, use local JSON (static mode)
   }
   return '';
+}
+
+// Map frontend filter names to backend API params
+function mapFiltersToParams(filters: Partial<FilterState>): URLSearchParams {
+  const params = new URLSearchParams();
+  const now = new Date();
+
+  if (filters.timePeriod && filters.timePeriod !== 'all') {
+    const days = parseInt(filters.timePeriod, 10);
+    if (!isNaN(days)) {
+      const minDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+      params.append('min_date', minDate.toISOString().split('T')[0]);
+    }
+  }
+  if (filters.drugTypes && filters.drugTypes.length > 0) {
+    filters.drugTypes.forEach(dt => params.append('drug_type', dt));
+  }
+  if (filters.states && filters.states.length > 0) {
+    filters.states.forEach(s => params.append('state', s));
+  }
+  // severity_min maps to min_quantity (both represent min kg threshold)
+  if (filters.severityMin !== undefined && filters.severityMin > 0) {
+    params.append('min_quantity', String(filters.severityMin));
+  }
+  // severity_max is not a backend param; backend doesn't support max_quantity filtering
+  return params;
+}
+
+// Map API response fields to frontend Seizure type
+function mapApiSeizure(s: any): Seizure {
+  return {
+    id: s.id,
+    location: {
+      city: s.city || s.location_city || '',
+      state: s.state || s.location_state || '',
+      lat: s.lat ?? s.latitude ?? s.location_lat ?? null,
+      lon: s.lon ?? s.longitude ?? s.location_lon ?? null,
+    },
+    drugType: s.drug_type || s.drugType || '',
+    quantityKg: s.quantity_kg ?? s.quantityKg ?? 0,
+    date: s.date || s.seizure_date || '',
+    source: { name: s.source_name || s.sourceName || '', url: s.source_url || s.sourceUrl || '' },
+    agency: s.agency || '',
+    images: s.images ? (typeof s.images === 'string' ? JSON.parse(s.images) : s.images) : [],
+    caseNo: s.case_no || s.caseNo || '',
+    description: s.description || '',
+  };
 }
 
 function isStaticMode(): boolean {
@@ -118,30 +164,17 @@ export function useApi() {
     setError(null);
     setIsOffline(false);
     try {
-      const params = new URLSearchParams();
       const activeFilters = { ...filters, ...filterOverrides };
-      if (activeFilters.timePeriod !== 'all') params.append('time_period', activeFilters.timePeriod);
-      if (activeFilters.drugTypes.length > 0) activeFilters.drugTypes.forEach(dt => params.append('drug_type', dt));
-      if (activeFilters.states.length > 0) activeFilters.states.forEach(s => params.append('state', s));
-      params.append('severity_min', String(activeFilters.severityMin));
-      params.append('severity_max', String(activeFilters.severityMax));
+      const params = mapFiltersToParams(activeFilters);
+      params.append('limit', '100');
 
-      const res = await fetch(`${getApiBase()}/seizures?${params}`);
+      const res = await fetch(`${getApiBase()}/api/seizures?${params}`);
       if (!res.ok) throw new Error(`API error ${res.status}`);
       const data = await res.json();
       if (!mountedRef.current) return;
-      const seizuresList = (data.seizures || []).map((s: any) => ({
-        id: s.id,
-        location: { city: s.city, state: s.state, lat: s.lat, lon: s.lon },
-        drugType: s.drug_type,
-        quantityKg: s.quantity_kg,
-        date: s.date,
-        source: { name: s.source_name || '', url: s.source_url || '' },
-        agency: s.agency || '',
-        images: s.images ? JSON.parse(s.images) : [],
-        caseNo: s.case_no,
-        description: s.description,
-      }));
+
+      // Backend returns { total, seizures: [...] } or just seizures array
+      const seizuresList = (data.seizures || data || []).map(mapApiSeizure);
       setSeizures(seizuresList);
       const now = new Date().toISOString();
       setLastUpdate(now);
@@ -164,19 +197,19 @@ export function useApi() {
 
   const fetchStats = useCallback(async () => {
     try {
-      const res = await fetch(`${getApiBase()}/stats`);
+      const res = await fetch(`${getApiBase()}/api/stats`);
       if (!res.ok) throw new Error(`API error ${res.status}`);
       const data = await res.json();
       if (!mountedRef.current) return;
       const statsData: ApiStats = {
-        totalSeizures: data.total_seizures || 0,
-        totalQuantityKg: data.total_quantity_kg || 0,
-        raidsThisWeek: data.raids_this_week ?? 0,
+        totalSeizures: data.total_seizures ?? 0,
+        totalQuantityKg: data.total_quantity_kg ?? 0,
+        raidsThisWeek: data.raids_this_week ?? data.recent_seizures_7d ?? 0,
         byState: data.by_state || {},
         byDrugType: data.by_drug_type || {},
         byMonth: data.by_month || {},
         topLocations: (data.top_locations || []).map((l: any) => ({
-          state: l.state, city: l.city, seizureCount: l.seizure_count, totalKg: l.total_kg,
+          state: l.state || '', city: l.city || '', seizureCount: l.seizure_count ?? l.count ?? 0, totalKg: l.total_kg ?? l.kg ?? 0,
         })),
       };
       setStats(statsData);

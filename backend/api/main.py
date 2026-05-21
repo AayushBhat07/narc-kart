@@ -38,7 +38,13 @@ def _get_allowlist() -> list[str]:
     # Vercel frontend
     vercel_url = os.getenv("VERCEL_FRONTEND_URL")
     if vercel_url:
-        origins.append(f"https://{vercel_url}")
+        # Handle both full URL and just the subdomain
+        if vercel_url.startswith("https://"):
+            origins.append(vercel_url)
+        else:
+            origins.append(f"https://{vercel_url}")
+        # Also add wildcard for all Vercel preview deployments
+        origins.append("https://*.vercel.app")
     # Cloudflare tunnels (if known)
     cf_tunnel = os.getenv("CLOUDFLARE_TUNNEL_URL")
     if cf_tunnel:

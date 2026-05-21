@@ -37,7 +37,7 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 # Environment
 ENV PYTHONUNBUFFERED=1
-ENV DATABASE_PATH=narc_kart.db
+ENV DATABASE_PATH=/data/narc_kart.db
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
