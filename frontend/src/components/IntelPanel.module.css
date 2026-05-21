@@ -14,18 +14,19 @@
   align-items: center;
   gap: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .icon {
-  font-size: 18px;
-  color: var(--accent-red);
+  font-size: 16px;
+  color: var(--accent);
 }
 
 .title {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   color: var(--text-primary);
+  font-weight: bold;
 }
 
 .grid {
@@ -35,9 +36,10 @@
 }
 
 .card {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  padding: 10px 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 12px 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -47,30 +49,35 @@
   font-size: 9px;
   color: var(--text-muted);
   letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .cardValue {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--text-primary);
   font-weight: bold;
+  font-family: var(--font-mono);
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .sectionTitle {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .bars {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .barRow {
@@ -84,20 +91,23 @@
   color: var(--text-secondary);
   width: 70px;
   flex-shrink: 0;
+  font-family: var(--font-mono);
 }
 
 .barTrack {
   flex: 1;
-  height: 6px;
+  height: 5px;
   background: var(--bg-tertiary);
   position: relative;
   overflow: hidden;
+  border-radius: 3px;
 }
 
 .barFill {
   height: 100%;
-  background: var(--accent-red);
-  transition: width 0.3s ease;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
 }
 
 .barCount {
@@ -105,30 +115,37 @@
   color: var(--text-muted);
   width: 24px;
   text-align: right;
+  font-family: var(--font-mono);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 0;
 }
 
 .listRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 11px;
+}
+
+.listRow:last-child {
+  border-bottom: none;
 }
 
 .listLabel {
-  font-size: 11px;
   color: var(--text-secondary);
+  font-size: 11px;
 }
 
 .listValue {
-  font-size: 11px;
   color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
 }
 
 .empty {

@@ -1,11 +1,11 @@
 .footer {
-  background: #050505;
-  border-top: 1px solid #7A7A70;
-  padding: 8px 16px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-subtle);
+  padding: 6px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 36px;
+  height: 32px;
 }
 
 .left,
@@ -13,29 +13,25 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .label {
   font-size: 9px;
-  color: #7A7A70;
-  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
 }
 
 .value {
   font-size: 10px;
-  color: #EFEFE2;
+  color: var(--text-secondary);
   letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
 .online {
-  font-size: 10px;
-  color: #EFEFE2;
-  letter-spacing: 0.1em;
-  animation: pulse-online 2s infinite;
-}
-
-@keyframes pulse-online {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
 }

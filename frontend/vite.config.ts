@@ -9,6 +9,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  assetsInclude: ['**/*.geojson'],
   server: {
     port: 5173,
     proxy: {

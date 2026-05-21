@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { Seizure } from '../types';
 import styles from './SeizurePopup.module.css';
 
@@ -44,7 +45,12 @@ export function SeizurePopup({ seizure }: Props) {
 
         {seizure.images.length > 0 && (
           <div className={styles.imageContainer}>
-            <img src={seizure.images[0]} alt="Drug seizure" className={styles.image} />
+            <img
+              src={seizure.images[0]}
+              alt="Drug seizure"
+              className={styles.image}
+              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
           </div>
         )}
 
@@ -85,7 +91,7 @@ export function SeizurePopup({ seizure }: Props) {
         {seizure.description && (
           <div className={styles.description}>
             <span className={styles.label}>INTEL</span>
-            <p>{seizure.description}</p>
+            <p>{DOMPurify.sanitize(seizure.description)}</p>
           </div>
         )}
       </div>

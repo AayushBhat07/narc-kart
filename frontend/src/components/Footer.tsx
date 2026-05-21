@@ -10,7 +10,7 @@ export function Footer({ coords = { lat: 20.5937, lon: 78.9629 } }: Props) {
   return (
     <footer className={styles.footer}>
       <div className={styles.left}>
-        <span className={styles.label}>COORDINATES:</span>
+        <span className={styles.label}>COORD:</span>
         <span className={styles.value}>
           {coords.lat.toFixed(4)}° N, {coords.lon.toFixed(4)}° E
         </span>

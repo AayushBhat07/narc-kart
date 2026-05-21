@@ -14,18 +14,19 @@
   align-items: center;
   gap: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .icon {
-  font-size: 18px;
-  color: var(--accent-red);
+  font-size: 16px;
+  color: var(--accent);
 }
 
 .title {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   color: var(--text-primary);
+  font-weight: bold;
 }
 
 .statusRow {
@@ -33,20 +34,20 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .statusDot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #00FF00;
-  box-shadow: 0 0 6px #00FF00;
+  background: #22C55E;
+  flex-shrink: 0;
 }
 
 .statusText {
-  font-size: 11px;
-  color: #00FF00;
+  font-size: 10px;
+  color: var(--text-secondary);
   letter-spacing: 0.1em;
   flex: 1;
 }
@@ -60,9 +61,10 @@
 .mapArea {
   flex: 1;
   background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
   position: relative;
   min-height: 200px;
+  border-radius: var(--radius);
 }
 
 .graphContainer {
@@ -77,7 +79,7 @@
 .node {
   position: absolute;
   border-radius: 50%;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--border-medium);
   background: var(--bg-tertiary);
   display: flex;
   align-items: center;
@@ -87,13 +89,14 @@
 }
 
 .node:hover {
-  border-color: var(--accent-red);
+  border-color: var(--accent);
 }
 
 .nodeLabel {
   font-size: 9px;
   color: var(--text-secondary);
   letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
 .edgeSvg {
@@ -106,15 +109,17 @@
 }
 
 .legend {
-  padding: 8px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
 }
 
 .legendTitle {
   font-size: 9px;
   color: var(--text-muted);
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   display: block;
   margin-bottom: 6px;
 }
@@ -128,23 +133,30 @@
   margin-bottom: 4px;
 }
 
+.legendRow:last-child {
+  margin-bottom: 0;
+}
+
 .legendDot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--border-medium);
+  flex-shrink: 0;
 }
 
 .table {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
 }
 
 .tableHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 60px;
-  padding: 6px 8px;
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
+  grid-template-columns: 1fr 1fr 50px;
+  padding: 6px 10px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 9px;
   color: var(--text-muted);
   letter-spacing: 0.1em;
@@ -152,11 +164,12 @@
 
 .tableRow {
   display: grid;
-  grid-template-columns: 1fr 1fr 60px;
-  padding: 5px 8px;
-  border-bottom: 1px solid var(--border-color);
+  grid-template-columns: 1fr 1fr 50px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 11px;
   color: var(--text-secondary);
+  font-family: var(--font-mono);
 }
 
 .tableRow:last-child {
@@ -169,7 +182,7 @@
 }
 
 .empty {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
   font-style: italic;
 }

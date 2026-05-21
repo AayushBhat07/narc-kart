@@ -9,9 +9,9 @@ interface Props {
 }
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'radar', label: 'RADAR', icon: '◎' },
-  { id: 'intel', label: 'INTEL', icon: '◉' },
-  { id: 'network', label: 'NETWORK', icon: '⬡' },
+  { id: 'radar',    label: 'RADAR',    icon: '◎' },
+  { id: 'intel',    label: 'INTEL',    icon: '◉' },
+  { id: 'network',  label: 'NETWORK',  icon: '⬡' },
   { id: 'terminal', label: 'TERMINAL', icon: '▣' },
 ];
 
@@ -38,19 +38,16 @@ export function Sidebar({ activeTab, onTabChange, onFilterToggle }: Props) {
 
       <div className={styles.actions}>
         <button className={styles.actionBtn} onClick={onFilterToggle}>
-          <span>⌦</span> FILTERS
-        </button>
-        <button className={styles.actionBtn}>
-          <span>↺</span> REFRESH
+          ⚙ FILTERS
         </button>
       </div>
 
       <div className={styles.footer}>
         <div className={styles.statusItem}>
           <span className={styles.statusDot} />
-          <span>SYSTEMS ONLINE</span>
+          <span>ONLINE</span>
         </div>
-        <div className={styles.version}>v1.0.0</div>
+        <div className={styles.version}>v2.0</div>
       </div>
     </div>
   );

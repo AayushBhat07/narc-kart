@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
+import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import { Seizure } from '../types';
 import { SeizureMarker } from './SeizureMarker';
@@ -12,6 +13,29 @@ interface Props {
 const INDIA_CENTER: L.LatLngExpression = [20.5937, 78.9625];
 
 export function IndiaMap({ seizures, onSeizureSelect }: Props) {
+  const mapRef = useRef<L.Map | null>(null);
+  const geoJsonAdded = useRef(false);
+
+  useEffect(() => {
+    if (!mapRef.current || geoJsonAdded.current) return;
+    geoJsonAdded.current = true;
+
+    fetch('/india-boundary.geojson')
+      .then(res => res.json())
+      .then(data => {
+        if (!mapRef.current) return;
+        L.geoJSON(data, {
+          style: {
+            color: '#00FFFF',
+            weight: 1.5,
+            fillOpacity: 0,
+            opacity: 0.6,
+          },
+        }).addTo(mapRef.current);
+      })
+      .catch(err => console.warn('[IndiaMap] GeoJSON load failed:', err));
+  }, []);
+
   return (
     <div className={styles.container}>
       <MapContainer
@@ -24,6 +48,9 @@ export function IndiaMap({ seizures, onSeizureSelect }: Props) {
         zoomControl={true}
         scrollWheelZoom={true}
         doubleClickZoom={true}
+        ref={(map) => {
+          if (map) mapRef.current = map;
+        }}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
@@ -38,10 +65,6 @@ export function IndiaMap({ seizures, onSeizureSelect }: Props) {
           />
         ))}
       </MapContainer>
-      <div className={styles.radarOverlay}>
-        <div className={styles.radarSweep} />
-        <div className={styles.radarCenter} />
-      </div>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 .header {
-  background: #0F0F0F;
-  padding: 10px 16px;
+  background: var(--bg-primary);
+  padding: 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  border-bottom: 2px solid #EFEFE2;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 10;
 }
 
 .left {
@@ -18,59 +20,69 @@
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.2em;
-  color: #EFEFE2;
-  text-shadow: 0 0 20px rgba(232, 61, 61, 0.5);
+  color: var(--text-primary);
+  /* Accent red only on the word NARC */
+}
+
+.title .accent {
+  color: var(--accent);
 }
 
 .version {
   font-size: 10px;
-  color: #7A7A70;
+  color: var(--text-muted);
   letter-spacing: 0.1em;
 }
 
-.classified {
+/* LIVE badge — KiranaTrack signature style */
+.liveBadge {
+  display: inline-block;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   font-size: 9px;
-  color: #E83D3D;
-  background: transparent;
-  padding: 2px 8px;
-  letter-spacing: 0.15em;
-  border: 1px solid #E83D3D;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  line-height: 1.4;
 }
 
 .right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .iconBtn {
   background: transparent;
-  border: 1px solid #7A7A70;
-  color: #EFEFE2;
-  padding: 6px 8px;
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  padding: 6px 10px;
   font-size: 14px;
   cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .iconBtn:hover {
-  border-color: #E83D3D;
-  color: #E83D3D;
-  box-shadow: 0 0 10px rgba(232, 61, 61, 0.3);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
 }
 
 .datetime {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: 1px;
 }
 
 .datetime span {
   font-size: 10px;
-  color: #7A7A70;
+  color: var(--text-muted);
   letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
 .datetime span:first-child {
-  color: #EFEFE2;
+  color: var(--text-secondary);
 }

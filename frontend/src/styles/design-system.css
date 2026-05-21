@@ -1,0 +1,203 @@
+/* ============================================================
+   NARC KART — KIRANATRACK DESIGN SYSTEM
+   ============================================================ */
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #000000;
+  --bg-secondary: #0F0F0F;
+  --bg-tertiary: #121212;
+
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #8E8E8E;
+  --text-muted: #5A5A5A;
+
+  /* Borders */
+  --border-subtle: #262626;
+  --border-medium: #333333;
+  --border-light: #444444;
+
+  /* Accent — signal red (Narc Kart's identity) */
+  --accent: #E83D3D;
+  --accent-dim: rgba(232, 61, 61, 0.15);
+  --accent-glow: rgba(232, 61, 61, 0.3);
+
+  /* Severity */
+  --severity-critical: #E83D3D;
+  --severity-high: #FF8C42;
+  --severity-low: #FFCC00;
+
+  /* Radii */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+
+  /* Font */
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================================
+   DOT-GRID BACKGROUND PATTERN
+   ============================================================ */
+.dot-grid-bg {
+  background-image: radial-gradient(circle, #262626 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
+/* ============================================================
+   BASE CARD STYLE
+   ============================================================ */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+/* ============================================================
+   BADGE / PILL STYLES
+   ============================================================ */
+
+/* LIVE / NEW pill — white bg + black text (KiranaTrack signature) */
+.badge-live {
+  display: inline-block;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  line-height: 1.4;
+}
+
+/* Severity pills */
+.badge-critical {
+  color: var(--severity-critical);
+  border: 1px solid var(--severity-critical);
+  background: transparent;
+}
+
+.badge-high {
+  color: var(--severity-high);
+  border: 1px solid var(--severity-high);
+  background: transparent;
+}
+
+.badge-low {
+  color: var(--severity-low);
+  border: 1px solid var(--severity-low);
+  background: transparent;
+}
+
+/* ============================================================
+   INPUT / SELECT BASE
+   ============================================================ */
+.ds-input {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.ds-input:focus {
+  border-color: var(--accent);
+}
+
+.ds-input::placeholder {
+  color: var(--text-muted);
+}
+
+.ds-select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+}
+
+.ds-select:focus {
+  border-color: var(--accent);
+}
+
+.ds-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   BUTTON BASE
+   ============================================================ */
+.ds-btn {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+}
+
+.ds-btn:active {
+  transform: scale(0.98);
+}
+
+.ds-btn-primary {
+  background: var(--accent);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.ds-btn-primary:hover {
+  background: #c93030;
+  border-color: #c93030;
+}
+
+.ds-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-medium);
+}
+
+.ds-btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+/* ============================================================
+   SECTION TITLE
+   ============================================================ */
+.section-title {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
