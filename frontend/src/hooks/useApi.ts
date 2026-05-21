@@ -168,7 +168,7 @@ export function useApi() {
       const params = mapFiltersToParams(activeFilters);
       params.append('limit', '100');
 
-      const res = await fetch(`${getApiBase()}/api/seizures?${params}`);
+      const res = await fetch(`${getApiBase()}/api/seizures?${params}`, { signal: AbortSignal.timeout(8000) });
       if (!res.ok) throw new Error(`API error ${res.status}`);
       const data = await res.json();
       if (!mountedRef.current) return;
@@ -180,15 +180,9 @@ export function useApi() {
       setLastUpdate(now);
       writeCache(seizuresList, null, now);
     } catch {
+      // Live API failed — fall back to static data
       if (mountedRef.current) {
-        const cached = readCache();
-        if (cached) {
-          setSeizures(cached.seizures);
-          setLastUpdate(cached.lastUpdate);
-          setIsOffline(true);
-        } else {
-          setError('Failed to fetch seizures');
-        }
+        await fetchStatic();
       }
     } finally {
       if (mountedRef.current) setLoading(false);
