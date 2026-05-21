@@ -1116,6 +1116,324 @@ def scrape_rajasthan_police() -> List[Dict]:
     return seizures
 
 
+def scrape_the_print() -> List[Dict]:
+    """Scrape The Print for drug seizure news."""
+    logger.info("Scraping The Print...")
+    seizures = []
+
+    try:
+        # Try search-based approach
+        search_url = "https://www.theprint.in/search/"
+        params = {'q': 'drug seizure'}
+        resp = make_request(search_url, params=params)
+        if not resp:
+            logger.warning("Print: Could not fetch search page")
+            # Fall back to homepage
+            resp = make_request("https://www.theprint.in")
+            if not resp:
+                return seizures
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+        articles = soup.find_all('a', href=re.compile(r'/\d{4}/\d{2}/'))
+
+        for article in articles[:30]:
+            try:
+                link = article.get('href', '')
+                if not link.startswith('http'):
+                    link = f"https://www.theprint.in{link}"
+
+                article_resp = make_request(link)
+                if not article_resp:
+                    continue
+
+                article_soup = BeautifulSoup(article_resp.text, 'lxml')
+                article_text = article_soup.get_text()
+
+                if not any(kw in article_text.lower() for kw in SEIZURE_KEYWORDS):
+                    continue
+
+                drug = normalize_drug(article_text)
+                if not drug:
+                    continue
+
+                city, state, lat, lon = extract_location(article_text, CITIES_LOOKUP)
+                if not city:
+                    continue
+
+                date_match = re.search(r'(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})', article_text)
+                date = normalize_date(date_match.group(1)) if date_match else datetime.now().strftime('%Y-%m-%d')
+
+                quantity = extract_quantity(article_text)
+
+                seizure = {
+                    'id': '',
+                    'caseNo': f"TPR-{city[:3].upper()}-{datetime.now().strftime('%Y')}-{(len(seizures)+100):04d}",
+                    'city': city,
+                    'state': state,
+                    'lat': lat,
+                    'lon': lon,
+                    'drugType': drug,
+                    'quantityKg': quantity,
+                    'date': date,
+                    'sourceName': 'The Print',
+                    'sourceUrl': link,
+                    'agency': 'Local Police / The Print',
+                    'description': article_text[:500],
+                    'images': []
+                }
+                seizure['id'] = generate_id(seizure)
+                seizures.append(seizure)
+
+            except Exception as e:
+                logger.debug(f"Print: Error processing article: {e}")
+                continue
+
+    except Exception as e:
+        logger.error(f"Print: Scraping failed: {e}")
+
+    logger.info(f"Print: Found {len(seizures)} seizures")
+    return seizures
+
+
+def scrape_dainik_bhaskar() -> List[Dict]:
+    """Scrape Dainik Bhaskar (Hindi, major Rajasthan/MP/UP coverage) for drug seizure news."""
+    logger.info("Scraping Dainik Bhaskar...")
+    seizures = []
+
+    try:
+        state_urls = {
+            'Rajasthan': 'https://www.bhaskar.com/rajasthan',
+            'Madhya Pradesh': 'https://www.bhaskar.com/madhya-pradesh',
+            'Uttar Pradesh': 'https://www.bhaskar.com/uttar-pradesh',
+            'Bihar': 'https://www.bhaskar.com/bihar',
+            'Maharashtra': 'https://www.bhaskar.com/maharashtra',
+            'Gujarat': 'https://www.bhaskar.com/gujarat',
+        }
+
+        for state, base_url in state_urls.items():
+            try:
+                resp = make_request(base_url)
+                if not resp:
+                    continue
+
+                soup = BeautifulSoup(resp.text, 'lxml')
+                articles = soup.find_all('a', href=re.compile(r'/news/|/article/|\.html'))
+
+                for article in articles[:15]:
+                    try:
+                        link = article.get('href', '')
+                        if not link.startswith('http'):
+                            link = f"https://www.bhaskar.com{link}"
+
+                        article_resp = make_request(link)
+                        if not article_resp:
+                            continue
+
+                        article_soup = BeautifulSoup(article_resp.text, 'lxml')
+                        article_text = article_soup.get_text()
+
+                        if not any(kw in article_text.lower() for kw in SEIZURE_KEYWORDS):
+                            continue
+
+                        drug = normalize_drug(article_text)
+                        if not drug:
+                            continue
+
+                        city, extracted_state, lat, lon = extract_location(article_text, CITIES_LOOKUP)
+                        if not city:
+                            continue
+
+                        date_match = re.search(r'(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})', article_text)
+                        date = normalize_date(date_match.group(1)) if date_match else datetime.now().strftime('%Y-%m-%d')
+
+                        quantity = extract_quantity(article_text)
+
+                        seizure = {
+                            'id': '',
+                            'caseNo': f"DB-{city[:3].upper()}-{datetime.now().strftime('%Y')}-{(len(seizures)+100):04d}",
+                            'city': city,
+                            'state': extracted_state or state,
+                            'lat': lat,
+                            'lon': lon,
+                            'drugType': drug,
+                            'quantityKg': quantity,
+                            'date': date,
+                            'sourceName': 'Dainik Bhaskar',
+                            'sourceUrl': link,
+                            'agency': 'Local Police / Dainik Bhaskar',
+                            'description': article_text[:500],
+                            'images': []
+                        }
+                        seizure['id'] = generate_id(seizure)
+                        seizures.append(seizure)
+
+                    except Exception as e:
+                        logger.debug(f"DB ({state}): Error processing article: {e}")
+                        continue
+
+                    import time
+                    time.sleep(REQUEST_DELAY)
+
+            except Exception as e:
+                logger.warning(f"DB: Error processing state {state}: {e}")
+                continue
+
+    except Exception as e:
+        logger.error(f"DB: Scraping failed: {e}")
+
+    logger.info(f"DB: Found {len(seizures)} seizures")
+    return seizures
+
+
+def scrape_prabhat_khabar() -> List[Dict]:
+    """Scrape Prabhat Khabar (Bihar/Jharkhand) for drug seizure news."""
+    logger.info("Scraping Prabhat Khabar...")
+    seizures = []
+
+    try:
+        url = "https://www.prabhatkhabar.com"
+        resp = make_request(url)
+        if not resp:
+            logger.warning("PK: Could not fetch page")
+            return seizures
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+        articles = soup.find_all('a', href=re.compile(r'/news/|/article/'))
+
+        for article in articles[:30]:
+            try:
+                link = article.get('href', '')
+                if not link.startswith('http'):
+                    link = f"https://www.prabhatkhabar.com{link}"
+
+                article_resp = make_request(link)
+                if not article_resp:
+                    continue
+
+                article_soup = BeautifulSoup(article_resp.text, 'lxml')
+                article_text = article_soup.get_text()
+
+                if not any(kw in article_text.lower() for kw in SEIZURE_KEYWORDS):
+                    continue
+
+                drug = normalize_drug(article_text)
+                if not drug:
+                    continue
+
+                city, state, lat, lon = extract_location(article_text, CITIES_LOOKUP)
+                if not city:
+                    continue
+
+                date_match = re.search(r'(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})', article_text)
+                date = normalize_date(date_match.group(1)) if date_match else datetime.now().strftime('%Y-%m-%d')
+
+                quantity = extract_quantity(article_text)
+
+                seizure = {
+                    'id': '',
+                    'caseNo': f"PK-{city[:3].upper()}-{datetime.now().strftime('%Y')}-{(len(seizures)+100):04d}",
+                    'city': city,
+                    'state': state,
+                    'lat': lat,
+                    'lon': lon,
+                    'drugType': drug,
+                    'quantityKg': quantity,
+                    'date': date,
+                    'sourceName': 'Prabhat Khabar',
+                    'sourceUrl': link,
+                    'agency': 'Local Police / Prabhat Khabar',
+                    'description': article_text[:500],
+                    'images': []
+                }
+                seizure['id'] = generate_id(seizure)
+                seizures.append(seizure)
+
+            except Exception as e:
+                logger.debug(f"PK: Error processing article: {e}")
+                continue
+
+    except Exception as e:
+        logger.error(f"PK: Scraping failed: {e}")
+
+    logger.info(f"PK: Found {len(seizures)} seizures")
+    return seizures
+
+
+def scrape_sakshi() -> List[Dict]:
+    """Scrape Sakshi (Telugu/English) for drug seizure news."""
+    logger.info("Scraping Sakshi...")
+    seizures = []
+
+    try:
+        url = "https://www.sakshi.com/search"
+        params = {'q': 'drug seizure'}
+        resp = make_request(url, params=params)
+        if not resp:
+            logger.warning("Sakshi: Could not fetch search page")
+            return seizures
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+        articles = soup.find_all('a', href=re.compile(r'/article/|/news/'))
+
+        for article in articles[:30]:
+            try:
+                link = article.get('href', '')
+                if not link.startswith('http'):
+                    link = f"https://www.sakshi.com{link}"
+
+                article_resp = make_request(link)
+                if not article_resp:
+                    continue
+
+                article_soup = BeautifulSoup(article_resp.text, 'lxml')
+                article_text = article_soup.get_text()
+
+                if not any(kw in article_text.lower() for kw in SEIZURE_KEYWORDS):
+                    continue
+
+                drug = normalize_drug(article_text)
+                if not drug:
+                    continue
+
+                city, state, lat, lon = extract_location(article_text, CITIES_LOOKUP)
+                if not city:
+                    continue
+
+                date_match = re.search(r'(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})', article_text)
+                date = normalize_date(date_match.group(1)) if date_match else datetime.now().strftime('%Y-%m-%d')
+
+                quantity = extract_quantity(article_text)
+
+                seizure = {
+                    'id': '',
+                    'caseNo': f"SK-{city[:3].upper()}-{datetime.now().strftime('%Y')}-{(len(seizures)+100):04d}",
+                    'city': city,
+                    'state': state,
+                    'lat': lat,
+                    'lon': lon,
+                    'drugType': drug,
+                    'quantityKg': quantity,
+                    'date': date,
+                    'sourceName': 'Sakshi',
+                    'sourceUrl': link,
+                    'agency': 'Local Police / Sakshi',
+                    'description': article_text[:500],
+                    'images': []
+                }
+                seizure['id'] = generate_id(seizure)
+                seizures.append(seizure)
+
+            except Exception as e:
+                logger.debug(f"Sakshi: Error processing article: {e}")
+                continue
+
+    except Exception as e:
+        logger.error(f"Sakshi: Scraping failed: {e}")
+
+    logger.info(f"Sakshi: Found {len(seizures)} seizures")
+    return seizures
+
+
 def deduplicate_seizures(seizures: List[Dict]) -> List[Dict]:
     """Remove duplicate seizures based on date, city, drug type, and quantity."""
     seen = set()
@@ -1232,6 +1550,10 @@ def run_scraper():
         ('HP', scrape_haryana_police),
         ('BP', scrape_bihar_police),
         ('RP', scrape_rajasthan_police),
+        ('TPR', scrape_the_print),
+        ('DB', scrape_dainik_bhaskar),
+        ('PK', scrape_prabhat_khabar),
+        ('SK', scrape_sakshi),
     ]
 
     all_seizures = []
