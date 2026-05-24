@@ -1,62 +1,13 @@
 {
-  "seizures": [
-    {
-      "id": "sz-f78865df",
-      "caseNo": "IE-MUM-2026-0100",
-      "city": "Mumbai",
-      "state": "Delhi",
-      "lat": 19.076,
-      "lon": 72.877,
-      "drugType": "meth",
-      "quantityKg": null,
-      "date": "2026-05-21",
-      "sourceName": "Indian Express",
-      "sourceUrl": "https://indianexpress.com/article/india/20-years-ago-odisha-engineer-joined-at-rs-6000-salary-this-week-vigilance-found-he-owns-97-land-plots-farmhouses-10700277/",
-      "agency": "Local Police / Indian Express",
-      "description": "\n\n\n\n\nOdisha engineer goes from Rs 6,000 salary to 5 buildings, 97 plots in 20 years | India News - The Indian Express\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\nskip to content\n\n\n\n\n\n\n\nSections\n\n\n\n\n\n\n\nEditionIndiaInternational\n\n\n\nEnglishதமிழ்বাংলাമലയാളംગુજરાતીहिंदीमराठीBusiness \n\n\n\n\nNewsletters  \n\n\n \n\n\n\n\n\n\n\nWeather\n\n ePaper \n Today’s Paper\n\n\n\n\n\n\n\n\nJournalism of Courage\n\n\n \n\n\n\n\n\nHome ePaper Politics Explained Opinion India Business Premium Cities UPSC Entertainment Sports World L",
-      "images": []
-    },
-    {
-      "id": "sz-68f4b281",
-      "caseNo": "DB-JAI-2026-0100",
-      "city": "Jaipur",
-      "state": "Tamil Nadu",
-      "lat": 26.912,
-      "lon": 75.787,
-      "drugType": "meth",
-      "quantityKg": null,
-      "date": "2026-05-21",
-      "sourceName": "Dainik Bhaskar",
-      "sourceUrl": "https://www.bhaskar.com/local/rajasthan/jaipur/news/jaipur-dri-african-woman-drugs-seized-trolley-bag-137986459.html",
-      "agency": "Local Police / Dainik Bhaskar",
-      "description": "Jaipur | African Woman Arrested With Drugs; Meth, Cocaine, MDMA Seizedहोमवीडियोसर्चवेब स्टोरीजई-पेपरटॉप न्यूज़राज्य-शहरIPL 2026भास्कर खासDB ओरिजिनलस्पोर्ट्सबॉलीवुडजॉब - एजुकेशनबिजनेसलाइफस्टाइलजीवन मंत्रवुमनदेशविदेशराशिफलटेक - ऑटोफेक न्यूज एक्सपोज़ओपिनियनमधुरिमामैगजीनयूटिलिटीलाइफ - साइंसमध्य प्रदेशउत्तरप्रदेशराजस्थानबिहारHindi NewsLocalRajasthanJaipurJaipur | African Woman Arrested With Drugs; Meth, Cocaine, MDMA Seizedजयपुर में विदेशी महिला से ढाई करोड़ की स्मैक बरामद:बस से मुंबई जाते समय किया गिर",
-      "images": []
-    }
-  ],
+  "seizures": [],
   "stats": {
-    "total_seizures": 2,
+    "total_seizures": 0,
     "total_quantity_kg": 0,
-    "raids_this_week": 2,
-    "by_state": {
-      "Delhi": 1,
-      "Tamil Nadu": 1
-    },
-    "by_drug_type": {
-      "meth": 2
-    },
-    "by_month": {
-      "2026-05": 2
-    },
-    "top_locations": [
-      {
-        "location": "Mumbai, Delhi",
-        "count": 1
-      },
-      {
-        "location": "Jaipur, Tamil Nadu",
-        "count": 1
-      }
-    ]
+    "raids_this_week": 0,
+    "by_state": {},
+    "by_drug_type": {},
+    "by_month": {},
+    "top_locations": []
   },
-  "lastUpdated": "2026-05-21T12:23:08.949394"
+  "lastUpdated": "2026-05-24T14:09:30.729390"
 }
