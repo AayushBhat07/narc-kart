@@ -542,7 +542,7 @@ def compute_stats(seizures: List[Dict]) -> Dict:
     by_state = {}
     by_drug = {}
     by_month = {}
-    location_counts = {}
+    location_data = {}
 
     for s in seizures:
         state = s.get('state') or 'Unknown'
@@ -556,9 +556,13 @@ def compute_stats(seizures: List[Dict]) -> Dict:
             month = date[:7]
             by_month[month] = by_month.get(month, 0) + 1
 
-        loc = f"{s.get('city', '')}, {state}"
-        if loc != ', ':
-            location_counts[loc] = location_counts.get(loc, 0) + 1
+        city = s.get('city', '')
+        loc_key = f"{city}, {state}"
+        if loc_key != ', ':
+            if loc_key not in location_data:
+                location_data[loc_key] = {'count': 0, 'total_kg': 0}
+            location_data[loc_key]['count'] += 1
+            location_data[loc_key]['total_kg'] += s.get('quantityKg', 0) or 0
 
     week_ago = datetime.now() - timedelta(days=7)
     raids_week = 0
@@ -572,16 +576,30 @@ def compute_stats(seizures: List[Dict]) -> Dict:
             except Exception:
                 pass
 
-    top_locs = sorted(location_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+    top_locs = sorted(location_data.items(), key=lambda x: x[1]['count'], reverse=True)[:10]
+
+    total_qty = sum(s.get('quantityKg', 0) or 0 for s in seizures)
+
+    top_locations = []
+    for loc_key, data in top_locs:
+        parts = loc_key.rsplit(', ', 1) if ', ' in loc_key else [loc_key, '']
+        city = parts[0]
+        state = parts[1] if len(parts) > 1 else ''
+        top_locations.append({
+            'city': city,
+            'state': state,
+            'seizureCount': data['count'],
+            'totalKg': data['total_kg']
+        })
 
     return {
         'total_seizures': len(seizures),
-        'total_quantity_kg': 0,
+        'total_quantity_kg': total_qty,
         'raids_this_week': raids_week,
         'by_state': by_state,
         'by_drug_type': by_drug,
         'by_month': by_month,
-        'top_locations': [{'location': loc, 'count': count} for loc, count in top_locs]
+        'top_locations': top_locations
     }
 
 

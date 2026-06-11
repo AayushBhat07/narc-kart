@@ -31579,44 +31579,64 @@
     },
     "top_locations": [
       {
-        "location": "Mumbai, Maharashtra",
-        "count": 267
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "seizureCount": 267,
+        "totalKg": 6140.52533
       },
       {
-        "location": "Delhi, Delhi",
-        "count": 241
+        "city": "Delhi",
+        "state": "Delhi",
+        "seizureCount": 241,
+        "totalKg": 36137.749749999995
       },
       {
-        "location": "Amritsar, Punjab",
-        "count": 190
+        "city": "Amritsar",
+        "state": "Punjab",
+        "seizureCount": 190,
+        "totalKg": 2671.7174000000005
       },
       {
-        "location": "Lucknow, Uttar Pradesh",
-        "count": 145
+        "city": "Lucknow",
+        "state": "Uttar Pradesh",
+        "seizureCount": 145,
+        "totalKg": 46678.327626000006
       },
       {
-        "location": "Kolkata, West Bengal",
-        "count": 144
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "seizureCount": 144,
+        "totalKg": 15526.412994999997
       },
       {
-        "location": "Patna, Bihar",
-        "count": 87
+        "city": "Patna",
+        "state": "Bihar",
+        "seizureCount": 87,
+        "totalKg": 27613.811999999998
       },
       {
-        "location": "Guwahati, Assam",
-        "count": 86
+        "city": "Guwahati",
+        "state": "Assam",
+        "seizureCount": 86,
+        "totalKg": 30811.24038
       },
       {
-        "location": "Bangalore, Karnataka",
-        "count": 72
+        "city": "Bangalore",
+        "state": "Karnataka",
+        "seizureCount": 72,
+        "totalKg": 1413.0917799999995
       },
       {
-        "location": "Chennai, Tamil Nadu",
-        "count": 71
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "seizureCount": 71,
+        "totalKg": 4473.97621
       },
       {
-        "location": "Jodhpur, Rajasthan",
-        "count": 71
+        "city": "Jodhpur",
+        "state": "Rajasthan",
+        "seizureCount": 71,
+        "totalKg": 15320.015239999995
       }
     ]
   },
