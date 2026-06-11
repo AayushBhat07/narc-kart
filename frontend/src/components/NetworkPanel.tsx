@@ -5,12 +5,18 @@ export function NetworkPanel() {
   const { stats } = useApi();
 
   // Build a simple adjacency from top locations
-  const nodes = stats?.topLocations?.map((loc, i) => ({
-    id: i,
-    label: loc.city,
-    state: loc.state,
-    weight: loc.totalKg,
-  })) || [];
+  const nodes = (stats?.topLocations ?? []).map((loc: any, i: number) => {
+    // Handle both { city, state, totalKg } and { location: "City, State", count } formats
+    let label = loc.city || '';
+    let state = loc.state || '';
+    let weight = loc.totalKg || loc.seizureCount || 0;
+    if (!label && loc.location) {
+      const parts = String(loc.location).split(', ');
+      label = parts[0] || '';
+      state = parts.slice(1).join(', ') || '';
+    }
+    return { id: i, label, state, weight };
+  });
 
   return (
     <div className={styles.container}>
