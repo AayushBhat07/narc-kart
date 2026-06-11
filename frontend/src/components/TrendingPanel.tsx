@@ -70,7 +70,7 @@ export function TrendingPanel() {
             <div className={styles.statsRow}>
                 <div className={styles.statCard}>
                     <span className={styles.statLabel}>TOTAL VOLUME</span>
-                    <span className={styles.statValue}>{(stats?.totalQuantityKg ?? 0 / 1000).toFixed(0)}T</span>
+                    <span className={styles.statValue}>{((stats?.totalQuantityKg ?? 0) / 1000).toFixed(0)}T</span>
                 </div>
                 <div className={styles.statCard}>
                     <span className={styles.statLabel}>AVG/SIZE</span>
