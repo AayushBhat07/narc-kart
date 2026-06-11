@@ -1,0 +1,165 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.icon {
+    font-size: 16px;
+    color: var(--accent);
+}
+
+.title {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sectionTitle {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.barRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.barLabel {
+    font-size: 10px;
+    color: var(--text-secondary);
+    width: 60px;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+}
+
+.barTrack {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-tertiary);
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.barFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #8B5CF6);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+.barCount {
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 20px;
+    text-align: right;
+    font-family: var(--font-mono);
+}
+
+.drugGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.drugCard {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.drugName {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.drugCount {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-weight: bold;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.timelineBar {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 60px;
+    padding: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+}
+
+.monthCol {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+}
+
+.monthBar {
+    width: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    min-height: 4px;
+    transition: height 0.3s ease;
+}
+
+.monthLabel {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.empty {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+}

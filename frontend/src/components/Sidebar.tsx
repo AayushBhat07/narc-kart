@@ -1,6 +1,6 @@
 import styles from './Sidebar.module.css';
 
-type Tab = 'radar' | 'intel' | 'network' | 'terminal';
+type Tab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'agency' | 'compare';
 
 interface Props {
   activeTab: Tab;
@@ -12,6 +12,9 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'radar',    label: 'RADAR',    icon: '◎' },
   { id: 'intel',    label: 'INTEL',    icon: '◉' },
   { id: 'network',  label: 'NETWORK',  icon: '⬡' },
+  { id: 'trending', label: 'TRENDING', icon: '★' },
+  { id: 'agency',   label: 'AGENCY',   icon: '◎' },
+  { id: 'compare',  label: 'COMPARE', icon: '⊞' },
   { id: 'terminal', label: 'TERMINAL', icon: '▣' },
 ];
 

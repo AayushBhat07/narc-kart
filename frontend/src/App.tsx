@@ -11,6 +11,9 @@ import { StatBoxes } from './components/StatBoxes';
 import { IntelPanel } from './components/IntelPanel';
 import { NetworkPanel } from './components/NetworkPanel';
 import { TerminalPanel } from './components/TerminalPanel';
+import { TrendingPanel } from './components/TrendingPanel';
+import { AgencyPanel } from './components/AgencyPanel';
+import { ComparePanel } from './components/ComparePanel';
 import { OfflineBadge } from './components/OfflineBadge';
 import { useApi } from './hooks/useApi';
 import { Seizure } from './types';
@@ -18,7 +21,7 @@ import 'leaflet/dist/leaflet.css';
 import './styles/global.css';
 import styles from './App.module.css';
 
-type SidebarTab = 'radar' | 'intel' | 'network' | 'terminal';
+type SidebarTab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'agency' | 'compare';
 
 export function App() {
   const { seizures, stats, filters, applyFilters, resetFilters, refresh, isOffline, lastUpdate } = useApi();
@@ -65,6 +68,9 @@ export function App() {
           )}
           {sidebarTab === 'intel' && <IntelPanel />}
           {sidebarTab === 'network' && <NetworkPanel />}
+          {sidebarTab === 'trending' && <TrendingPanel />}
+          {sidebarTab === 'agency' && <AgencyPanel />}
+          {sidebarTab === 'compare' && <ComparePanel />}
           {sidebarTab === 'terminal' && <TerminalPanel />}
 
           <div className={styles.cmdInput}>
