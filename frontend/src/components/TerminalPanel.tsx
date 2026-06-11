@@ -2,17 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { useApi } from '../hooks/useApi';
 import styles from './TerminalPanel.module.css';
 
-interface Seizure {
-    id: string;
-    location: { city: string; state: string; lat: number; lon: number };
-    drugType: string;
-    quantityKg: number;
-    date: string;
-    source: { name: string; url: string };
-    agency: string;
-    description?: string;
-}
-
 export function TerminalPanel() {
     const { seizures, stats } = useApi();
     const [lines, setLines] = useState<Array<{ type: 'input' | 'output' | 'error'; text: string }>>([

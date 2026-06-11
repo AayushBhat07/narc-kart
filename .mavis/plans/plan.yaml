@@ -1,0 +1,257 @@
+version: 1
+plan:
+  name: 'narc-kart full-codebase security + perf + arch audit'
+  max_concurrency: 3
+  max_consecutive_failures: 3
+  max_cycles: 6
+  verifier_config:
+    default_verifiers: [verifier]
+    audit_sample_rate: 0.0
+
+tasks:
+  - id: security-audit
+    title: 'Security audit: injection, auth, secrets, dependencies'
+    prompt: |
+      Perform a thorough security audit of the narc-kart codebase at /Users/aayush07/Documents/GitHub/narc-kart.
+
+      Scope covers BOTH the backend (Python/FastAPI) and frontend (React 19/TypeScript/Vite):
+      - SQL injection and database query safety
+      - XSS and input sanitization (especially user-supplied data in React renders)
+      - Authentication and authorization gaps
+      - Hardcoded secrets, API keys, credentials in code
+      - CORS misconfigurations
+      - Dependency vulnerabilities (check requirements.txt, package.json)
+      - File path traversal risks
+      - SSRF in any URL-fetching code
+      - Insecure direct object references
+      - Scraped data (drug_seizures_india.json) — check for PII, safe handling
+
+      Methodology:
+      1. Read all Python files in backend/ thoroughly (api/, database/, scraper/, ai/)
+      2. Read all TypeScript/TSX files in frontend/src/
+      3. Read package.json and requirements.txt for dependency audit
+      4. Read drug_seizures_india.json to assess data safety
+      5. Run: cd /Users/aayush07/Documents/GitHub/narc-kart/backend && pip-audit 2>/dev/null || echo "pip-audit not available"
+      6. Run: cd /Users/aayush07/Documents/GitHub/narc-kart/frontend && npm audit 2>/dev/null || echo "npm audit not available"
+      7. Check .env.example and any .env files for secret patterns
+      8. Check docker-compose.yml and Dockerfile for security issues
+
+      Output format — produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/security-audit.md with:
+      ## Security Audit Report — narc-kart
+
+      ### Critical Findings
+      [list each with: file:line, description, impact, suggested fix]
+
+      ### High Findings
+      [same format]
+
+      ### Medium Findings
+      [same format]
+
+      ### Low / Informational
+      [same format]
+
+      ### Dependency Report
+      [pip-audit / npm audit output or manual inspection notes]
+
+      ### Overall Security Posture
+      [1-paragraph summary]
+
+    assigned_to: general
+    verified_by: verifier
+    verify_prompt: |
+      Independently re-audit the codebase for security issues. Do NOT read the deliverable.md from the security-audit task.
+      1. Read backend/api/routes/*.py — look for SQL injection, auth gaps, missing input validation
+      2. Read backend/database/queries.py — check for parameterized queries vs string interpolation
+      3. Read frontend/src/**/*.tsx — look for dangerouslySetInnerHTML, unsanitized data renders, XSS vectors
+      4. Grep for: password, secret, token, api_key, API_KEY, Authorization, Bearer in all files
+      5. Check backend/scraper/scraper.py for SSRF or unsafe URL handling
+      6. Check geocoder.py for any API key usage patterns
+
+      Verify the audit task's findings. If you find issues the audit missed, add them to your report.
+      Produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/security-verifier.md with:
+      - Confirmed findings (from audit task)
+      - Missed findings (new issues you found)
+      - False positives (issues in audit report that are not real)
+      - Verdict: PASS / FAIL with explanation
+
+  - id: perf-audit
+    title: 'Performance audit: complexity, queries, rendering, bundle size'
+    prompt: |
+      Perform a thorough performance audit of the narc-kart codebase at /Users/aayush07/Documents/GitHub/narc-kart.
+
+      Scope covers BOTH backend and frontend:
+      - Backend: algorithm complexity, DB query efficiency, N+1 query patterns, missing indexes, memory leaks
+      - Frontend: React rendering performance (re-renders, memoization), bundle size, image optimization, lazy loading
+      - Data processing: JSON parsing of drug_seizures_india.json (1928 records), any heavy computations on large arrays
+      - Caching opportunities (both backend and frontend)
+      - Network efficiency: unnecessary API calls, over-fetching
+      - Vite build configuration for production
+
+      Methodology:
+      1. Read backend/database/queries.py — analyze query patterns, look for N+1, missing indexes
+      2. Read backend/database/models.py — check for model-level performance issues
+      3. Read all frontend/src/**/*.tsx — identify React performance anti-patterns (missing memo, inline callbacks, etc.)
+      4. Read frontend/src/**/*.ts files — check API client efficiency
+      5. Read drug_seizures_india.json — assess data loading strategy (1928 records)
+      6. Check frontend/vite.config.ts for build optimizations
+      7. Read frontend/package.json — check for bundle size relevant deps (leaflet, etc.)
+      8. Count lines in drug_seizures_india.json to assess data load scale
+
+      Output format — produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/perf-audit.md with:
+      ## Performance Audit Report — narc-kart
+
+      ### Critical Performance Issues
+      [file:line, description, impact, suggested fix]
+
+      ### High Performance Issues
+      [same format]
+
+      ### Medium Performance Issues
+      [same format]
+
+      ### Low / Opportunities
+      [same format]
+
+      ### Data Scale Assessment
+      [How well does the app handle the 1928-record dataset?]
+
+      ### Overall Performance Posture
+      [1-paragraph summary]
+
+    assigned_to: general
+    verified_by: verifier
+    verify_prompt: |
+      Independently re-audit the codebase for performance issues. Do NOT read the deliverable.md from the perf-audit task.
+      1. Read frontend/src/**/* — identify React component performance issues (missing React.memo, useCallback, useMemo where needed)
+      2. Read backend/scraper/scraper.py and seed_database.py — look for inefficient loops, missing batching
+      3. Read frontend/src/**/*.ts for API call patterns — check for N+1 or over-fetching
+      4. Read drug_seizures_india.json — estimate size, check how it's loaded in the frontend
+      5. Grep for: console.log (performance logging left in), TODO comments about performance
+      6. Read SPEC.md and UX_ROADMAP.md for any stated performance requirements
+
+      Verify the audit task's findings. Produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/perf-verifier.md with:
+      - Confirmed findings
+      - Missed findings
+      - False positives
+      - Verdict: PASS / FAIL with explanation
+
+  - id: arch-audit
+    title: 'Architecture audit: patterns, SOLID, DRY, separation of concerns'
+    prompt: |
+      Perform a thorough architecture audit of the narc-kart codebase at /Users/aayush07/Documents/GitHub/narc-kart.
+
+      Scope:
+      - Backend architecture: FastAPI structure, separation of concerns (api vs database vs scraper vs ai), layered architecture adherence
+      - Frontend architecture: React component structure, state management, code organization
+      - SOLID principles violations
+      - DRY violations (significant duplicated logic)
+      - Circular dependencies
+      - Error handling consistency and patterns
+      - TypeScript type coverage and quality
+      - API design quality (routes, models, consistency)
+      - Backend is currently archived/static — assess the archived FastAPI design quality
+      - Frontend is the active target — assess React 19 patterns, hooks usage
+
+      Methodology:
+      1. Read SPEC.md, UX_ROADMAP.md for intended architecture
+      2. Read all backend Python files — assess layered architecture
+      3. Read all frontend src/ files — assess component architecture and state management
+      4. Read frontend/api/ — check API client design
+      5. Check for: God files, barrel imports, circular imports (grep for "import.*from.*\\.\\." patterns)
+      6. Read SECURITY.md for any stated architectural constraints
+      7. Assess TypeScript tsconfig.json and type coverage
+      8. Look for error handling patterns (try/except in Python, error boundaries in React)
+
+      Output format — produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/arch-audit.md with:
+      ## Architecture Audit Report — narc-kart
+
+      ### Critical Architecture Issues
+      [file:line, description, impact, suggested fix]
+
+      ### High Architecture Issues
+      [same format]
+
+      ### Medium Architecture Issues
+      [same format]
+
+      ### Low / Suggestions
+      [same format]
+
+      ### Design Pattern Observations
+      [What patterns ARE being used well? What's missing?]
+
+      ### Overall Architecture Posture
+      [1-paragraph summary]
+
+    assigned_to: general
+    verified_by: verifier
+    verify_prompt: |
+      Independently re-audit the codebase for architecture issues. Do NOT read the deliverable.md from the arch-audit task.
+      1. Read SPEC.md and UX_ROADMAP.md — understand the intended architecture
+      2. Trace data flow: frontend API calls -> backend routes -> database — is the layering clean?
+      3. Grep for duplicated logic across Python files (similar function signatures, copy-pasted code)
+      4. Grep for duplicated logic across TypeScript/TSX files
+      5. Check frontend/src/ for state management approach — is there one? Is it consistent?
+      6. Read backend/api/models.py and frontend/api/ — assess API model consistency
+      7. Check for error handling patterns across backend and frontend
+
+      Verify the audit task's findings. Produce a markdown report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/arch-verifier.md with:
+      - Confirmed findings
+      - Missed findings
+      - False positives
+      - Verdict: PASS / FAIL with explanation
+
+  - id: final-synthesis
+    title: 'Synthesize all audit findings into final report'
+    prompt: |
+      Synthesize the three audit reports into a final comprehensive security, performance, and architecture audit report for narc-kart.
+
+      Read these files:
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/security-audit.md
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/security-verifier.md
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/perf-audit.md
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/perf-verifier.md
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/arch-audit.md
+      - /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/arch-verifier.md
+
+      Produce a final merged report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/FINAL-AUDIT-REPORT.md with:
+
+      # NARC KART — Full Codebase Audit Report
+
+      ## Executive Summary
+      [2-3 paragraph overview: what was audited, overall health, top priorities]
+
+      ## Security Findings
+      [Merged from security-audit + security-verifier. De-duplicate. List Critical first, then High, Medium, Low]
+
+      ## Performance Findings
+      [Merged from perf-audit + perf-verifier. De-duplicate.]
+
+      ## Architecture Findings
+      [Merged from arch-audit + arch-verifier. De-duplicate.]
+
+      ## Verified Clean Areas
+      [Things that were checked and are fine — positive findings]
+
+      ## Top 5 Priority Fixes
+      [The 5 most impactful issues to address, across all categories]
+
+      ## Appendix: Verifier Disputes
+      [Any findings that were disputed between audit and verifier — what was confirmed vs rejected]
+
+      The final report should be actionable, well-organized, and prioritised. It is the deliverable the user will read.
+    assigned_to: mavis
+    depends_on: [security-audit, perf-audit, arch-audit]
+    verified_by: verifier
+    verify_prompt: |
+      Read the final synthesis report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/FINAL-AUDIT-REPORT.md and verify:
+      1. All three audits are represented (security, performance, architecture)
+      2. Findings are consistent with what the individual audit + verifier reports say
+      3. No significant findings were dropped during synthesis
+      4. Priority ranking makes sense (critical issues listed as priority)
+      5. The report is readable and actionable
+
+      Check the source audit files to confirm the synthesis is accurate.
+      Produce a short verdict report at /Users/aayush07/Documents/GitHub/narc-kart/.mavis/audit/synthesis-verifier.md.
+      Verdict: PASS / FAIL with explanation.

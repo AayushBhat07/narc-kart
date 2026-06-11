@@ -1,0 +1,12 @@
+{
+  "last_cycle": [
+    {
+      "task_id": "final-synthesis",
+      "verdict": "accept",
+      "reason": "Final report covers all three audits, de-duplicated findings, top 5 priorities are well-reasoned, verified clean areas are reassuring, verifier disputes are documented transparently."
+    }
+  ],
+  "next_cycle": [],
+  "plan_complete": true,
+  "message_to_user": "Audit complete."
+}
