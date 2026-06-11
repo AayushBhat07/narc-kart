@@ -87,7 +87,10 @@ async function fetchStaticData(): Promise<{ seizures: Seizure[]; stats: ApiStats
     byDrugType: data.stats.by_drug_type,
     byMonth: data.stats.by_month,
     topLocations: data.stats.top_locations.map((l: any) => ({
-      state: l.state, city: l.city, seizureCount: l.count, totalKg: l.kg,
+      state: l.state,
+      city: l.city,
+      seizureCount: l.seizureCount ?? l.count ?? 0,
+      totalKg: l.totalKg ?? l.kg ?? 0,
     })),
   };
   return { seizures, stats };
