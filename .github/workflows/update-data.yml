@@ -1,0 +1,54 @@
+name: Update Drug Seizure Data
+
+on:
+  schedule:
+    cron: '0 0 */20 * *'
+  workflow_dispatch:
+ push:
+    branches:
+      - main
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r scripts/requirements.txt
+
+      - name: Run data collector
+        run: |
+          python scripts/collect_data.py
+        env:
+          no_proxy: '*'
+
+      - name: Configure git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push data
+        run: |
+          git add frontend/public/data.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update drug seizure data $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            git push
+          fi
+
+      - name: Create deployment status
+        if: success()
+        run: |
+          echo "Data updated successfully at $(date)"
+          echo "Total seizures: $(python3 -c "import json; d=json.load(open('frontend/public/data.json')); print(d['stats']['total_seizures'])")"
