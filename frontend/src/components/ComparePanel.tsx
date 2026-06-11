@@ -9,6 +9,7 @@ export function ComparePanel() {
 
     const states = Object.entries(stateData)
         .map(([name, count]) => ({ name, count: count as number }))
+        .filter(s => s.name !== 'India') // Filter out aggregate "India" entry
         .sort((a, b) => b.count - a.count);
 
     const maxCount = Math.max(...states.map(s => s.count), 1);
