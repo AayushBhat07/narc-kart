@@ -76,11 +76,6 @@ export function App() {
           <div className={styles.cmdInput}>
             <span className={styles.cmdPrompt}>NARC@{sidebarTab.toUpperCase()}&gt;</span>
             <span className={styles.cursor}>_</span>
-            <input
-              type="text"
-              placeholder="Enter command..."
-              className={styles.cmdField}
-            />
           </div>
         </div>
 

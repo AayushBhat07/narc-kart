@@ -60,6 +60,8 @@ export function FilterPanel({ isOpen, onClose, filters, onApply, onReset }: Prop
 
   const handleSeverityChange = (e: React.ChangeEvent<HTMLInputElement>, bound: 'min' | 'max') => {
     const value = parseInt(e.target.value);
+    if (bound === 'min' && value > localFilters.severityMax) return;
+    if (bound === 'max' && value < localFilters.severityMin) return;
     setLocalFilters({
       ...localFilters,
       severityMin: bound === 'min' ? value : localFilters.severityMin,
@@ -193,7 +195,7 @@ export function FilterPanel({ isOpen, onClose, filters, onApply, onReset }: Prop
 
             <div className={styles.footer}>
               <button className={styles.executeBtn} onClick={handleApply}>
-                [EXECUTER]
+                [EXECUTE]
               </button>
               <button className={styles.clearBtn} onClick={handleReset}>
                 [CLEAR]

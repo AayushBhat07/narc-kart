@@ -23,7 +23,7 @@ export function TerminalPanel() {
         setLines(newLines.slice(-100));
     };
 
-    const exportData = () => {
+    const doExport = () => {
         const data = JSON.stringify({ seizures, stats, exportedAt: new Date().toISOString() }, null, 2);
         const blob = new Blob([data], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -32,7 +32,6 @@ export function TerminalPanel() {
         a.download = `narc-kart-export-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        return 'Data exported to JSON file';
     };
 
     const searchSeizures = (query: string) => {
@@ -180,7 +179,12 @@ DRUG TYPES       : ${stats?.byDrugType ? Object.keys(stats.byDrugType).length : 
         }
 
         if (cmd === 'export') {
-            addLine('output', exportData(), raw);
+            doExport();
+            setLines(prev => [
+                { type: 'output', text: '✓ Data exported to JSON file' },
+                { type: 'input', text: raw },
+                ...prev.slice(-98),
+            ]);
             return;
         }
 

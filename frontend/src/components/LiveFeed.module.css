@@ -102,3 +102,25 @@
   font-size: 9px;
   color: var(--text-muted);
 }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 16px;
+  color: var(--text-muted);
+}
+
+.emptyIcon {
+  font-size: 24px;
+  opacity: 0.4;
+}
+
+.emptyText {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}

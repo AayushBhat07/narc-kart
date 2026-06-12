@@ -26,14 +26,15 @@ export function Sidebar({ activeTab, onTabChange, onFilterToggle }: Props) {
         <span className={styles.logoText}>OPS CENTER</span>
       </div>
 
-      <nav className={styles.nav}>
+      <nav className={styles.nav} role="navigation" aria-label="Main navigation">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             className={`${styles.navItem} ${activeTab === tab.id ? styles.active : ''}`}
             onClick={() => onTabChange(tab.id)}
+            aria-current={activeTab === tab.id ? 'page' : undefined}
           >
-            <span className={styles.icon}>{tab.icon}</span>
+            <span className={styles.icon} aria-hidden="true">{tab.icon}</span>
             <span className={styles.label}>{tab.label}</span>
           </button>
         ))}

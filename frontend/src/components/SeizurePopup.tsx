@@ -4,6 +4,7 @@ import styles from './SeizurePopup.module.css';
 
 interface Props {
   seizure: Seizure;
+  onClose: () => void;
 }
 
 function formatDate(iso: string): string {
@@ -25,7 +26,7 @@ function getSeverityClass(kg: number): string {
   return styles.low;
 }
 
-export function SeizurePopup({ seizure }: Props) {
+export function SeizurePopup({ seizure, onClose }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.classified}>CLASSIFIED</div>
@@ -34,6 +35,9 @@ export function SeizurePopup({ seizure }: Props) {
         {seizure.caseNo && (
           <span className={styles.caseNo}>{seizure.caseNo}</span>
         )}
+        <button className={styles.closeBtn} onClick={onClose} aria-label="Close case file">
+          ✕
+        </button>
       </div>
 
       <div className={styles.body}>

@@ -92,18 +92,7 @@
 }
 
 .cmdField {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  outline: none;
-  caret-color: var(--text-primary);
-}
-
-.cmdField::placeholder {
-  color: var(--text-muted);
+  display: none;
 }
 
 .rightPanel {

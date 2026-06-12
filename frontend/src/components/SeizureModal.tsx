@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import { Seizure } from '../types';
 import { SeizurePopup } from './SeizurePopup';
 import styles from './SeizureModal.module.css';
@@ -9,6 +10,16 @@ interface Props {
 }
 
 export function SeizureModal({ seizure, onClose }: Props) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && seizure) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [seizure, onClose]);
+
   return (
     <AnimatePresence>
       {seizure && (
@@ -28,10 +39,7 @@ export function SeizureModal({ seizure, onClose }: Props) {
             transition={{ duration: 0.2 }}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
-            <button className={styles.closeBtn} onClick={onClose}>
-              ✕
-            </button>
-            <SeizurePopup seizure={seizure} />
+            <SeizurePopup seizure={seizure} onClose={onClose} />
           </motion.div>
         </motion.div>
       )}
