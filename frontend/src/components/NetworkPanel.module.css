@@ -3,10 +3,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
+  gap: 8px;
+  padding: 10px 14px;
   background: var(--bg-secondary);
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .header {
@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -58,131 +58,266 @@
   letter-spacing: 0.05em;
 }
 
-.mapArea {
-  flex: 1;
+/* ─── Graph Area ──────────────────────────────────────────── */
+.graphArea {
+  flex: 0 0 auto;
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
-  position: relative;
-  min-height: 200px;
   border-radius: var(--radius);
-}
-
-.graphContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.node {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid var(--border-medium);
-  background: var(--bg-tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-
-.node:hover {
-  border-color: var(--accent);
-}
-
-.nodeLabel {
-  font-size: 9px;
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
-  font-family: var(--font-mono);
-}
-
-.edgeSvg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.legend {
   padding: 8px 10px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.legendTitle {
+.graphLabel {
   font-size: 9px;
+  letter-spacing: 0.12em;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
   text-transform: uppercase;
-  display: block;
-  margin-bottom: 6px;
 }
 
-.legendRow {
+.chartWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.chartSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* bars are plain SVG rects — no CSS animation needed */
+
+.graphLegend {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
-}
-
-.legendRow:last-child {
-  margin-bottom: 0;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .legendDot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid var(--border-medium);
+  border: 2px solid;
   flex-shrink: 0;
 }
 
-.table {
+.legendText {
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-right: 6px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── Table Area ─────────────────────────────────────────── */
+.tableArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   overflow: hidden;
+  max-height: 160px;
 }
 
 .tableHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 50px;
-  padding: 6px 10px;
+  grid-template-columns: 1fr 70px 1fr 32px;
+  gap: 8px;
+  padding: 5px 10px;
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-subtle);
   font-size: 9px;
   color: var(--text-muted);
   letter-spacing: 0.1em;
+  flex-shrink: 0;
 }
 
-.tableRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr 50px;
-  padding: 5px 10px;
-  border-bottom: 1px solid var(--border-subtle);
-  font-size: 11px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
+.tableBody {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 120px;
 }
 
-.tableRow:last-child {
-  border-bottom: none;
-}
-
-.tableRow span:last-child {
-  text-align: right;
-  color: var(--text-primary);
-}
-
-.empty {
+.tableEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
   font-size: 11px;
   color: var(--text-muted);
   font-style: italic;
+}
+
+/* ─── State Row ──────────────────────────────────────────── */
+.stateGroup {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.stateGroup:last-child {
+  border-bottom: none;
+}
+
+.stateRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 70px 1fr 32px;
+  gap: 8px;
+  align-items: center;
+  padding: 5px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: var(--font-mono);
+  transition: background 0.15s;
+}
+
+.stateRow:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.stateRow--expanded {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stateName {
+  font-size: 11px;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stateCount {
+  font-size: 11px;
+  color: var(--text-primary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.barTrack {
+  height: 4px;
+  background: var(--border-subtle);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.barFill--critical {
+  background: var(--severity-critical);
+}
+
+.barFill--high {
+  background: var(--severity-high);
+}
+
+.barFill--low {
+  background: var(--severity-low);
+}
+
+.chevron {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-align: center;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s;
+}
+
+.chevron--open {
+  transform: rotate(0deg);
+  color: var(--text-secondary);
+}
+
+/* ─── City List (animated expand) ───────────────────────── */
+.cityList {
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.cityList--open {
+  max-height: 200px !important;
+}
+
+.cityListInner {
+  padding: 3px 10px 6px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cityRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cityRow:last-child {
+  border-bottom: none;
+}
+
+.cityName {
+  font-size: 10px;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.cityCount {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cityEmpty {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 4px 0;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
+  }
+
+  .barFill {
+    transition: none;
+  }
+
+  .chevron {
+    transition: none;
+  }
+
+  .cityList {
+    transition: none;
+  }
+
+  .cityListInner {
+    animation: none;
+  }
 }
