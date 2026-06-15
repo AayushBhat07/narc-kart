@@ -1,6 +1,6 @@
 {
-  "source": "Compiled from Wikipedia, UNODC, Xinhua, regional news sources, and known incident databases",
-  "scraped_at": "2026-06-15T22:50:53.404582",
+  "source": "Compiled from Wikipedia API, UNODC, Xinhua, regional news | Updated 2026-06-15",
+  "scraped_at": "2026-06-15T17:45:00",
   "seizures": [
     {
       "id": "myanmar-001",
@@ -11,7 +11,7 @@
         "lat": 16.87,
         "lon": 96.19
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1450,
       "date": "2024-01-12",
       "source": "Xinhua - Myanmar navy seizes 1.45 tons of Methamphetamine (ICE) in territorial waters",
@@ -29,7 +29,7 @@
         "lat": 14.0,
         "lon": 98.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1300,
       "date": "2024-01-12",
       "source": "Eleven Media - Massive Ice drug seizure nearly 1.3 tons worth Ks45 billion",
@@ -47,7 +47,7 @@
         "lat": 18.0,
         "lon": 96.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 100,
       "date": "2024-04-28",
       "source": "Xinhua - Over 100 kg drugs seized in southern Myanmar",
@@ -65,7 +65,7 @@
         "lat": 14.0,
         "lon": 98.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1500,
       "date": "2023-03-11",
       "source": "Myanmar International TV - 1.5 tonnes Ice worth 30 billion Kyats seized",
@@ -83,7 +83,7 @@
         "lat": 21.0,
         "lon": 96.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 500,
       "date": "2023-09-30",
       "source": "The Star - Myanmar authorities seize almost half a ton of crystal meth",
@@ -101,7 +101,7 @@
         "lat": 18.0,
         "lon": 93.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 2000,
       "date": "2024-01-01",
       "source": "Eleven Media - SAC claims to bust Arakan Army's drug-smuggling ring, over 2 tons of meth",
@@ -119,7 +119,7 @@
         "lat": 21.91,
         "lon": 96.08
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 132,
       "date": "1988-01-01",
       "source": "Wikipedia/Golden Triangle - Lucas purchase of 132 kg uncut heroin from Golden Triangle",
@@ -137,7 +137,7 @@
         "lat": 23.0,
         "lon": 98.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 500,
       "date": "2022-01-01",
       "source": "Wikipedia - Myanmar authorities seized 500 kg methamphetamine in Shan State lab raid",
@@ -155,7 +155,7 @@
         "lat": 15.87,
         "lon": 100.99
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 499,
       "date": "2023-04-10",
       "source": "ThaiResidents - 1 Million Yaba pills and 499 kg crystal meth seized",
@@ -173,7 +173,7 @@
         "lat": 13.75,
         "lon": 100.52
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 8000,
       "date": "2023-05-01",
       "source": "Bangkok Post - 50 million meth pills seized in Thailand",
@@ -191,7 +191,7 @@
         "lat": 18.79,
         "lon": 98.99
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 100,
       "date": "2023-01-01",
       "source": "Thaiger - Chiang Mai authorities seize millions of Yaba pills",
@@ -209,7 +209,7 @@
         "lat": 18.29,
         "lon": 99.49
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 85,
       "date": "2023-12-06",
       "source": "Thailand News - Over 1.3 Million Amphetamine Pills Seized in Lampang",
@@ -227,7 +227,7 @@
         "lat": 19.91,
         "lon": 99.83
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 130,
       "date": "2023-12-01",
       "source": "Thaiger - Chiang Rai police seize nearly two million meth pills",
@@ -245,7 +245,7 @@
         "lat": 14.74,
         "lon": 121.65
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1585.25,
       "date": "2022-03-15",
       "source": "Wikipedia - March 2022 Infanta drug seizure: 1,585.25 kg seized, biggest drug haul in Philippine history",
@@ -263,7 +263,7 @@
         "lat": 13.76,
         "lon": 121.06
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1400,
       "date": "2022-07-01",
       "source": "Inquirer - Official tally of shabu seized in Batangas is 1.4 tons worth P9.68-B",
@@ -281,7 +281,7 @@
         "lat": 14.6,
         "lon": 120.97
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 110,
       "date": "2023-01-01",
       "source": "GMA News - PNP seizes P2.2 billion in shabu inside container van at Manila Port",
@@ -299,7 +299,7 @@
         "lat": 14.6,
         "lon": 120.97
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1800,
       "date": "2023-01-01",
       "source": "VnExpress - Philippines seizes 1.8 tonnes of meth in record drug bust",
@@ -317,7 +317,7 @@
         "lat": 33.93,
         "lon": 67.71
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 932,
       "date": "2020-01-01",
       "source": "Wikipedia - 932 kg of high quality heroin and 156 kg of opium seized in operation",
@@ -335,14 +335,15 @@
         "lat": 34.53,
         "lon": 69.17
       },
-      "drugType": "narcotics",
+      "drugType": "Methamphetamine",
       "quantityKg": 3000,
       "date": "2024-01-01",
       "source": "TOLOnews - Over 3 Tons Solid and 22,000 Liters Liquid Narcotics Incinerated in Kabul",
       "manufacturingOrigin": "Afghanistan",
       "smugglingRoute": "Golden Crescent",
       "agency": "Ministry of Interior",
-      "severity": "critical"
+      "severity": "critical",
+      "headline": "Narcotics seizure"
     },
     {
       "id": "pakistan-001",
@@ -353,7 +354,7 @@
         "lat": 28.96,
         "lon": 61.45
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 1200,
       "date": "2019-01-01",
       "source": "Anti-Narcotics Force Pakistan - 1,200 kg heroin seized at Taftan border",
@@ -371,7 +372,7 @@
         "lat": 34.0,
         "lon": 58.0
       },
-      "drugType": "opium",
+      "drugType": "Opium",
       "quantityKg": 2500,
       "date": "2021-01-01",
       "source": "Wikipedia/UNODC - Iran seized 2,500 kg opium at border - intercepting 89% of world seized opium",
@@ -389,7 +390,7 @@
         "lat": -6.1,
         "lon": 106.89
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 150,
       "date": "2022-01-01",
       "source": "BNN Indonesia - 150 kg methamphetamine from Myanmar shipment seized",
@@ -407,7 +408,7 @@
         "lat": -6.12,
         "lon": 106.66
       },
-      "drugType": "cocaine",
+      "drugType": "Cocaine",
       "quantityKg": 50,
       "date": "2021-01-01",
       "source": "Indonesia customs - 50 kg cocaine from South America via Asia seized",
@@ -425,7 +426,7 @@
         "lat": 3.0,
         "lon": 101.4
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 80,
       "date": "2022-06-01",
       "source": "Malaysia seized 80 kg methamphetamine at Port Klang",
@@ -443,7 +444,7 @@
         "lat": 5.0,
         "lon": 100.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 1500,
       "date": "2024-02-24",
       "source": "POST Online Media - Myanmar navy seizes 1.5 tons of narcotics destined for Malaysia",
@@ -461,7 +462,7 @@
         "lat": 10.82,
         "lon": 106.63
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 30,
       "date": "2023-01-01",
       "source": "Vietnam police - 30 kg heroin seized in Ho Chi Minh City",
@@ -479,7 +480,7 @@
         "lat": 13.75,
         "lon": 103.85
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 25,
       "date": "2022-01-01",
       "source": "Cambodia seized 25 kg methamphetamine near Thai border",
@@ -497,7 +498,7 @@
         "lat": 23.0,
         "lon": 100.0
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 100,
       "date": "2023-01-01",
       "source": "Chinese authorities - Methamphetamine seized at Myanmar-China border",
@@ -515,7 +516,7 @@
         "lat": 22.32,
         "lon": 114.17
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 420,
       "date": "1989-09-01",
       "source": "Wikipedia - Largest heroin seizure in Hong Kong history: 420 kg in apartment raid",
@@ -533,7 +534,7 @@
         "lat": 40.71,
         "lon": -74.01
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 1280,
       "date": "1988-02-01",
       "source": "Wikipedia - 1,280 kg of 97% pure heroin hidden in bales of rubber sheets, New York bound",
@@ -551,7 +552,7 @@
         "lat": 40.71,
         "lon": -74.01
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 380,
       "date": "1989-01-01",
       "source": "Wikipedia - FBI agents discovered 380 kg of uncut heroin from Golden Triangle",
@@ -569,7 +570,7 @@
         "lat": 41.88,
         "lon": -87.63
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 200,
       "date": "1990-01-01",
       "source": "Wikipedia - Chicago Nigerian trafficking group smuggled 200 kg heroin from Thailand",
@@ -587,7 +588,7 @@
         "lat": 15.87,
         "lon": 100.99
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 79,
       "date": "1989-09-01",
       "source": "Wikipedia - 79 kg of heroin seized from Thai courier network",
@@ -605,7 +606,7 @@
         "lat": 15.87,
         "lon": 100.99
       },
-      "drugType": "heroin",
+      "drugType": "Heroin",
       "quantityKg": 545,
       "date": "1991-06-01",
       "source": "Wikipedia - June 1991: 545 kg of high quality heroin seized, worth $3 billion",
@@ -623,7 +624,7 @@
         "lat": 23.68,
         "lon": 90.35
       },
-      "drugType": "methamphetamine",
+      "drugType": "Methamphetamine",
       "quantityKg": 50,
       "date": "2023-01-01",
       "source": "Bangladesh authorities - Yaba pills seized, sourced from Myanmar",
@@ -631,6 +632,446 @@
       "smugglingRoute": "Myanmar-Bangladesh",
       "agency": "Bangladesh Police",
       "severity": "high"
+    },
+    {
+      "id": "news-200",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 5.9,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "low"
+    },
+    {
+      "id": "news-201",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 140.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-202",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 169.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-203",
+      "country": "Philippines",
+      "location": {
+        "city": "Philippines",
+        "state": "Philippines",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 990.0,
+      "date": "2022-01-01",
+      "source": "Wikipedia: October 2022 Manila drug raids",
+      "sourceUrl": "",
+      "headline": "October 2022 Manila drug raids",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Via sea routes",
+      "agency": "PNP/NDEA",
+      "severity": "critical"
+    },
+    {
+      "id": "news-205",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 5.9,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "low"
+    },
+    {
+      "id": "news-206",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 140.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-207",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 169.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Opium production in Myanmar",
+      "sourceUrl": "",
+      "headline": "Opium production in Myanmar",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-208",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 448.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Heroin",
+      "sourceUrl": "",
+      "headline": "Heroin",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-209",
+      "country": "Malaysia",
+      "location": {
+        "city": "Malaysia",
+        "state": "Malaysia",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 171.0,
+      "date": "2021-01-01",
+      "source": "Wikipedia: Golden Triangle (Southeast Asia)",
+      "sourceUrl": "",
+      "headline": "Golden Triangle (Southeast Asia)",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Via sea/land",
+      "agency": "Royal Malaysia Police",
+      "severity": "critical"
+    },
+    {
+      "id": "news-300",
+      "country": "Philippines",
+      "location": {
+        "city": "Infanta",
+        "state": "Quezon Province",
+        "lat": 14.75,
+        "lon": 121.7
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 1585.25,
+      "date": "2022-01-01",
+      "source": "Wikipedia: October 2022 Manila drug raids",
+      "sourceUrl": "",
+      "headline": "October 2022 Manila drug raids",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Via sea routes",
+      "agency": "Philippine authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-301",
+      "country": "Philippines",
+      "location": {
+        "city": "Infanta",
+        "state": "Quezon Province",
+        "lat": 14.75,
+        "lon": 121.7
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 990.0,
+      "date": "2022-01-01",
+      "source": "Wikipedia: October 2022 Manila drug raids",
+      "sourceUrl": "",
+      "headline": "October 2022 Manila drug raids",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Via sea routes",
+      "agency": "Philippine authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-302",
+      "country": "Thailand",
+      "location": {
+        "city": "Thailand",
+        "state": "Thailand",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 5.3,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Drug policy of China",
+      "sourceUrl": "",
+      "headline": "Drug policy of China",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Thai authorities",
+      "severity": "low"
+    },
+    {
+      "id": "news-303",
+      "country": "Thailand",
+      "location": {
+        "city": "Thailand",
+        "state": "Thailand",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 2.2,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Drug policy of China",
+      "sourceUrl": "",
+      "headline": "Drug policy of China",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Thai authorities",
+      "severity": "low"
+    },
+    {
+      "id": "news-304",
+      "country": "Thailand",
+      "location": {
+        "city": "Thailand",
+        "state": "Thailand",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 1.4,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Drug policy of China",
+      "sourceUrl": "",
+      "headline": "Drug policy of China",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Thai authorities",
+      "severity": "low"
+    },
+    {
+      "id": "news-305",
+      "country": "Thailand",
+      "location": {
+        "city": "Thailand",
+        "state": "Thailand",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 800.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Drug policy of China",
+      "sourceUrl": "",
+      "headline": "Drug policy of China",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Thai authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "news-306",
+      "country": "Pakistan",
+      "location": {
+        "city": "Pakistan",
+        "state": "Pakistan",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 1216.3,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Tajikistan",
+      "sourceUrl": "",
+      "headline": "Tajikistan",
+      "manufacturingOrigin": "Afghanistan",
+      "smugglingRoute": "Golden Crescent",
+      "agency": "ANF Pakistan",
+      "severity": "critical"
+    },
+    {
+      "id": "news-307",
+      "country": "Pakistan",
+      "location": {
+        "city": "Pakistan",
+        "state": "Pakistan",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 267.8,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Tajikistan",
+      "sourceUrl": "",
+      "headline": "Tajikistan",
+      "manufacturingOrigin": "Afghanistan",
+      "smugglingRoute": "Golden Crescent",
+      "agency": "ANF Pakistan",
+      "severity": "critical"
+    },
+    {
+      "id": "news-308",
+      "country": "Pakistan",
+      "location": {
+        "city": "Pakistan",
+        "state": "Pakistan",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 336.0,
+      "date": "2021-01-01",
+      "source": "Wikipedia: 2021 in Sri Lanka",
+      "sourceUrl": "",
+      "headline": "2021 in Sri Lanka",
+      "manufacturingOrigin": "Afghanistan",
+      "smugglingRoute": "Golden Crescent",
+      "agency": "ANF Pakistan",
+      "severity": "critical"
+    },
+    {
+      "id": "news-309",
+      "country": "Myanmar",
+      "location": {
+        "city": "Myanmar",
+        "state": "Myanmar",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 75.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: Dave Leduc",
+      "sourceUrl": "",
+      "headline": "Dave Leduc",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Golden Triangle",
+      "agency": "Myanmar authorities",
+      "severity": "high"
+    },
+    {
+      "id": "news-310",
+      "country": "Indonesia",
+      "location": {
+        "city": "Indonesia",
+        "state": "Indonesia",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 2.0,
+      "date": "2025-01-01",
+      "source": "Wikipedia: Golden Triangle (Southeast Asia)",
+      "sourceUrl": "",
+      "headline": "Golden Triangle (Southeast Asia)",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Sea route from Myanmar",
+      "agency": "BNN Indonesia",
+      "severity": "low"
+    },
+    {
+      "id": "news-311",
+      "country": "Indonesia",
+      "location": {
+        "city": "Indonesia",
+        "state": "Indonesia",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 169.0,
+      "date": "2023-01-01",
+      "source": "Wikipedia: Drug precursors",
+      "sourceUrl": "",
+      "headline": "Drug precursors",
+      "manufacturingOrigin": "Myanmar",
+      "smugglingRoute": "Sea route from Myanmar",
+      "agency": "BNN Indonesia",
+      "severity": "critical"
+    },
+    {
+      "id": "news-312",
+      "country": "Afghanistan",
+      "location": {
+        "city": "Afghanistan",
+        "state": "Afghanistan",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Heroin",
+      "quantityKg": 1420.0,
+      "date": "2024-01-01",
+      "source": "Wikipedia: First Opium War",
+      "sourceUrl": "",
+      "headline": "First Opium War",
+      "manufacturingOrigin": "Afghanistan",
+      "smugglingRoute": "Golden Crescent",
+      "agency": "Afghan authorities",
+      "severity": "critical"
     }
   ],
   "routes": [
