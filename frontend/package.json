@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/x-charts": "^9.5.0",
     "@supabase/supabase-js": "^2.106.0",
     "@vercel/node": "^5.8.2",
     "dompurify": "^3.4.5",

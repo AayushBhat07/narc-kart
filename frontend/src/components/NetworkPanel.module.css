@@ -1,323 +1,70 @@
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px 14px;
-  background: var(--bg-secondary);
-  overflow: hidden;
+/* NetworkPanel + AgencyPanel shared panel structure */
+.panel { display: flex; flex-direction: column; height: 100%; }
+.panelHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border-dim); flex-shrink: 0;
+}
+.panelTitle {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--text-secondary); font-family: var(--font-mono); text-transform: uppercase;
+}
+.panelClose {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; background: transparent;
+  border: 1px solid var(--border-dim); border-radius: var(--r-sm);
+  color: var(--text-muted); cursor: pointer; font-size: 12px; font-family: var(--font-mono);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.panelClose:hover { color: var(--text-primary); border-color: var(--border-mid); }
+.panelBody { flex: 1; overflow-y: auto; padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-4); }
+
+/* Agency rows */
+.agencyTable { display: flex; flex-direction: column; gap: 2px; }
+.agencyRow {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2); border-radius: var(--r-sm);
+  cursor: pointer; border: 1px solid transparent;
+  transition: background var(--dur-fast), border-color var(--dur-fast);
+}
+.agencyRow:hover { background: var(--border-ghost); border-color: var(--border-dim); }
+.agencyRank {
+  font-size: 9px; font-weight: 700; color: var(--text-muted);
+  font-family: var(--font-mono); width: 18px; flex-shrink: 0; text-align: right;
+}
+.agencyRank--top { color: var(--accent); }
+.agencyName {
+  flex: 1; font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.agencyBar {
+  width: 80px; height: 2px; background: var(--border-dim); border-radius: 1px; overflow: hidden; flex-shrink: 0;
+}
+.agencyBarFill {
+  height: 100%; border-radius: 1px; background: var(--accent); transition: width var(--dur-slow) var(--ease-out);
+}
+.agencyCount {
+  font-size: 10px; font-variant-numeric: tabular-nums; color: var(--text-muted); font-family: var(--font-mono);
+  width: 28px; text-align: right; flex-shrink: 0;
+}
+.agencyCount--top { color: var(--text-primary); font-weight: 700; }
+
+/* Network SVG chart */
+.chartSection { display: flex; flex-direction: column; gap: var(--sp-2); }
+.sectionTitle {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.20em;
+  color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase;
+  padding-bottom: var(--sp-1); border-bottom: 1px solid var(--border-ghost);
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-subtle);
+/* Summary cards */
+.summaryGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
+.summaryCard {
+  background: var(--bg-void); border: 1px solid var(--border-ghost);
+  border-radius: var(--r-sm); padding: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-1);
 }
-
-.icon {
-  font-size: 16px;
-  color: var(--accent);
+.summaryCardValue {
+  font-size: 20px; font-weight: 700; color: var(--text-primary); font-family: var(--font-mono); font-variant-numeric: tabular-nums;
 }
-
-.title {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--text-primary);
-  font-weight: bold;
-}
-
-.statusRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22C55E;
-  flex-shrink: 0;
-}
-
-.statusText {
-  font-size: 10px;
-  color: var(--text-secondary);
-  letter-spacing: 0.1em;
-  flex: 1;
-}
-
-.nodeCount {
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-}
-
-/* ─── Graph Area ──────────────────────────────────────────── */
-.graphArea {
-  flex: 0 0 auto;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.graphLabel {
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.chartWrapper {
-  width: 100%;
-  overflow: hidden;
-}
-
-.chartSvg {
-  width: 100%;
-  height: auto;
-  display: block;
-  overflow: visible;
-}
-
-/* bars are plain SVG rects — no CSS animation needed */
-
-.graphLegend {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-top: 4px;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.legendDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid;
-  flex-shrink: 0;
-}
-
-.legendText {
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-  margin-right: 6px;
-}
-
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* ─── Table Area ─────────────────────────────────────────── */
-.tableArea {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  overflow: hidden;
-  max-height: 160px;
-}
-
-.tableHeader {
-  display: grid;
-  grid-template-columns: 1fr 70px 1fr 32px;
-  gap: 8px;
-  padding: 5px 10px;
-  background: var(--bg-tertiary);
-  border-bottom: 1px solid var(--border-subtle);
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-  flex-shrink: 0;
-}
-
-.tableBody {
-  flex: 1;
-  overflow-y: auto;
-  max-height: 120px;
-}
-
-.tableEmpty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* ─── State Row ──────────────────────────────────────────── */
-.stateGroup {
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.stateGroup:last-child {
-  border-bottom: none;
-}
-
-.stateRow {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 70px 1fr 32px;
-  gap: 8px;
-  align-items: center;
-  padding: 5px 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  color: inherit;
-  font-family: var(--font-mono);
-  transition: background 0.15s;
-}
-
-.stateRow:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.stateRow--expanded {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.stateName {
-  font-size: 11px;
-  color: var(--text-primary);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.stateCount {
-  font-size: 11px;
-  color: var(--text-primary);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-.barTrack {
-  height: 4px;
-  background: var(--border-subtle);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.barFill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.barFill--critical {
-  background: var(--severity-critical);
-}
-
-.barFill--high {
-  background: var(--severity-high);
-}
-
-.barFill--low {
-  background: var(--severity-low);
-}
-
-.chevron {
-  font-size: 9px;
-  color: var(--text-muted);
-  text-align: center;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s;
-}
-
-.chevron--open {
-  transform: rotate(0deg);
-  color: var(--text-secondary);
-}
-
-/* ─── City List (animated expand) ───────────────────────── */
-.cityList {
-  overflow: hidden;
-  transition: max-height 0.25s ease;
-}
-
-.cityList--open {
-  max-height: 200px !important;
-}
-
-.cityListInner {
-  padding: 3px 10px 6px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.cityRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.cityRow:last-child {
-  border-bottom: none;
-}
-
-.cityName {
-  font-size: 10px;
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
-}
-
-.cityCount {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.cityEmpty {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-style: italic;
-  padding: 4px 0;
-}
-
-/* ─── Reduced Motion ─────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .bar {
-    transition: none;
-  }
-
-  .barFill {
-    transition: none;
-  }
-
-  .chevron {
-    transition: none;
-  }
-
-  .cityList {
-    transition: none;
-  }
-
-  .cityListInner {
-    animation: none;
-  }
-}
+.summaryCardValue--accent { color: var(--accent); }
+.summaryCardLabel { font-size: 9px; letter-spacing: 0.14em; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; }
+.summaryCardSub { font-size: 9px; color: var(--text-muted); font-family: var(--font-mono); }

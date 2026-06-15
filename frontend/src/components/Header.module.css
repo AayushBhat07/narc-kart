@@ -1,88 +1,131 @@
+/* ── Header — Tactical Status Bar ────────────────────────── */
 .header {
   background: var(--bg-primary);
-  padding: 0 16px;
+  padding: 0 var(--space-4);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: var(--header-h);
   border-bottom: 1px solid var(--border-subtle);
   position: relative;
   z-index: 10;
+  flex-shrink: 0;
 }
 
+/* ── Left: Identity block ────────────────────────────────── */
 .left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
-.title {
-  font-size: 18px;
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.logoMark {
+  font-size: var(--text-lg);
   font-weight: bold;
   letter-spacing: 0.2em;
-  color: var(--text-primary);
-  /* Accent red only on the word NARC */
-}
-
-.title .accent {
   color: var(--accent);
 }
 
-.version {
-  font-size: 10px;
+.logoText {
+  font-size: var(--text-xs);
   color: var(--text-muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
-/* LIVE badge — KiranaTrack signature style */
-.liveBadge {
-  display: inline-block;
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  padding: 2px 6px;
-  border-radius: 3px;
-  line-height: 1.4;
+/* Live indicator — left accent strip */
+.liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
 }
 
+.liveDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.liveLabel {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+/* ── Right: Controls ─────────────────────────────────────── */
 .right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .iconBtn {
   background: transparent;
-  border: 1px solid var(--border-medium);
-  color: var(--text-secondary);
-  padding: 6px 10px;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 5px 10px;
   font-size: 14px;
   cursor: pointer;
   border-radius: var(--radius-sm);
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 150ms ease, color 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
 }
 
 .iconBtn:hover {
-  border-color: var(--text-primary);
+  border-color: var(--border-strong);
   color: var(--text-primary);
 }
 
-.datetime {
+.iconBtn:active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.iconBtn:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Clock display ───────────────────────────────────────── */
+.clock {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 1px;
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--border-subtle);
 }
 
-.datetime span {
-  font-size: 10px;
-  color: var(--text-muted);
+.clockDate {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
   letter-spacing: 0.05em;
   font-family: var(--font-mono);
 }
 
-.datetime span:first-child {
-  color: var(--text-secondary);
+.clockTime {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }

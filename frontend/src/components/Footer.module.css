@@ -1,11 +1,13 @@
+/* ── Footer — Status Strip ───────────────────────────────── */
 .footer {
   background: var(--bg-primary);
   border-top: 1px solid var(--border-subtle);
-  padding: 6px 16px;
+  padding: 0 var(--space-4);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 32px;
+  height: var(--footer-h);
+  flex-shrink: 0;
 }
 
 .left,
@@ -13,24 +15,24 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .label {
-  font-size: 9px;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   letter-spacing: 0.08em;
 }
 
 .value {
-  font-size: 10px;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   letter-spacing: 0.05em;
   font-family: var(--font-mono);
 }
 
 .online {
-  font-size: 9px;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   letter-spacing: 0.08em;
   font-family: var(--font-mono);
