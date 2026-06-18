@@ -1,0 +1,45 @@
+/* ── SeizureArea ─────────────────────────────────────────────
+   Translucent intensity circles, one per seizure. Radius + opacity
+   are driven by severity in SeizureArea.tsx; this file only owns
+   the SVG path overrides and the main↔rave fade transition.
+
+   Two themes:
+   - .theme--main : war-room red/orange/yellow
+   - .theme--rave : magenta/cyan/lime (festival intel)
+
+   Visibility is driven by [data-mode="rave"] on the shell so all
+   areas stay mounted — no Leaflet teardown — and CSS handles the
+   smooth fade/transition.
+
+   NOTE: data-mode rules use :global() because the shell attribute
+   lives outside this module's hashed scope. */
+
+.areaWrapper {
+  cursor: pointer;
+  /* Leaflet renders Circle paths inside an SVG <path> (or canvas if
+     the map has preferCanvas); we animate opacity here so the
+     fade between main↔rave is GPU-cheap. */
+  transition: opacity 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Default: main theme visible, rave theme hidden */
+.theme--rave {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme--main {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Rave mode on the shell: swap visibility */
+:global([data-mode="rave"]) .theme--main {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:global([data-mode="rave"]) .theme--rave {
+  opacity: 1;
+  pointer-events: auto;
+}

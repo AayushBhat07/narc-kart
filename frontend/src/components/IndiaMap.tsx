@@ -1,20 +1,31 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import L from 'leaflet';
 import { Seizure } from '../types';
-import { SeizureMarker } from './SeizureMarker';
+import { SeizureArea } from './SeizureArea';
 import styles from './IndiaMap.module.css';
 
 interface Props {
   seizures: Seizure[];
+  raveSeizures?: Seizure[];
   onSeizureSelect: (seizure: Seizure) => void;
 }
 
 const INDIA_CENTER: L.LatLngExpression = [20.5937, 78.9625];
 
-export function IndiaMap({ seizures, onSeizureSelect }: Props) {
+function hasCoords(s: Seizure): boolean {
+  const lat = s.location?.lat;
+  const lon = s.location?.lon;
+  return typeof lat === 'number' && typeof lon === 'number' && !isNaN(lat) && !isNaN(lon);
+}
+
+export function IndiaMap({ seizures, raveSeizures = [], onSeizureSelect }: Props) {
   const mapRef = useRef<L.Map | null>(null);
   const geoJsonAdded = useRef(false);
+
+  // Pre-filter to valid coords so we never mount a marker at [0,0] / NaN
+  const mainMarkers  = useMemo(() => seizures.filter(hasCoords),       [seizures]);
+  const raveMarkers  = useMemo(() => raveSeizures.filter(hasCoords),   [raveSeizures]);
 
   useEffect(() => {
     if (!mapRef.current || geoJsonAdded.current) return;
@@ -48,6 +59,8 @@ export function IndiaMap({ seizures, onSeizureSelect }: Props) {
         zoomControl={true}
         scrollWheelZoom={true}
         doubleClickZoom={true}
+        // preferCanvas disabled — react-leaflet 5 + Leaflet 1.9 doesn't reliably
+        // render Circle to canvas; keeping SVG paths so seizures stay clickable.
         ref={(map) => {
           if (map) mapRef.current = map;
         }}
@@ -57,11 +70,20 @@ export function IndiaMap({ seizures, onSeizureSelect }: Props) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
           subdomains={['a', 'b', 'c', 'd']}
         />
-        {seizures.map((seizure) => (
-          <SeizureMarker
+        {mainMarkers.map((seizure) => (
+          <SeizureArea
             key={seizure.id}
             seizure={seizure}
             onSelect={onSeizureSelect}
+            theme="main"
+          />
+        ))}
+        {raveMarkers.map((seizure) => (
+          <SeizureArea
+            key={seizure.id}
+            seizure={seizure}
+            onSelect={onSeizureSelect}
+            theme="rave"
           />
         ))}
       </MapContainer>
