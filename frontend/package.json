@@ -11,6 +11,8 @@
   "dependencies": {
     "@mui/x-charts": "^9.5.0",
     "@supabase/supabase-js": "^2.106.0",
+    "@turf/boolean-point-in-polygon": "^7.3.5",
+    "@turf/helpers": "^7.3.5",
     "@vercel/node": "^5.8.2",
     "dompurify": "^3.4.5",
     "framer-motion": "^11.0.0",

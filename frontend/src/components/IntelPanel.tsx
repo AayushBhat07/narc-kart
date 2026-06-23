@@ -14,6 +14,10 @@ function getSeverity(kg: number) {
   return 'low';
 }
 
+// `getSeverity` is defined for future use in this panel; suppress unused warning
+// until it's wired into the JSX.
+void getSeverity;
+
 export function IntelPanel({ seizures, stats, onClose }: Props) {
   const total = seizures.length;
   const totalKg = seizures.reduce((s, sz) => s + (sz.quantityKg || 0), 0);

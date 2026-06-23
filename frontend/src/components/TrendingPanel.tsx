@@ -26,7 +26,7 @@ function formatDate(iso: string) {
   } catch { return '—'; }
 }
 
-export function TrendingPanel({ seizures, stats, onClose }: Props) {
+export function TrendingPanel({ seizures, onClose }: Props) {
   // By volume — top 10
   const byVolume = [...seizures]
     .sort((a, b) => (b.quantityKg || 0) - (a.quantityKg || 0))

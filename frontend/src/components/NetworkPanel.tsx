@@ -8,7 +8,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function NetworkPanel({ seizures, stats, onClose }: Props) {
+export function NetworkPanel({ seizures, onClose }: Props) {
   // Agency rollup
   const agencyMap: Record<string, number> = {};
   seizures.forEach(s => {
@@ -32,7 +32,9 @@ export function NetworkPanel({ seizures, stats, onClose }: Props) {
   const maxState = stateEntries[0]?.[1] || 1;
 
   const uniqueAgencies = agencyEntries.length;
+  // Computed for future use; suppress unused-var until rendered.
   const topAgency = agencyEntries[0]?.[0] || '—';
+  void topAgency;
 
   return (
     <div className={styles.panel} role="region" aria-label="Network panel">

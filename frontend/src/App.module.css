@@ -37,7 +37,8 @@
   gap: 0;
   background: var(--bg-glass);
   border-bottom: 1px solid var(--border-dim);
-  backdrop-filter: blur(16px) saturate(180%);
+  /* backdrop-filter removed — was blurring a constantly-painting Leaflet map.
+     The bar has its own dark glass background, blur is pure repaint cost. */
   padding: 0 var(--sp-4);
 }
 
@@ -185,12 +186,18 @@
   z-index: 90;
   background: var(--bg-glass);
   border-right: 1px solid var(--border-dim);
-  backdrop-filter: blur(16px) saturate(180%);
+  /* backdrop-filter removed — see .hudTop comment */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: var(--sp-3) 0;
   gap: var(--sp-1);
+  transition: background var(--dur-slow) var(--ease-out), border-color var(--dur-slow) var(--ease-out);
+}
+
+[data-mode="rave"] .iconRail {
+  background: rgba(28, 8, 24, 0.92);
+  border-right-color: var(--rave-primary-mid);
 }
 
 .railBtn {
@@ -268,6 +275,12 @@
   right: 0;
   bottom: 40px;
   z-index: 10;
+  /* The viewport is a layout container for .viewportPanel. It has
+     no visible content of its own — without pointer-events:none it
+     would swallow every click on the map (Leaflet paths, district
+     polygons, etc.). The .viewportPanel below re-enables
+     pointer-events on the actual scrollable panel surface. */
+  pointer-events: none;
 }
 
 /* When a panel is open, right side is panel */
@@ -284,6 +297,7 @@
   transform: translateX(0);
   transition: transform var(--dur-slow) var(--ease-out);
   z-index: 80;
+  pointer-events: auto;
 }
 
 /* ── Bottom Ticker ────────────────────────────────────── */
@@ -296,10 +310,30 @@
   z-index: 90;
   background: var(--bg-glass);
   border-top: 1px solid var(--border-dim);
-  backdrop-filter: blur(16px);
+  /* backdrop-filter removed — was blurring the live, constantly-painting
+     Leaflet map underneath the scrolling ticker. Solid bg-glass is enough. */
   display: flex;
   align-items: center;
   overflow: hidden;
+  transition: background var(--dur-slow) var(--ease-out), border-color var(--dur-slow) var(--ease-out);
+}
+
+[data-mode="rave"] .ticker {
+  background: rgba(28, 8, 24, 0.92);
+  border-top-color: var(--rave-primary-mid);
+}
+
+[data-mode="rave"] .tickerLabel {
+  border-right-color: var(--rave-primary-mid);
+}
+
+[data-mode="rave"] .tickerLabelDot {
+  background: var(--rave-secondary);
+  box-shadow: 0 0 8px var(--rave-secondary-dim);
+}
+
+[data-mode="rave"] .tickerLabelText {
+  color: var(--rave-primary);
 }
 
 .tickerLabel {
@@ -433,34 +467,91 @@
   background: var(--accent-dim);
 }
 
-/* ── Classified Watermark ─────────────────────────────── */
+/* ── Classified Watermark ─────────────────────────────
+   Was a giant rotated center stamp covering the whole viewport — that forced
+   a full-viewport repaint on every map pan/zoom. Replaced with a tiny fixed
+   corner badge: same vibe, near-zero repaint cost. */
 .classifiedWatermark {
   position: absolute;
-  inset: 0;
-  z-index: 5;
+  top: calc(52px + var(--sp-4));
+  right: var(--sp-4);
+  z-index: 6;
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  user-select: none;
 }
 
 .classifiedStamp {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.3em;
-  color: rgba(232, 61, 61, 0.04);
+  letter-spacing: 0.32em;
+  color: rgba(232, 61, 61, 0.22);
   font-family: var(--font-mono);
-  white-space: nowrap;
   text-transform: uppercase;
-  user-select: none;
-  border: 6px solid rgba(232, 61, 61, 0.04);
-  padding: var(--sp-4) var(--sp-8);
+  border: 1px solid rgba(232, 61, 61, 0.22);
+  padding: 3px var(--sp-2);
   border-radius: var(--r-sm);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* ── Rave Mode Badge ────────────────────────────────────────
+   Hidden by default. When [data-mode="rave"] is set on the shell,
+   fades in as a kaleidoscope corner element, CLASSIFIED fades out. */
+.raveBadge {
+  position: absolute;
+  top: calc(52px + var(--sp-4));
+  right: var(--sp-4);
+  z-index: 7;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+[data-mode="rave"] .classifiedWatermark {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+[data-mode="rave"] .raveBadge {
+  opacity: 1;
+}
+
+.raveBadgeRing,
+.raveBadgeCore {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.raveBadgeRing {
+  border: 1px solid var(--rave-primary, #FF1B8D);
+  animation: raveSpin 6s linear infinite;
+  box-shadow: 0 0 12px var(--rave-primary-mid, rgba(255, 27, 141, 0.4));
+}
+
+.raveBadgeRing:nth-child(2) {
+  border-color: var(--rave-secondary, #00E5FF);
+  transform: rotate(45deg) scale(0.7);
+  animation-duration: 4s;
+  animation-direction: reverse;
+  box-shadow: 0 0 10px var(--rave-secondary-dim, rgba(0, 229, 255, 0.3));
+}
+
+.raveBadgeCore {
+  inset: 9px;
+  background: var(--rave-primary, #FF1B8D);
+  box-shadow: 0 0 16px var(--rave-primary-bright, rgba(255, 27, 141, 0.6));
+  animation: ravePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes raveSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ravePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
 }
 
 /* ── Offline Badge ───────────────────────────────────── */

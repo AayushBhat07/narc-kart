@@ -1,0 +1,360 @@
+/* ══════════════════════════════════════════════════════════════
+   DistrictPanel — slide-in detail panel for a clicked district
+   Positioned in the App shell overlay slot (right edge, below
+   the HUD, above the ticker). Z-index sits below the tab-driven
+   panels so they remain on top when both are open.
+
+   Visual language matches IntelPanel / ComparePanel: mono font,
+   letter-spaced uppercase headers, dim borders, no shadows.
+   ══════════════════════════════════════════════════════════════ */
+
+.panelSlot {
+  position: absolute;
+  top: 52px;        /* below .hudTop */
+  right: 0;
+  bottom: 40px;     /* above .ticker */
+  width: 360px;
+  z-index: 75;      /* above map (0) and filters, below .viewportPanel (80) */
+  background: var(--bg-glass);
+  border-left: 1px solid var(--border-dim);
+  backdrop-filter: blur(20px) saturate(200%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+}
+
+/* Rave-mode: keep the same glass background but tint the border */
+:global([data-mode="rave"]) .panelSlot {
+  background: rgba(28, 8, 24, 0.92);
+  border-left-color: var(--rave-primary-mid);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
+  gap: var(--sp-2);
+}
+
+.panelTitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  line-height: 1.3;
+  /* Allow the title to wrap on long district + state names without
+     pushing the close button out of view. */
+  flex: 1;
+  min-width: 0;
+}
+
+.panelTitleAccent {
+  color: var(--text-primary);
+  letter-spacing: 0.22em;
+}
+
+.panelClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.panelClose:hover {
+  color: var(--text-primary);
+  border-color: var(--border-mid);
+}
+
+.panelBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ── Empty state ───────────────────────────────────────── */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--sp-6);
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* ── Stat row (3 cells) ───────────────────────────────── */
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+
+.statCell {
+  background: var(--bg-void);
+  border: 1px solid var(--border-ghost);
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statCellValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.statCellValue--critical {
+  color: var(--sev-critical);
+}
+
+.statCellValue--high {
+  color: var(--sev-high);
+}
+
+.statCellValue--low {
+  color: var(--sev-low);
+}
+
+.statCellLabel {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* ── Section ────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.sectionTitle {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  padding-bottom: var(--sp-1);
+  border-bottom: 1px solid var(--border-ghost);
+}
+
+/* ── Drug-type bars ────────────────────────────────────── */
+.drugBars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.drugRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.drugLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+.drugName {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.drugPct {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.drugBarTrack {
+  height: 2px;
+  background: var(--border-dim);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.drugBarFill {
+  height: 100%;
+  border-radius: 1px;
+  background: var(--accent);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+.drugBarFill--meth     { background: var(--sev-high); }
+.drugBarFill--cannabis { background: var(--sev-low); }
+.drugBarFill--cocaine  { background: var(--text-secondary); }
+.drugBarFill--heroin   { background: var(--sev-critical); }
+.drugBarFill--opium    { background: var(--text-muted); }
+
+/* ── Per-seizure list ─────────────────────────────────── */
+.seizureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-height: 360px;   /* cap so the panel doesn't blow past the viewport;
+                            scrolls inside the list itself */
+  overflow-y: auto;
+  padding-right: var(--sp-1);
+}
+
+.seizureRow {
+  background: var(--bg-void);
+  border: 1px solid var(--border-ghost);
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.seizureRowTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+.seizureRowDate {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.seizureRowKg {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.seizureRowTitle {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  /* Multi-line clamp via line-clamp on webkit + standard fallback */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.seizureRowMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.seizureRowDrug {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.seizureRowAgency {
+  color: var(--text-secondary);
+}
+
+.seizureRowLoc {
+  color: var(--text-secondary);
+}
+
+.seizureRowSep {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.seizureRowDesc {
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  word-break: break-word;
+  /* Rave-mode headlines are long — clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ── Footer / source note ──────────────────────────────── */
+.footer {
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border-ghost);
+}
+
+.footerNum {
+  color: var(--text-secondary);
+  font-weight: 700;
+}

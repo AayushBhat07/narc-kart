@@ -8,7 +8,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function ComparePanel({ seizures, stats, onClose }: Props) {
+export function ComparePanel({ seizures, onClose }: Props) {
   // State comparison
   const stateMap: Record<string, number> = {};
   seizures.forEach(s => { const st = s.location?.state || 'Unknown'; stateMap[st] = (stateMap[st] || 0) + (s.quantityKg || 0); });

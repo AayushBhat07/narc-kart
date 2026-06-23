@@ -12,3 +12,5 @@ __pycache__/
 *.log
 .vercel
 .env*.local
+.worktrees/
+frontend/tsconfig.tsbuildinfo

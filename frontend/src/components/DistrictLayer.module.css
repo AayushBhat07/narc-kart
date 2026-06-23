@@ -1,0 +1,81 @@
+/* ══════════════════════════════════════════════════════════════
+   DistrictLayer — choropleth polygon styling
+   Tier classes are GLOBAL on purpose: react-leaflet hands them to
+   Leaflet, which applies them as the SVG <path> className, so the
+   rules must escape CSS module hashing. The hover rule uses
+   .leaflet-interactive (Leaflet's own class on every path) so it
+   doesn't need a tier match.
+
+   Color values come from CSS variables on :root / [data-mode="rave"]
+   in design-system.css — switching the shell to rave mode swaps the
+   palette without any JS theme prop.
+
+   No gradients. No shadows. Filled by tier, dimmed outline for
+   empty districts so the country silhouette stays legible.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Base — applied to every district path. The className on the path
+   is "leaflet-interactive district district--<tier>". */
+:global(.district) {
+  /* Smooth opacity transitions on hover/leave. fill-opacity is
+     animatable on SVG paths when set via CSS. */
+  transition: fill-opacity 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              stroke-width 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+/* ── Tier fills ────────────────────────────────────────── */
+:global(.district--critical) {
+  fill: var(--dist-critical);
+  fill-opacity: 0.70;
+  stroke: var(--dist-stroke);
+  stroke-width: 0.5;
+}
+
+:global(.district--high) {
+  fill: var(--dist-high);
+  fill-opacity: 0.62;
+  stroke: var(--dist-stroke);
+  stroke-width: 0.5;
+}
+
+:global(.district--low) {
+  fill: var(--dist-low);
+  fill-opacity: 0.55;
+  stroke: var(--dist-stroke);
+  stroke-width: 0.5;
+}
+
+:global(.district--none) {
+  /* No aggregate — country outline only, so the choropleth doesn't
+     look like a blank mask. fill-opacity 0 means Leaflet still
+     renders nothing, but stroke keeps the polygon clickable. */
+  fill: var(--dist-low);
+  fill-opacity: 0.04;
+  stroke: var(--dist-stroke-none);
+  stroke-width: 0.4;
+}
+
+/* ── Hover state — bumps opacity + weight ────────────────── */
+:global(.district--critical.leaflet-interactive:hover) { fill-opacity: 0.92; stroke-width: 1.2; }
+:global(.district--high.leaflet-interactive:hover)     { fill-opacity: 0.85; stroke-width: 1.1; }
+:global(.district--low.leaflet-interactive:hover)      { fill-opacity: 0.78; stroke-width: 1.0; }
+:global(.district--none.leaflet-interactive:hover)     { fill-opacity: 0.12; stroke-width: 0.9; }
+
+/* ── Tooltip styling — match war-room dark glass ─────────── */
+:global(.leaflet-tooltip.district-tooltip) {
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 6px 8px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  white-space: pre-line;
+}
+
+:global(.leaflet-tooltip.district-tooltip::before) {
+  border-top-color: var(--border-mid);
+}

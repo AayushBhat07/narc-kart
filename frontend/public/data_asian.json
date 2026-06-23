@@ -1,6 +1,6 @@
 {
-  "source": "Compiled from Wikipedia API, UNODC, Xinhua, regional news | Updated 2026-06-15",
-  "scraped_at": "2026-06-15T17:45:00",
+  "source": "Compiled via Scrapling (Fetcher) from UNODC, Wikipedia, INTERPOL | 2026-06-15",
+  "scraped_at": "2026-06-15T23:56:02.047178",
   "seizures": [
     {
       "id": "myanmar-001",
@@ -1071,6 +1071,26 @@
       "manufacturingOrigin": "Afghanistan",
       "smugglingRoute": "Golden Crescent",
       "agency": "Afghan authorities",
+      "severity": "critical"
+    },
+    {
+      "id": "interpol-dae25263",
+      "country": "Asia",
+      "location": {
+        "city": "Asia",
+        "state": "Asia",
+        "lat": null,
+        "lon": null
+      },
+      "drugType": "Methamphetamine",
+      "quantityKg": 56000.0,
+      "date": "2026-06-15",
+      "source": "INTERPOL: Over 3,300 illegal firearms, 56 tonnes of drugs seized in operation in the Americas",
+      "sourceUrl": "https://www.interpol.int/News-and-Events/News/2026/Over-3-300-illegal-firearms-56-tonnes-of-drugs-seized-in-operation-in-the-Americas",
+      "headline": "Over 3,300 illegal firearms, 56 tonnes of drugs seized in operation in the Americas",
+      "manufacturingOrigin": null,
+      "smugglingRoute": null,
+      "agency": "INTERPOL",
       "severity": "critical"
     }
   ],

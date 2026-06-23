@@ -42,6 +42,16 @@
   --sev-high:       #FF7043;
   --sev-low:       #FFB300;
 
+  /* District choropleth — same severity scale by default, swapped
+     to rave palette in [data-mode="rave"] below. Use these on
+     <path> elements via CSS (fill, fill-opacity, stroke) so the
+     district layer never needs a JS theme prop. */
+  --dist-critical:   #E83D3D;
+  --dist-high:       #FF7043;
+  --dist-low:        #FFB300;
+  --dist-stroke:        rgba(0, 0, 0, 0.55);
+  --dist-stroke-none:   rgba(255, 255, 255, 0.10);
+
   /* Functional */
   --online:        #22C55E;
   --offline:       #EF4444;
@@ -72,6 +82,43 @@
   --dur-fast:   120ms;
   --dur-mid:    220ms;
   --dur-slow:   380ms;
+}
+
+/* ═══════════════════════════════════════
+   1b. RAVE THEME TOKENS
+   Active when [data-mode="rave"] is set on the shell.
+   Reuses the same mono font + 4pt spacing scale — just a different palette.
+   ═══════════════════════════════════════ */
+[data-mode="rave"] {
+  /* Neon palette: magenta primary, cyan secondary, acid green tertiary */
+  --rave-primary:    #FF1B8D;        /* hot magenta */
+  --rave-secondary:  #00E5FF;        /* electric cyan */
+  --rave-tertiary:   #B6FF00;        /* acid lime */
+  --rave-violet:     #8B5CF6;        /* deep violet */
+
+  --rave-primary-dim:   rgba(255, 27, 141, 0.12);
+  --rave-primary-mid:   rgba(255, 27, 141, 0.28);
+  --rave-primary-bright:rgba(255, 27, 141, 0.55);
+  --rave-secondary-dim: rgba(0, 229, 255, 0.14);
+  --rave-glow-primary:  0 0 18px rgba(255, 27, 141, 0.35);
+  --rave-glow-secondary:0 0 18px rgba(0, 229, 255, 0.30);
+
+  /* Replace the war-room red accent with magenta while in rave mode */
+  --accent:         var(--rave-primary);
+  --accent-dim:     var(--rave-primary-dim);
+  --accent-mid:     var(--rave-primary-mid);
+  --accent-bright:  var(--rave-primary-bright);
+  --accent-glow:    var(--rave-glow-primary);
+
+  /* Swap the choropleth to the rave palette — magenta/cyan/lime —
+     so the district layer reads as part of the kaleidoscope, not a
+     red war-room heatmap. Driven entirely by [data-mode="rave"]
+     on the shell; no JS theme prop needed. */
+  --dist-critical:   var(--rave-primary);
+  --dist-high:       var(--rave-secondary);
+  --dist-low:        var(--rave-tertiary);
+  --dist-stroke:        rgba(255, 27, 141, 0.55);
+  --dist-stroke-none:   rgba(0, 229, 255, 0.20);
 }
 
 /* ═══════════════════════════════════════
