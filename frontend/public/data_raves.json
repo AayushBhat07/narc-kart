@@ -1,0 +1,1649 @@
+{
+  "source": "Compiled via web search + Scrapling (Indian Express, NDTV, Times of India, Indian Express, Mid-day, Economic Times, Deccan Chronicle, O Heraldo, The Hindu, New Indian Express, Free Press Journal, Hindustan Times, Rediff, India Today, Pune Mirror, Times Now, WION, The Tribune, The Week, Telangana Today, Business Standard) | Updated 2026-06-17",
+  "scraped_at": "2026-06-17T16:35:03.898052+00:00",
+  "seizures": [
+    {
+      "id": "IN-RAVE-bengaluru-4-mdma-ganja",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA + Methamphetamine + Cannabis",
+      "quantityKg": 0.15,
+      "date": "2026-06-09",
+      "source": "Rediff - Bengaluru Police Arrest Four For Drug Trafficking, Seize Ganja, MDMA, Methamphetamine Worth Rs 14.94 Lakh",
+      "sourceUrl": "https://www.rediff.com/news/report/four-arrested-for-selling-drugs-in-bengaluru/20260609.htm",
+      "headline": "Bengaluru Police Arrest Four In Major Drug Bust, Seize Rs 14.94 Lakh Worth Of Narcotics",
+      "eventName": "Bengaluru drug trafficking (rave circuit)",
+      "agency": "Bengaluru Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-pune-156-detained",
+      "country": "India",
+      "location": {
+        "city": "Pune",
+        "state": "Maharashtra",
+        "lat": 18.5204,
+        "lon": 73.8567
+      },
+      "drugType": "MDMA + Cannabis",
+      "quantityKg": 0.5,
+      "date": "2026-06-07",
+      "source": "IND Today - Police Detain 156 At Pune Rave Party, Drugs And Liquor Seized",
+      "sourceUrl": "https://indtoday.com/police-detain-156-at-pune-rave-party-drugs-and-liquor-seized/",
+      "headline": "Police Detain 156 At Pune Rave Party, Drugs And Liquor Seized",
+      "eventName": "Pune rave party (mass detention)",
+      "agency": "Pune Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-nesco-student-arrested",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.02,
+      "date": "2026-06-01",
+      "source": "Free Press Journal - NESCO Concert Deaths Case: 22-Year-Old Student Arrested For MDMA Supply",
+      "sourceUrl": "https://www.freepressjournal.in/mumbai/nesco-concert-deaths-case-22-year-old-student-arrested-for-mdma-supply-police-uncover-student-led-network-probe-organiser-links",
+      "headline": "NESCO Concert Deaths Case: 22-Year-Old Student Arrested For MDMA Supply",
+      "eventName": "NESCO Concert Goregaon — student MDMA supplier",
+      "agency": "Vanrai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-nesco-ecstasy-raigad",
+      "country": "India",
+      "location": {
+        "city": "Raigad",
+        "state": "Maharashtra",
+        "lat": 18.2333,
+        "lon": 73.1333
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.1,
+      "date": "2026-06-01",
+      "source": "Free Press Journal - NESCO Drug Case: Vanrai Police Recover Ecstasy Pills Worth ₹15.39 Lakh In Raigad",
+      "sourceUrl": "https://www.freepressjournal.in/mumbai/nesco-drug-case-vanrai-police-recover-ecstasy-pills-worth-1539-lakh-in-raigad",
+      "headline": "NESCO Drug Case: Vanrai Police Recover Ecstasy Pills Worth ₹15.39 Lakh In Raigad",
+      "eventName": "NESCO Concert Goregaon — ecstasy pills recovered Raigad",
+      "agency": "Vanrai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-nesco-concert-mdma-us",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.3,
+      "date": "2026-05-30",
+      "source": "Indian Express - Toxicology reports confirm 'ecstasy' in deaths of two students at Mumbai's NESCO concert",
+      "sourceUrl": "https://indianexpress.com/article/cities/mumbai/toxicology-reports-confirm-ecstasy-in-deaths-of-two-students-at-mumbais-nesco-concert-10741437/",
+      "headline": "Toxicology reports confirm 'ecstasy' in deaths of two students at Mumbai's NESCO concert",
+      "eventName": "NESCO Concert Goregaon (9x9 Mumbai music fest)",
+      "agency": "Mumbai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-concert-supply-chain",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.05,
+      "date": "2026-05-30",
+      "source": "Times of India - Mumbai concert drug overdose case: Police detain 1 person suspected to be link in MDMA supply chain",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/mumbai/mumbai-concert-drug-overdose-case-police-detain-1-person-suspected-to-be-link-in-mdma-supply-chain/articleshow/130297374.cms",
+      "headline": "Mumbai concert drug overdose case: Police detain 1 person suspected to be link in MDMA supply chain",
+      "eventName": "NESCO 9x9 Mumbai music festival MDMA supply chain",
+      "agency": "Mumbai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-concert-tragedy-wion",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.03,
+      "date": "2026-05-30",
+      "source": "WION - Mumbai music festival tragedy: 2 college students dead after alleged MDMA overdose in Goregaon",
+      "sourceUrl": "https://www.wionews.com/india-news/mumbai-music-festival-tragedy-2-college-students-dead-after-alleged-mdma-overdose-in-goregaon-1776225595482",
+      "headline": "Mumbai music festival tragedy: 2 college students dead after alleged MDMA overdose in Goregaon",
+      "eventName": "Goregaon NESCO music festival (MDMA overdose deaths)",
+      "agency": "Mumbai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-bengaluru-8-mdma-2026",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.25,
+      "date": "2026-05-20",
+      "source": "Rediff - MDMA Drug Racket Busted: Bengaluru Police Arrest 8",
+      "sourceUrl": "https://www.rediff.com/news/report/eight-arrested-mdma-seized-in-bengaluru/20260520.htm",
+      "headline": "Bengaluru Police Nab 8 In MDMA Drug Bust",
+      "eventName": "Bengaluru MDMA racket (rave party supply)",
+      "agency": "Bengaluru Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-bengaluru-6-college-2026",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA + Cannabis",
+      "quantityKg": 0.15,
+      "date": "2026-05-05",
+      "source": "Rediff - Bengaluru Drug Bust: Dealers Targeting College Students Arrested",
+      "sourceUrl": "https://www.rediff.com/news/report/bengaluru-six-arrested-with-mdma-hydro-ganja/20260505.htm",
+      "headline": "Bengaluru Police Arrest Six Drug Dealers Targeting College Students",
+      "eventName": "Bengaluru college student rave supply",
+      "agency": "Bengaluru Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-9x9-concert-deaths",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.2,
+      "date": "2026-04-14",
+      "source": "Times Now - 9x9 Mumbai Concert: Two Dead After Suspected Drug Overdose; Organiser And Five Others Arrested",
+      "sourceUrl": "https://www.timesnownews.com/entertainment-news/bollywood/9x9-mumbai-concert-two-dead-after-suspected-drug-overdose-organiser-and-five-others-arrested-article-154072742",
+      "headline": "9x9 Mumbai Concert: Two Dead After Suspected Drug Overdose; Organiser And Five Others Arrested",
+      "eventName": "9x9 Mumbai Concert (Goregaon NESCO)",
+      "agency": "Mumbai Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-sunburn-klassique",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Cocaine + MDMA + Cannabis",
+      "quantityKg": 0.3,
+      "date": "2026-02-09",
+      "source": "ET Now - Rave party crackdown in Goa: Sunburn Klassique co-promoter among those arrested",
+      "sourceUrl": "https://www.etnownews.com/news/rave-party-crackdown-in-goa-sunburn-klassique-co-promoter-among-those-arrested-article-153582408",
+      "headline": "Rave party crackdown in Goa: Sunburn Klassique co-promoter among those arrested",
+      "eventName": "Sunburn Klassique (Vagator by-invite rave)",
+      "agency": "Goa Crime Branch",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-ed-vagator-raids",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Multiple",
+      "quantityKg": 5.0,
+      "date": "2026-01-17",
+      "source": "O Heraldo - Goa a drugs hub? Raids yield 1.5 cr, drugs worth 1 cr",
+      "sourceUrl": "https://www.heraldgoa.in/goa/goa-a-drugs-hub-raids-yield-1-5-cr-drugs-worth-1-cr/461000/",
+      "headline": "Goa a drugs hub? Raids yield 1.5 cr, drugs worth 1 cr",
+      "eventName": "Vagator international narcotics racket (ED/NCB PMLA raids)",
+      "agency": "ED + NCB Goa",
+      "severity": "high"
+    },
+    {
+      "id": "IN-RAVE-goa-anc-anjuna-arrest",
+      "country": "India",
+      "location": {
+        "city": "Anjuna",
+        "state": "Goa",
+        "lat": 15.5748,
+        "lon": 73.7397
+      },
+      "drugType": "Multiple",
+      "quantityKg": 0.02,
+      "date": "2025-12-28",
+      "source": "O Heraldo - ANC Arrests 23-Year-Old in Anjuna, Seizes Drugs Worth 1.15 Lakh",
+      "sourceUrl": "https://www.heraldgoa.in/goa/anc-arrests-23-year-old-in-anjuna-seizes-drugs-worth-1-15-lakh/458638/",
+      "headline": "ANC Arrests 23-Year-Old in Anjuna, Seizes Drugs Worth 1.15 Lakh",
+      "eventName": "Anjuna late-night party ops",
+      "agency": "Goa ANC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-bengaluru-ccb-nigerian-23cr",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA + Ecstasy",
+      "quantityKg": 1.5,
+      "date": "2025-11-26",
+      "source": "New Indian Express - CCB seizes ecstasy pills, MDMA worth Rs 23.74 cr from Nigerian",
+      "sourceUrl": "https://www.newindianexpress.com/cities/bengaluru/2025/Nov/26/ccb-seizes-ecstasy-pills-mdma-worth-rs-2374-cr-from-nigerian",
+      "headline": "CCB seizes ecstasy pills, MDMA worth Rs 23.74 cr from Nigerian",
+      "eventName": "Bengaluru NYE rave party supply (Nigerian national)",
+      "agency": "Bengaluru CCB",
+      "severity": "high"
+    },
+    {
+      "id": "IN-RAVE-kondapur-eagle-team-rave",
+      "country": "India",
+      "location": {
+        "city": "Kondapur",
+        "state": "Telangana",
+        "lat": 17.4691,
+        "lon": 78.3687
+      },
+      "drugType": "Cocaine + MDMA + Ecstasy",
+      "quantityKg": 0.15,
+      "date": "2025-08-25",
+      "source": "Deccan Chronicle - EAGLE Team Busts Rave Party, Arrests Six For Drug Use",
+      "sourceUrl": "https://www.deccanchronicle.com/southern-states/telangana/eagle-team-busts-rave-party-arrests-six-for-drug-use-1899683",
+      "headline": "EAGLE Team Busts Rave Party, Arrests Six For Drug Use",
+      "eventName": "Kondapur service apartment rave party",
+      "agency": "Telangana EAGLE + Gachibowli Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-lsd-blots-ed-raids",
+      "country": "India",
+      "location": {
+        "city": "Goa",
+        "state": "Goa",
+        "lat": 15.2993,
+        "lon": 74.124
+      },
+      "drugType": "LSD",
+      "quantityKg": 1.0,
+      "date": "2025-08-01",
+      "source": "Indian Express - Over a year after Goa's biggest seizure of LSD blots, ED raids across country",
+      "sourceUrl": "https://indianexpress.com/article/india/over-a-year-after-goas-biggest-seizure-of-lsd-blots-ed-raids-across-country-in-narcotics-trafficking-case-10478332/",
+      "headline": "Over a year after Goa's biggest seizure of LSD blots, ED raids across country in narcotics trafficking case",
+      "eventName": "Goa LSD blot party circuit — money-laundering case",
+      "agency": "ED + NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-pune-studio-suite-khadse-toi",
+      "country": "India",
+      "location": {
+        "city": "Pune",
+        "state": "Maharashtra",
+        "lat": 18.5204,
+        "lon": 73.8567
+      },
+      "drugType": "Cocaine + Cannabis",
+      "quantityKg": 0.2,
+      "date": "2025-07-28",
+      "source": "Times of India - Pune studio suite drug bust: Cocaine, booze and political links",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/pune/cocaine-marijuana-hookah-pots-and-booze-how-cops-caught-eknath-khadses-son-in-law-businessmen-builder-at-drug-party-in-pune-studio-suite/articleshow/122942939.cms",
+      "headline": "Pune studio suite drug bust: Cocaine, booze and political links",
+      "eventName": "Pune Kharadi studio-suite rave (Khadse family)",
+      "agency": "Pune Crime Branch",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-pune-khadse-kharadi",
+      "country": "India",
+      "location": {
+        "city": "Pune",
+        "state": "Maharashtra",
+        "lat": 18.5204,
+        "lon": 73.8567
+      },
+      "drugType": "Cocaine + Cannabis + MDMA",
+      "quantityKg": 0.3,
+      "date": "2025-07-27",
+      "source": "Economic Times - Drugs seized after raid at rave party in Pune; Eknath Khadse's son-in-law among 7 detained",
+      "sourceUrl": "https://economictimes.indiatimes.com/news/new-updates/drugs-seized-after-raid-at-a-rave-party-in-pune-7-persons-detained/articleshow/122931791.cms",
+      "headline": "Drugs seized after raid at rave party in Pune; Eknath Khadse's son-in-law among 7 detained",
+      "eventName": "Kharadi luxury suite rave party (Pune)",
+      "agency": "Pune Crime Branch",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-pune-mirror-khadse",
+      "country": "India",
+      "location": {
+        "city": "Pune",
+        "state": "Maharashtra",
+        "lat": 18.5204,
+        "lon": 73.8567
+      },
+      "drugType": "Cocaine + Cannabis + MDMA",
+      "quantityKg": 0.25,
+      "date": "2025-07-27",
+      "source": "Pune Times Mirror - Police Raid Rave Party in Pune; NCP Leader Rohini Khadse's Husband Detained",
+      "sourceUrl": "https://punemirror.com/city/police-raid-rave-party-in-pune-ncp-leader-rohini-khadse-s-husband-detained/",
+      "headline": "Police Raid Rave Party in Pune; NCP Leader Rohini Khadse's Husband Detained",
+      "eventName": "Pune Kharadi rave (Khadse son-in-law)",
+      "agency": "Pune Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-bengaluru-ccb-rave",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA + Ecstasy",
+      "quantityKg": 0.2,
+      "date": "2025-05-19",
+      "source": "News18 - Rave Party Busted in Bengaluru, Blood Samples of Guests Being Tested, 5 Arrested So Far",
+      "sourceUrl": "https://www.news18.com/india/rave-party-busted-in-bengaluru-ecstacy-pills-mdma-recovered-8898559.html",
+      "headline": "Rave Party Busted in Bengaluru, Blood Samples of Guests Being Tested, 5 Arrested So Far",
+      "eventName": "Bengaluru farmhouse rave (Electronic City)",
+      "agency": "Bengaluru City Police / CCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-interstate-ecstasy",
+      "country": "India",
+      "location": {
+        "city": "Goa",
+        "state": "Goa",
+        "lat": 15.2993,
+        "lon": 74.124
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.25,
+      "date": "2025-03-15",
+      "source": "Times of India - Goa police bust interstate drug racket, seize Ecstasy and pills worth Rs 25L",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/goa/goa-police-bust-interstate-drug-racket-seize-ecstasy-and-pills-worth-rs-25l/articleshow/119761587.cms",
+      "headline": "Goa police bust interstate drug racket, seize Ecstasy and pills worth Rs 25L",
+      "eventName": "Goa interstate rave party supply",
+      "agency": "Goa Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-anjuna-arrest-9l",
+      "country": "India",
+      "location": {
+        "city": "Anjuna",
+        "state": "Goa",
+        "lat": 15.5748,
+        "lon": 73.7397
+      },
+      "drugType": "Multiple",
+      "quantityKg": 0.2,
+      "date": "2025-02-01",
+      "source": "Times of India - Anjuna man held with drugs worth nearly Rs 9L",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/goa/anjuna-man-held-with-drugs-worth-nearly-rs-9l/articleshow/119389596.cms",
+      "headline": "Anjuna man held with drugs worth nearly Rs 9L",
+      "eventName": "Anjuna party-circuit arrest",
+      "agency": "Goa ANC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-karnataka-mdma-3787kg",
+      "country": "India",
+      "location": {
+        "city": "Mangaluru",
+        "state": "Karnataka",
+        "lat": 12.9141,
+        "lon": 74.856
+      },
+      "drugType": "MDMA",
+      "quantityKg": 37.87,
+      "date": "2025-02-01",
+      "source": "Times of India - Karnataka Police's Historic Drug Bust: 37.87 kg MDMA Seized, Two South African Women Arrested",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/mangaluru/biggest-drug-cartel-bust-in-karnataka-2-south-african-women-arrested-with-37-87-kg-mdma-worth-rs-75-crore/articleshow/119069557.cms",
+      "headline": "Karnataka Police's Historic Drug Bust: 37.87 kg MDMA Seized, Two South African Women Arrested",
+      "eventName": "Karnataka international MDMA cartel (rave circuit)",
+      "agency": "Karnataka Police",
+      "severity": "high"
+    },
+    {
+      "id": "IN-RAVE-goa-sunburn-random-tests",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Cannabis + Cocaine",
+      "quantityKg": 0.05,
+      "date": "2025-01-01",
+      "source": "Hindustan Times - 5 booked for narcotics consumption at Goa fest after random tests: Police",
+      "sourceUrl": "https://www.hindustantimes.com/cities/others/random-tests-lead-to-5-detentions-for-narcotics-consumption-at-goa-fest-police-101735646511244.html",
+      "headline": "5 booked for narcotics consumption at Goa fest after random tests: Police",
+      "eventName": "Sunburn Goa EDM festival (3-day)",
+      "agency": "Goa Police ANC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-hyderabad-kingpin-goa",
+      "country": "India",
+      "location": {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "lat": 17.385,
+        "lon": 78.4867
+      },
+      "drugType": "Multiple",
+      "quantityKg": 0.5,
+      "date": "2025-01-01",
+      "source": "Telangana Today - Hyderabad Police arrest drug kingpin from Goa",
+      "sourceUrl": "https://telanganatoday.com/hyderabad-police-arrest-drug-kingpin-from-Goa",
+      "headline": "Hyderabad Police arrest drug kingpin from Goa",
+      "eventName": "Hyderabad–Goa party circuit supply",
+      "agency": "Hyderabad Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-hyd-kondapur-darkweb-9",
+      "country": "India",
+      "location": {
+        "city": "Kondapur",
+        "state": "Telangana",
+        "lat": 17.4691,
+        "lon": 78.3687
+      },
+      "drugType": "MDMA + Cocaine",
+      "quantityKg": 0.1,
+      "date": "2025-01-01",
+      "source": "The Hindu - Nine held in Kondapur rave party bust, drugs sourced from dark web seized",
+      "sourceUrl": "https://www.thehindu.com/news/cities/Hyderabad/nine-held-in-kondapur-rave-party-bust-drugs-sourced-from-dark-web-seized/article69861157.ece",
+      "headline": "Nine held in Kondapur rave party bust, drugs sourced from dark web seized",
+      "eventName": "Kondapur rave party (darkweb sourced)",
+      "agency": "Hyderabad Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-ncb-darkweb-team-kalki",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "LSD + MDMA + Cannabis",
+      "quantityKg": 0.25,
+      "date": "2025-01-01",
+      "source": "The Tribune - NCB busts dark web-based drugs trafficking network; seizes Rs 5-cr party drugs",
+      "sourceUrl": "https://www.tribuneindia.com/news/india/ncb-busts-dark-web-based-drugs-trafficking-network-seizes-rs-5-cr-party-drugs/",
+      "headline": "NCB busts dark web-based drugs trafficking network; seizes Rs 5-cr party drugs",
+      "eventName": "Pan-India rave party drug network 'Team Kalki' (darknet, crypto)",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-sunburn-delhi-death",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.005,
+      "date": "2024-12-31",
+      "source": "Times of India - Goa Sunburn Death: Delhi man dies at Sunburn EDM festival in Goa",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/goa/sunburn-death-gmc-prelim-report-points-to-drug-overdose/articleshow/116808416.cms",
+      "headline": "Goa Sunburn Death: Delhi man dies at Sunburn EDM festival in Goa",
+      "eventName": "Sunburn Goa 2024 (drug overdose death)",
+      "agency": "Goa Medical College / GMC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-hyd-madhapur-tganb",
+      "country": "India",
+      "location": {
+        "city": "Madhapur",
+        "state": "Telangana",
+        "lat": 17.4504,
+        "lon": 78.3815
+      },
+      "drugType": "Multiple",
+      "quantityKg": 0.05,
+      "date": "2024-12-30",
+      "source": "The Hindu - Madhapur party raid: 8 drug consumers identified in TGANB operation",
+      "sourceUrl": "https://www.thehindu.com/news/national/telangana/madhapur-party-raid-8-drug-consumers-identified-in-tganb-operation/article69043743.ece",
+      "headline": "Madhapur party raid: 8 drug consumers identified in TGANB operation",
+      "eventName": "Madhapur NYE party raid",
+      "agency": "Telangana TGANB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-lsd-1825-blots",
+      "country": "India",
+      "location": {
+        "city": "Goa",
+        "state": "Goa",
+        "lat": 15.2993,
+        "lon": 74.124
+      },
+      "drugType": "LSD",
+      "quantityKg": 0.02,
+      "date": "2024-10-16",
+      "source": "The Week - Rs 98 lakh drugs seized in Goa 1 held",
+      "sourceUrl": "https://www.theweek.in/wire-updates/national/2024/10/16/bom10-ga-drugs-seizure.html",
+      "headline": "Rs 98 lakh drugs seized in Goa 1 held (1,825 LSD blot papers)",
+      "eventName": "Goa party-circuit darknet LSD supply",
+      "agency": "Goa ANC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-clubs-562kg-cocaine",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Cocaine",
+      "quantityKg": 562.0,
+      "date": "2024-10-04",
+      "source": "O Heraldo - Majority of drugs seized used by clients of high-end clubs in Goa: Narco cops",
+      "sourceUrl": "https://www.heraldgoa.in/goa/majority-of-drugs-seized-used-by-clients-of-high-end-clubs-in-goa-narco-cops/380363/",
+      "headline": "Majority of drugs seized used by clients of high-end clubs in Goa: Narco cops",
+      "eventName": "Goa high-end clubs / December 2024 EDM concerts",
+      "agency": "NCB Delhi + Goa police",
+      "severity": "critical"
+    },
+    {
+      "id": "IN-RAVE-hyderabad-rave-cocaine-mdma",
+      "country": "India",
+      "location": {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "lat": 17.385,
+        "lon": 78.4867
+      },
+      "drugType": "Cocaine + MDMA",
+      "quantityKg": 0.25,
+      "date": "2024-09-01",
+      "source": "Times of India - Rave party busted in Hyderabad with cocaine and MDMA seized",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/hyderabad/rave-party-busted-in-hyderabad-with-cocaine-and-mdma-seized/articleshow/112026897.cms",
+      "headline": "Rave party busted in Hyderabad with cocaine and MDMA seized",
+      "eventName": "Hyderabad rave party",
+      "agency": "Telangana STF",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-bengaluru-farmhouse-telugu",
+      "country": "India",
+      "location": {
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lon": 77.5946
+      },
+      "drugType": "MDMA + Cocaine",
+      "quantityKg": 0.5,
+      "date": "2024-08-04",
+      "source": "Economic Times - Bengaluru Rave Party: Telugu actors, techies found partying at farmhouse",
+      "sourceUrl": "https://economictimes.indiatimes.com/news/bengaluru-news/bengaluru-rave-party-telugu-actors-techies-found-partying-at-farmhouse-stash-of-drugs-discovered-along-with-andhra-mla-sticker-car/articleshow/110266188.cms",
+      "headline": "Bengaluru Rave Party: Telugu actors, techies found partying at farmhouse; Stash of drugs discovered, along with Andhra MLA sticker car",
+      "eventName": "GM Farmhouse Electronic City rave party (Bengaluru)",
+      "agency": "Bengaluru CCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-hyderabad-cyber-towers-rave",
+      "country": "India",
+      "location": {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "lat": 17.385,
+        "lon": 78.4867
+      },
+      "drugType": "MDMA + Cocaine",
+      "quantityKg": 0.3,
+      "date": "2024-07-26",
+      "source": "Times Now - Hyderabad: Police Raid Rave Party in Rented Apartment Near Cyber Towers, 20 Held",
+      "sourceUrl": "https://www.timesnownews.com/hyderabad/hyderabad-police-raid-rave-party-in-rented-apartment-near-cyber-towers-20-held-article-112043128",
+      "headline": "Hyderabad: Police Raid Rave Party in Rented Apartment Near Cyber Towers, 20 Held",
+      "eventName": "Cyber Towers rented-apartment rave party",
+      "agency": "Hyderabad Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-hyderabad-stf-rave",
+      "country": "India",
+      "location": {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "lat": 17.385,
+        "lon": 78.4867
+      },
+      "drugType": "Cocaine + MDMA",
+      "quantityKg": 0.2,
+      "date": "2024-07-26",
+      "source": "New Indian Express - Hyderabad police bust rave party, seize drugs, liquor",
+      "sourceUrl": "https://www.newindianexpress.com/cities/hyderabad/2024/Jul/26/hyderabad-police-bust-rave-party-seize-drugs-liquor",
+      "headline": "Hyderabad police bust rave party, seize drugs, liquor",
+      "eventName": "Hyderabad rave party (liquor+drugs)",
+      "agency": "Telangana STF",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-ncb-2kg-mdma",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 2.17,
+      "date": "2024-04-24",
+      "source": "Mid-day - Mumbai: NCB busts international drug syndicate, seizes 2 kg of MDMA",
+      "sourceUrl": "https://www.mid-day.com/mumbai/mumbai-crime-news/article/mumbai-ncb-busts-international-drug-syndicate-seizes-2-kg-of-mdma--23345879",
+      "headline": "Mumbai: NCB busts international drug syndicate, seizes 2 kg of MDMA",
+      "eventName": "Mumbai nightclub circuit (darknet parcel from Netherlands)",
+      "agency": "NCB",
+      "severity": "high"
+    },
+    {
+      "id": "IN-RAVE-hyderabad-it-pub-techies",
+      "country": "India",
+      "location": {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "lat": 17.385,
+        "lon": 78.4867
+      },
+      "drugType": "MDMA + Cocaine",
+      "quantityKg": 0.15,
+      "date": "2024-04-01",
+      "source": "Times of India - Drug bust in IT hub pub in Hyderabad, 2nd in 2 weeks; techies & DJs caught",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/hyderabad/drug-bust-in-it-hub-pub-2nd-in-2-wks-techies-djs-caught/articleshow/111564155.cms",
+      "headline": "Drug bust in IT hub pub in Hyderabad, 2nd in 2 weeks; techies & DJs caught",
+      "eventName": "Hyderabad IT hub pub (Madhapur/Gachibowli)",
+      "agency": "Hyderabad Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-darknet-rs5l",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.02,
+      "date": "2024-01-01",
+      "source": "News18 - NCB Busts Dark Web Drug Syndicate in Mumbai; MDMA Tablets Worth Rs 5 Lakh Seized, 2 Held",
+      "sourceUrl": "https://www.news18.com/india/ncb-busts-dark-web-drug-syndicate-in-mumbai-mdma-tablets-worth-rs-5-lakh-seized-2-held-7621285.html",
+      "headline": "NCB Busts Dark Web Drug Syndicate in Mumbai; MDMA Tablets Worth Rs 5 Lakh Seized, 2 Held",
+      "eventName": "Mumbai rave party supply chain (darknet)",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-noida-snake-venom",
+      "country": "India",
+      "location": {
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "lat": 28.5355,
+        "lon": 77.391
+      },
+      "drugType": "Snake Venom",
+      "quantityKg": 0.01,
+      "date": "2023-11-03",
+      "source": "ThePrint - Suspected rave party case in Noida: Forensic report confirms snake venom",
+      "sourceUrl": "https://theprint.in/india/suspected-rave-party-case-in-noida-forensic-report-confirms-snake-venom/1969407/",
+      "headline": "Suspected rave party case in Noida: Forensic report confirms snake venom",
+      "eventName": "Noida YouTuber rave party (snake venom)",
+      "agency": "Noida Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-darknet-mdma-weed-lsd",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA + Cannabis + LSD",
+      "quantityKg": 0.25,
+      "date": "2023-08-12",
+      "source": "Mid-day - NCB-Mumbai busts international drug ring, seizes MDMA, Hydroponic Weed and LSD",
+      "sourceUrl": "https://www.mid-day.com/mumbai/mumbai-crime-news/article/ncb-mumbai-busts-international-drug-ring-seizes-mdma-hydroponic-weed-and-lsd-23303154",
+      "headline": "NCB-Mumbai busts international drug ring, seizes MDMA, Hydroponic Weed and LSD",
+      "eventName": "Mumbai nightclub circuit (US/UK-linked syndicate)",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-thane-rave-95-detained",
+      "country": "India",
+      "location": {
+        "city": "Thane",
+        "state": "Maharashtra",
+        "lat": 19.2183,
+        "lon": 72.9781
+      },
+      "drugType": "MDMA + Cannabis + Cocaine",
+      "quantityKg": 0.5,
+      "date": "2023-05-01",
+      "source": "The Tribune - 95 detained after cops raid rave party in Thane; drugs seized",
+      "sourceUrl": "https://www.tribuneindia.com/news/india/95-detained-after-cops-raid-rave-party-in-thane-drugs-seized-577040/",
+      "headline": "95 detained after cops raid rave party in Thane; drugs seized",
+      "eventName": "Thane rave party (large-scale)",
+      "agency": "Thane Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-mumbai-darknet-125-mdma",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.06,
+      "date": "2023-04-23",
+      "source": "India Today - NCB busts darkweb based drug network, seizes 60 grams MDMA",
+      "sourceUrl": "https://www.indiatoday.in/india/story/ncb-busts-darkweb-based-drug-network-seizes-drugs-2363495-2023-04-23",
+      "headline": "NCB busts darkweb based drug network, seizes 60 grams MDMA worth lakhs; 2 held",
+      "eventName": "Mumbai nightlife darknet supply",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-noida-techie-mdma-289",
+      "country": "India",
+      "location": {
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "lat": 28.5355,
+        "lon": 77.391
+      },
+      "drugType": "MDMA",
+      "quantityKg": 0.03,
+      "date": "2023-02-27",
+      "source": "Hindustan Times - Woman techie among 3 held with drugs in Noida, was to be supplied at parties",
+      "sourceUrl": "https://www.hindustantimes.com/cities/noida-news/woman-techie-among-3-held-with-drugs-in-noida-was-to-be-supplied-at-parties-cops-101678733524298.html",
+      "headline": "Woman techie among 3 held with drugs in Noida, was to be supplied at parties: cops",
+      "eventName": "Noida rave party supply chain",
+      "agency": "Gautam Budh Nagar Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-lsd-anjuna-lab",
+      "country": "India",
+      "location": {
+        "city": "Anjuna",
+        "state": "Goa",
+        "lat": 15.5748,
+        "lon": 73.7397
+      },
+      "drugType": "LSD",
+      "quantityKg": 0.25,
+      "date": "2023-02-26",
+      "source": "Times of India - LSD lab busted in Goa's Anjuna, drugs worth over Rs 25 lakh seized",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/goa/lsd-lab-busted-in-goas-anjuna-drugs-worth-over-rs-25-lakh-seized/articleshow/99950242.cms",
+      "headline": "LSD lab busted in Goa's Anjuna, drugs worth over Rs 25 lakh seized",
+      "eventName": "Anjuna party-circuit LSD lab (Goa rave supply)",
+      "agency": "Goa Police ANC",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-gurgaon-casadanza-288",
+      "country": "India",
+      "location": {
+        "city": "Gurugram",
+        "state": "Haryana",
+        "lat": 28.4595,
+        "lon": 77.0266
+      },
+      "drugType": "Heroin + Cocaine + Cannabis + MDMA",
+      "quantityKg": 0.3,
+      "date": "2023-01-28",
+      "source": "Indian Express - 'Drugs search': Gurgaon police take blood samples from 288 at club",
+      "sourceUrl": "https://indianexpress.com/article/cities/delhi/party-goers-gurgaon-give-blood-samples-police-raid-8409770/",
+      "headline": "'Drugs search': Gurgaon police take blood samples from 288 at club",
+      "eventName": "Casa Danza nightclub Udyog Vihar rave party",
+      "agency": "Gurgaon Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-ncb-mdma-mephedrone-foreign",
+      "country": "India",
+      "location": {
+        "city": "Goa",
+        "state": "Goa",
+        "lat": 15.2993,
+        "lon": 74.124
+      },
+      "drugType": "MDMA + Mephedrone + Cannabis",
+      "quantityKg": 0.202,
+      "date": "2022-11-28",
+      "source": "Mid-day - NCB seizes drugs worth Rs 5 lakh in Goa, nabs two foreign nationals",
+      "sourceUrl": "https://www.mid-day.com/mumbai/mumbai-news/article/ncb-seizes-drugs-worth-rs-5-lakh-in-goa-nabs-two-foreign-nationals-23257900",
+      "headline": "NCB seizes drugs worth Rs 5 lakh in Goa, nabs two foreign nationals",
+      "eventName": "Goa North party circuit (foreign nationals)",
+      "agency": "NCB Goa",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-2women-nye-2022",
+      "country": "India",
+      "location": {
+        "city": "Siolim",
+        "state": "Goa",
+        "lat": 15.6205,
+        "lon": 73.7651
+      },
+      "drugType": "Cannabis + MDMA + Cocaine + Amphetamine",
+      "quantityKg": 1.08,
+      "date": "2022-01-02",
+      "source": "NDTV - 2 Women Arrested For Supplying Drugs In Goa For New Year Eve Parties",
+      "sourceUrl": "https://www.ndtv.com/india-news/2-women-arrested-for-supplying-drugs-in-goa-for-new-year-eve-parties-2685254",
+      "headline": "2 Women Arrested For Supplying Drugs In Goa For New Year Eve Parties",
+      "eventName": "New Year Eve 2022 Goa parties",
+      "agency": "NCB Mumbai+Goa",
+      "severity": "high"
+    },
+    {
+      "id": "IN-RAVE-cruise-7-more-2021",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA + Cocaine + Cannabis",
+      "quantityKg": 0.1,
+      "date": "2021-10-05",
+      "source": "Business Standard - Cruise ship drugs: NCB arrests 7 more persons in rave party case",
+      "sourceUrl": "https://www.business-standard.com/article/current-affairs/cruise-ship-drugs-ncb-arrests-7-more-persons-in-rave-party-case-121100501278_1.html",
+      "headline": "Cruise ship drugs: NCB arrests 7 more persons in rave party case",
+      "eventName": "Cordelia Cruise rave party — followup arrests",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-aryan-cruise-2021",
+      "country": "India",
+      "location": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "lat": 19.076,
+        "lon": 72.8777
+      },
+      "drugType": "MDMA + Cocaine + Cannabis",
+      "quantityKg": 0.06,
+      "date": "2021-10-02",
+      "source": "Indian Express - Shah Rukh Khan's son Aryan Khan among 8 held in drugs bust on cruise ship",
+      "sourceUrl": "https://indianexpress.com/article/cities/mumbai/srks-son-aryan-khan-drugs-case-ncb-raid-on-cruise-7548967/",
+      "headline": "Shah Rukh's son Aryan Khan among 8 held in drugs bust on cruise ship; more raids on",
+      "eventName": "Cordelia Cruise Mumbai→Goa rave party (Aryan Khan case)",
+      "agency": "NCB",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-rave-5-detained",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Multiple",
+      "quantityKg": 0.1,
+      "date": "2021-04-10",
+      "source": "Times of India - Five detained after raid on 'rave party' at Vagator",
+      "sourceUrl": "https://timesofindia.indiatimes.com/city/goa/five-detained-after-raid-on-rave-party-at-vagator/articleshow/81488612.cms",
+      "headline": "Five detained after raid on 'rave party' at Vagator",
+      "eventName": "Vagator beach rave party",
+      "agency": "Goa Police",
+      "severity": "low"
+    },
+    {
+      "id": "IN-RAVE-goa-vagator-rave-23",
+      "country": "India",
+      "location": {
+        "city": "Vagator",
+        "state": "Goa",
+        "lat": 15.5975,
+        "lon": 73.7447
+      },
+      "drugType": "Cocaine + MDMA",
+      "quantityKg": 0.3,
+      "date": "2020-08-16",
+      "source": "Indian Express - Goa: 23 arrested at rave party, drugs worth Rs 9 lakh seized",
+      "sourceUrl": "https://indianexpress.com/article/cities/goa/goa-vagator-rave-party-crime-branch-arrest-drugs-seized-6556881/",
+      "headline": "Goa: 23 arrested at rave party, drugs worth Rs 9 lakh seized",
+      "eventName": "Firangipani Villas Vagator rave party (during COVID)",
+      "agency": "Goa Crime Branch",
+      "severity": "low"
+    }
+  ],
+  "events": [
+    {
+      "name": "9x9 Mumbai Concert (Goregaon NESCO)",
+      "count": 1,
+      "totalKg": 0.2,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Anjuna late-night party ops",
+      "count": 1,
+      "totalKg": 0.02,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Anjuna"
+      ]
+    },
+    {
+      "name": "Anjuna party-circuit LSD lab (Goa rave supply)",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "LSD"
+      ],
+      "cities": [
+        "Anjuna"
+      ]
+    },
+    {
+      "name": "Anjuna party-circuit arrest",
+      "count": 1,
+      "totalKg": 0.2,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Anjuna"
+      ]
+    },
+    {
+      "name": "Bengaluru MDMA racket (rave party supply)",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Bengaluru NYE rave party supply (Nigerian national)",
+      "count": 1,
+      "totalKg": 1.5,
+      "drugs": [
+        "Ecstasy",
+        "MDMA"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Bengaluru college student rave supply",
+      "count": 1,
+      "totalKg": 0.15,
+      "drugs": [
+        "Cannabis",
+        "MDMA"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Bengaluru drug trafficking (rave circuit)",
+      "count": 1,
+      "totalKg": 0.15,
+      "drugs": [
+        "Cannabis",
+        "MDMA",
+        "Methamphetamine"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Bengaluru farmhouse rave (Electronic City)",
+      "count": 1,
+      "totalKg": 0.2,
+      "drugs": [
+        "Ecstasy",
+        "MDMA"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Casa Danza nightclub Udyog Vihar rave party",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "Heroin",
+        "MDMA"
+      ],
+      "cities": [
+        "Gurugram"
+      ]
+    },
+    {
+      "name": "Cordelia Cruise Mumbai→Goa rave party (Aryan Khan case)",
+      "count": 1,
+      "totalKg": 0.06,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Cordelia Cruise rave party — followup arrests",
+      "count": 1,
+      "totalKg": 0.1,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Cyber Towers rented-apartment rave party",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Hyderabad"
+      ]
+    },
+    {
+      "name": "Firangipani Villas Vagator rave party (during COVID)",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "GM Farmhouse Electronic City rave party (Bengaluru)",
+      "count": 1,
+      "totalKg": 0.5,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Bengaluru"
+      ]
+    },
+    {
+      "name": "Goa LSD blot party circuit — money-laundering case",
+      "count": 1,
+      "totalKg": 1.0,
+      "drugs": [
+        "LSD"
+      ],
+      "cities": [
+        "Goa"
+      ]
+    },
+    {
+      "name": "Goa North party circuit (foreign nationals)",
+      "count": 1,
+      "totalKg": 0.202,
+      "drugs": [
+        "Cannabis",
+        "MDMA",
+        "Mephedrone"
+      ],
+      "cities": [
+        "Goa"
+      ]
+    },
+    {
+      "name": "Goa high-end clubs / December 2024 EDM concerts",
+      "count": 1,
+      "totalKg": 562.0,
+      "drugs": [
+        "Cocaine"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "Goa interstate rave party supply",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Goa"
+      ]
+    },
+    {
+      "name": "Goa party-circuit darknet LSD supply",
+      "count": 1,
+      "totalKg": 0.02,
+      "drugs": [
+        "LSD"
+      ],
+      "cities": [
+        "Goa"
+      ]
+    },
+    {
+      "name": "Goregaon NESCO music festival (MDMA overdose deaths)",
+      "count": 1,
+      "totalKg": 0.03,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Hyderabad IT hub pub (Madhapur/Gachibowli)",
+      "count": 1,
+      "totalKg": 0.15,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Hyderabad"
+      ]
+    },
+    {
+      "name": "Hyderabad rave party",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Hyderabad"
+      ]
+    },
+    {
+      "name": "Hyderabad rave party (liquor+drugs)",
+      "count": 1,
+      "totalKg": 0.2,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Hyderabad"
+      ]
+    },
+    {
+      "name": "Hyderabad–Goa party circuit supply",
+      "count": 1,
+      "totalKg": 0.5,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Hyderabad"
+      ]
+    },
+    {
+      "name": "Karnataka international MDMA cartel (rave circuit)",
+      "count": 1,
+      "totalKg": 37.87,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mangaluru"
+      ]
+    },
+    {
+      "name": "Kharadi luxury suite rave party (Pune)",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Pune"
+      ]
+    },
+    {
+      "name": "Kondapur rave party (darkweb sourced)",
+      "count": 1,
+      "totalKg": 0.1,
+      "drugs": [
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Kondapur"
+      ]
+    },
+    {
+      "name": "Kondapur service apartment rave party",
+      "count": 1,
+      "totalKg": 0.15,
+      "drugs": [
+        "Cocaine",
+        "Ecstasy",
+        "MDMA"
+      ],
+      "cities": [
+        "Kondapur"
+      ]
+    },
+    {
+      "name": "Madhapur NYE party raid",
+      "count": 1,
+      "totalKg": 0.05,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Madhapur"
+      ]
+    },
+    {
+      "name": "Mumbai nightclub circuit (US/UK-linked syndicate)",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "Cannabis",
+        "LSD",
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Mumbai nightclub circuit (darknet parcel from Netherlands)",
+      "count": 1,
+      "totalKg": 2.17,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Mumbai nightlife darknet supply",
+      "count": 1,
+      "totalKg": 0.06,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Mumbai rave party supply chain (darknet)",
+      "count": 1,
+      "totalKg": 0.02,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "NESCO 9x9 Mumbai music festival MDMA supply chain",
+      "count": 1,
+      "totalKg": 0.05,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "NESCO Concert Goregaon (9x9 Mumbai music fest)",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "NESCO Concert Goregaon — ecstasy pills recovered Raigad",
+      "count": 1,
+      "totalKg": 0.1,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Raigad"
+      ]
+    },
+    {
+      "name": "NESCO Concert Goregaon — student MDMA supplier",
+      "count": 1,
+      "totalKg": 0.02,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "New Year Eve 2022 Goa parties",
+      "count": 1,
+      "totalKg": 1.08,
+      "drugs": [
+        "Amphetamine",
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Siolim"
+      ]
+    },
+    {
+      "name": "Noida YouTuber rave party (snake venom)",
+      "count": 1,
+      "totalKg": 0.01,
+      "drugs": [
+        "Snake Venom"
+      ],
+      "cities": [
+        "Noida"
+      ]
+    },
+    {
+      "name": "Noida rave party supply chain",
+      "count": 1,
+      "totalKg": 0.03,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Noida"
+      ]
+    },
+    {
+      "name": "Pan-India rave party drug network 'Team Kalki' (darknet, crypto)",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "Cannabis",
+        "LSD",
+        "MDMA"
+      ],
+      "cities": [
+        "Mumbai"
+      ]
+    },
+    {
+      "name": "Pune Kharadi rave (Khadse son-in-law)",
+      "count": 1,
+      "totalKg": 0.25,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Pune"
+      ]
+    },
+    {
+      "name": "Pune Kharadi studio-suite rave (Khadse family)",
+      "count": 1,
+      "totalKg": 0.2,
+      "drugs": [
+        "Cannabis",
+        "Cocaine"
+      ],
+      "cities": [
+        "Pune"
+      ]
+    },
+    {
+      "name": "Pune rave party (mass detention)",
+      "count": 1,
+      "totalKg": 0.5,
+      "drugs": [
+        "Cannabis",
+        "MDMA"
+      ],
+      "cities": [
+        "Pune"
+      ]
+    },
+    {
+      "name": "Sunburn Goa 2024 (drug overdose death)",
+      "count": 1,
+      "totalKg": 0.005,
+      "drugs": [
+        "MDMA"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "Sunburn Goa EDM festival (3-day)",
+      "count": 1,
+      "totalKg": 0.05,
+      "drugs": [
+        "Cannabis",
+        "Cocaine"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "Sunburn Klassique (Vagator by-invite rave)",
+      "count": 1,
+      "totalKg": 0.3,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "Thane rave party (large-scale)",
+      "count": 1,
+      "totalKg": 0.5,
+      "drugs": [
+        "Cannabis",
+        "Cocaine",
+        "MDMA"
+      ],
+      "cities": [
+        "Thane"
+      ]
+    },
+    {
+      "name": "Vagator beach rave party",
+      "count": 1,
+      "totalKg": 0.1,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    },
+    {
+      "name": "Vagator international narcotics racket (ED/NCB PMLA raids)",
+      "count": 1,
+      "totalKg": 5.0,
+      "drugs": [
+        "Multiple"
+      ],
+      "cities": [
+        "Vagator"
+      ]
+    }
+  ],
+  "summary": {
+    "totalSeizures": 51,
+    "totalKg": 618.797,
+    "byDrugType": {
+      "MDMA": 38,
+      "Methamphetamine": 1,
+      "Cannabis": 16,
+      "Cocaine": 19,
+      "Multiple": 6,
+      "Ecstasy": 3,
+      "LSD": 5,
+      "Snake Venom": 1,
+      "Heroin": 1,
+      "Mephedrone": 1,
+      "Amphetamine": 1
+    },
+    "byEvent": {
+      "9x9 Mumbai Concert (Goregaon NESCO)": 1,
+      "Anjuna late-night party ops": 1,
+      "Anjuna party-circuit LSD lab (Goa rave supply)": 1,
+      "Anjuna party-circuit arrest": 1,
+      "Bengaluru MDMA racket (rave party supply)": 1,
+      "Bengaluru NYE rave party supply (Nigerian national)": 1,
+      "Bengaluru college student rave supply": 1,
+      "Bengaluru drug trafficking (rave circuit)": 1,
+      "Bengaluru farmhouse rave (Electronic City)": 1,
+      "Casa Danza nightclub Udyog Vihar rave party": 1,
+      "Cordelia Cruise Mumbai→Goa rave party (Aryan Khan case)": 1,
+      "Cordelia Cruise rave party — followup arrests": 1,
+      "Cyber Towers rented-apartment rave party": 1,
+      "Firangipani Villas Vagator rave party (during COVID)": 1,
+      "GM Farmhouse Electronic City rave party (Bengaluru)": 1,
+      "Goa LSD blot party circuit — money-laundering case": 1,
+      "Goa North party circuit (foreign nationals)": 1,
+      "Goa high-end clubs / December 2024 EDM concerts": 1,
+      "Goa interstate rave party supply": 1,
+      "Goa party-circuit darknet LSD supply": 1,
+      "Goregaon NESCO music festival (MDMA overdose deaths)": 1,
+      "Hyderabad IT hub pub (Madhapur/Gachibowli)": 1,
+      "Hyderabad rave party": 1,
+      "Hyderabad rave party (liquor+drugs)": 1,
+      "Hyderabad–Goa party circuit supply": 1,
+      "Karnataka international MDMA cartel (rave circuit)": 1,
+      "Kharadi luxury suite rave party (Pune)": 1,
+      "Kondapur rave party (darkweb sourced)": 1,
+      "Kondapur service apartment rave party": 1,
+      "Madhapur NYE party raid": 1,
+      "Mumbai nightclub circuit (US/UK-linked syndicate)": 1,
+      "Mumbai nightclub circuit (darknet parcel from Netherlands)": 1,
+      "Mumbai nightlife darknet supply": 1,
+      "Mumbai rave party supply chain (darknet)": 1,
+      "NESCO 9x9 Mumbai music festival MDMA supply chain": 1,
+      "NESCO Concert Goregaon (9x9 Mumbai music fest)": 1,
+      "NESCO Concert Goregaon — ecstasy pills recovered Raigad": 1,
+      "NESCO Concert Goregaon — student MDMA supplier": 1,
+      "New Year Eve 2022 Goa parties": 1,
+      "Noida YouTuber rave party (snake venom)": 1,
+      "Noida rave party supply chain": 1,
+      "Pan-India rave party drug network 'Team Kalki' (darknet, crypto)": 1,
+      "Pune Kharadi rave (Khadse son-in-law)": 1,
+      "Pune Kharadi studio-suite rave (Khadse family)": 1,
+      "Pune rave party (mass detention)": 1,
+      "Sunburn Goa 2024 (drug overdose death)": 1,
+      "Sunburn Goa EDM festival (3-day)": 1,
+      "Sunburn Klassique (Vagator by-invite rave)": 1,
+      "Thane rave party (large-scale)": 1,
+      "Vagator beach rave party": 1,
+      "Vagator international narcotics racket (ED/NCB PMLA raids)": 1
+    }
+  }
+}

@@ -1,201 +1,289 @@
-/* ============================================================
-   NARC KART — KIRANATRACK DESIGN SYSTEM
-   ============================================================ */
+/* ─────────────────────────────────────────────────────────────
+   NARC KART — HALLMARK DESIGN SYSTEM v4.0
+   Genre: Tactical War Room / SIGINT Ops Interface
+   Macrostructure: Full-Bleed Map + Floating HUD Overlays
+   ───────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════
+   1. TOKENS — OKLCH PALETTE (locked, no inline values)
+   ═══════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 :root {
-  /* Backgrounds */
-  --bg-primary: #000000;
-  --bg-secondary: #0F0F0F;
-  --bg-tertiary: #121212;
+  /* Backgrounds — pure depth, no colour */
+  --bg-void:       #000000;
+  --bg-surface:    #0A0A0A;
+  --bg-raised:     #111111;
+  --bg-overlay:    #161616;
+  --bg-glass:      rgba(10, 10, 10, 0.88);
 
-  /* Text */
-  --text-primary: #FFFFFF;
-  --text-secondary: #8E8E8E;
-  --text-muted: #626262;
+  /* Text — strict grayscale */
+  --text-primary:  #F0F0F0;
+  --text-secondary:#888888;
+  --text-muted:    #444444;
+  --text-inverse:  #000000;
 
-  /* Borders */
-  --border-subtle: #262626;
-  --border-medium: #333333;
-  --border-light: #444444;
+  /* Structural borders */
+  --border-ghost:  rgba(255, 255, 255, 0.04);
+  --border-dim:    rgba(255, 255, 255, 0.08);
+  --border-mid:    rgba(255, 255, 255, 0.14);
+  --border-bright: rgba(255, 255, 255, 0.30);
 
-  /* Accent — signal red (Narc Kart's identity) */
-  --accent: #E83D3D;
-  --accent-dim: rgba(232, 61, 61, 0.15);
-  --accent-glow: rgba(232, 61, 61, 0.3);
+  /* Accent — Signal Red (≤5% of viewport) */
+  --accent:         #E83D3D;
+  --accent-dim:     rgba(232, 61, 61, 0.10);
+  --accent-mid:     rgba(232, 61, 61, 0.22);
+  --accent-bright:  rgba(232, 61, 61, 0.45);
+  --accent-glow:    0 0 24px rgba(232, 61, 61, 0.20);
 
-  /* Severity */
-  --severity-critical: #E83D3D;
-  --severity-high: #FF8C42;
-  --severity-low: #FFCC00;
+  /* Severity scale */
+  --sev-critical:   #E83D3D;
+  --sev-high:       #FF7043;
+  --sev-low:       #FFB300;
 
-  /* Radii */
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-xs: 4px;
+  /* District choropleth — same severity scale by default, swapped
+     to rave palette in [data-mode="rave"] below. Use these on
+     <path> elements via CSS (fill, fill-opacity, stroke) so the
+     district layer never needs a JS theme prop. */
+  --dist-critical:   #E83D3D;
+  --dist-high:       #FF7043;
+  --dist-low:        #FFB300;
+  --dist-stroke:        rgba(0, 0, 0, 0.55);
+  --dist-stroke-none:   rgba(255, 255, 255, 0.10);
 
-  /* Font */
-  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Functional */
+  --online:        #22C55E;
+  --offline:       #EF4444;
+  --map-cyan:      #00E5FF;
+
+  /* Typography */
+  --font-mono:     'Share Tech Mono', 'Courier New', monospace;
+
+  /* Spacing — 4pt scale */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* Radius */
+  --r-sm:  4px;
+  --r-md:  8px;
+  --r-lg:  12px;
+
+  /* Transitions */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-fast:   120ms;
+  --dur-mid:    220ms;
+  --dur-slow:   380ms;
 }
 
-/* ============================================================
-   DOT-GRID BACKGROUND PATTERN
-   ============================================================ */
-.dot-grid-bg {
-  background-image: radial-gradient(circle, #262626 1px, transparent 1px);
+/* ═══════════════════════════════════════
+   1b. RAVE THEME TOKENS
+   Active when [data-mode="rave"] is set on the shell.
+   Reuses the same mono font + 4pt spacing scale — just a different palette.
+   ═══════════════════════════════════════ */
+[data-mode="rave"] {
+  /* Neon palette: magenta primary, cyan secondary, acid green tertiary */
+  --rave-primary:    #FF1B8D;        /* hot magenta */
+  --rave-secondary:  #00E5FF;        /* electric cyan */
+  --rave-tertiary:   #B6FF00;        /* acid lime */
+  --rave-violet:     #8B5CF6;        /* deep violet */
+
+  --rave-primary-dim:   rgba(255, 27, 141, 0.12);
+  --rave-primary-mid:   rgba(255, 27, 141, 0.28);
+  --rave-primary-bright:rgba(255, 27, 141, 0.55);
+  --rave-secondary-dim: rgba(0, 229, 255, 0.14);
+  --rave-glow-primary:  0 0 18px rgba(255, 27, 141, 0.35);
+  --rave-glow-secondary:0 0 18px rgba(0, 229, 255, 0.30);
+
+  /* Replace the war-room red accent with magenta while in rave mode */
+  --accent:         var(--rave-primary);
+  --accent-dim:     var(--rave-primary-dim);
+  --accent-mid:     var(--rave-primary-mid);
+  --accent-bright:  var(--rave-primary-bright);
+  --accent-glow:    var(--rave-glow-primary);
+
+  /* Swap the choropleth to the rave palette — magenta/cyan/lime —
+     so the district layer reads as part of the kaleidoscope, not a
+     red war-room heatmap. Driven entirely by [data-mode="rave"]
+     on the shell; no JS theme prop needed. */
+  --dist-critical:   var(--rave-primary);
+  --dist-high:       var(--rave-secondary);
+  --dist-low:        var(--rave-tertiary);
+  --dist-stroke:        rgba(255, 27, 141, 0.55);
+  --dist-stroke-none:   rgba(0, 229, 255, 0.20);
+}
+
+/* ═══════════════════════════════════════
+   2. RESET + BASE
+   ═══════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-void);
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ═══════════════════════════════════════
+   3. DOT-GRID BACKGROUND TEXTURE
+   ═══════════════════════════════════════ */
+
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
   background-size: 24px 24px;
-  background-position: center center;
+  background-position: 0 0;
 }
 
-/* ============================================================
-   BASE CARD STYLE
-   ============================================================ */
-.card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
+/* ═══════════════════════════════════════
+   4. SCROLLBAR — tactical dark
+   ═══════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-mid);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
-/* ============================================================
-   BADGE / PILL STYLES
-   ============================================================ */
+/* ═══════════════════════════════════════
+   5. FOCUS — visible, on-brand
+   ═══════════════════════════════════════ */
 
-/* LIVE / NEW pill — white bg + black text (KiranaTrack signature) */
-.badge-live {
-  display: inline-block;
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  padding: 2px 6px;
-  border-radius: 3px;
-  line-height: 1.4;
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
 }
 
-/* Severity pills */
-.badge-critical {
-  color: var(--severity-critical);
-  border: 1px solid var(--severity-critical);
-  background: transparent;
-}
+/* ═══════════════════════════════════════
+   6. SELECTION — inverted
+   ═══════════════════════════════════════ */
 
-.badge-high {
-  color: var(--severity-high);
-  border: 1px solid var(--severity-high);
-  background: transparent;
-}
-
-.badge-low {
-  color: var(--severity-low);
-  border: 1px solid var(--severity-low);
-  background: transparent;
-}
-
-/* ============================================================
-   INPUT / SELECT BASE
-   ============================================================ */
-.ds-input {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  padding: 8px 12px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  outline: none;
-  border-radius: var(--radius-sm);
-  transition: border-color 0.2s;
-  width: 100%;
-}
-
-.ds-input:focus {
-  border-color: var(--accent);
-}
-
-.ds-input::placeholder {
-  color: var(--text-muted);
-}
-
-.ds-select {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  padding: 8px 12px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  outline: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  width: 100%;
-  appearance: none;
-}
-
-.ds-select:focus {
-  border-color: var(--accent);
-}
-
-.ds-select option {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-/* ============================================================
-   BUTTON BASE
-   ============================================================ */
-.ds-btn {
-  font-family: var(--font-mono);
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
-  border: 1px solid transparent;
-  padding: 8px 16px;
-}
-
-.ds-btn:active {
-  transform: scale(0.98);
-}
-
-.ds-btn-primary {
+::selection {
   background: var(--accent);
-  color: var(--text-primary);
-  border-color: var(--accent);
+  color: var(--text-inverse);
 }
 
-.ds-btn-primary:hover {
-  background: #c93030;
-  border-color: #c93030;
+/* ═══════════════════════════════════════
+   7. LEAFLET OVERRIDES — hide default chrome
+   ═══════════════════════════════════════ */
+
+.leaflet-container {
+  background: var(--bg-void) !important;
+  font-family: var(--font-mono) !important;
 }
 
-.ds-btn-ghost {
-  background: transparent;
-  color: var(--text-secondary);
-  border-color: var(--border-medium);
+.leaflet-control-zoom {
+  display: none !important;
 }
 
-.ds-btn-ghost:hover {
-  color: var(--text-primary);
-  border-color: var(--text-secondary);
+.leaflet-control-attribution {
+  background: var(--bg-glass) !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9px !important;
+  backdrop-filter: blur(8px);
+  border-radius: var(--r-sm) 0 0 0;
 }
 
-/* ============================================================
-   SECTION TITLE
-   ============================================================ */
-.section-title {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+.leaflet-control-attribution a {
+  color: var(--text-secondary) !important;
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-overlay) !important;
+  border: 1px solid var(--border-mid) !important;
+  border-radius: var(--r-md) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-mono) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: var(--sp-3) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-overlay) !important;
+  border: 1px solid var(--border-mid) !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--text-secondary) !important;
+  font-size: 16px !important;
+  top: 6px !important;
+  right: 8px !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: var(--text-primary) !important;
+}
+
+/* ═══════════════════════════════════════
+   8. UTILITY CLASSES
+   ═══════════════════════════════════════ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

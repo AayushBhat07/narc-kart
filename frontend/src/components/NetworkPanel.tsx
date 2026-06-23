@@ -1,107 +1,116 @@
-import { useApi } from '../hooks/useApi';
+/* Hallmark · genre: tactical · panel: network */
+import { ApiStats, Seizure } from '../types';
 import styles from './NetworkPanel.module.css';
 
-export function NetworkPanel() {
-  const { stats } = useApi();
+interface Props {
+  seizures: Seizure[];
+  stats: ApiStats | null;
+  onClose: () => void;
+}
 
-  // Build a simple adjacency from top locations
-  const nodes = (stats?.topLocations ?? []).map((loc: any, i: number) => {
-    // Handle both { city, state, totalKg } and { location: "City, State", count } formats
-    let label = loc.city || '';
-    let state = loc.state || '';
-    let weight = loc.totalKg || loc.seizureCount || 0;
-    if (!label && loc.location) {
-      const parts = String(loc.location).split(', ');
-      label = parts[0] || '';
-      state = parts.slice(1).join(', ') || '';
-    }
-    return { id: i, label, state, weight };
+export function NetworkPanel({ seizures, onClose }: Props) {
+  // Agency rollup
+  const agencyMap: Record<string, number> = {};
+  seizures.forEach(s => {
+    const agency = s.agency || 'Unknown';
+    agencyMap[agency] = (agencyMap[agency] || 0) + 1;
   });
+  const agencyEntries = Object.entries(agencyMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 12);
+  const maxAgency = agencyEntries[0]?.[1] || 1;
+
+  // State rollup
+  const stateMap: Record<string, number> = {};
+  seizures.forEach(s => {
+    const state = s.location?.state || 'Unknown';
+    stateMap[state] = (stateMap[state] || 0) + 1;
+  });
+  const stateEntries = Object.entries(stateMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+  const maxState = stateEntries[0]?.[1] || 1;
+
+  const uniqueAgencies = agencyEntries.length;
+  // Computed for future use; suppress unused-var until rendered.
+  const topAgency = agencyEntries[0]?.[0] || '—';
+  void topAgency;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.icon}>⬡</span>
-        <span className={styles.title}>NETWORK</span>
+    <div className={styles.panel} role="region" aria-label="Network panel">
+      <div className={styles.panelHeader}>
+        <h2 className={styles.panelTitle}>NETWORK MAP</h2>
+        <button className={styles.panelClose} onClick={onClose} aria-label="Close panel">✕</button>
       </div>
 
-      <div className={styles.statusRow}>
-        <span className={styles.statusDot} />
-        <span className={styles.statusText}>SYSTEMS ONLINE</span>
-        <span className={styles.nodeCount}>{nodes.length} NODES</span>
-      </div>
+      <div className={styles.panelBody}>
 
-      <div className={styles.mapArea}>
-        <div className={styles.graphContainer}>
-          {nodes.length > 0 ? (
-            nodes.map((node, i) => {
-              const size = Math.max(40, Math.min(80, node.weight / 5));
-              const angle = (i / nodes.length) * 2 * Math.PI;
-              const radius = 100;
-              const cx = 160 + radius * Math.cos(angle);
-              const cy = 160 + radius * Math.sin(angle);
-              return (
-                <div
-                  key={node.id}
-                  className={styles.node}
-                  style={{
-                    width: size,
-                    height: size,
-                    left: cx - size / 2,
-                    top: cy - size / 2,
-                    borderColor: node.weight > 100 ? 'var(--accent)' : 'var(--border-medium)',
-                  }}
-                  title={`${node.label}, ${node.state} — ${node.weight.toFixed(0)} KG`}
-                >
-                  <span className={styles.nodeLabel}>{node.label.substring(0, 3)}</span>
-                </div>
-              );
-            })
-          ) : (
-            <span className={styles.empty}>NO NODES</span>
-          )}
-          {nodes.length > 1 && nodes.map((_node, i) => {
-            const angleA = (i / nodes.length) * 2 * Math.PI;
-            const angleB = ((i + 1) % nodes.length) / nodes.length * 2 * Math.PI;
-            const r = 100;
-            const x1 = 160 + r * Math.cos(angleA);
-            const y1 = 160 + r * Math.sin(angleA);
-            const x2 = 160 + r * Math.cos(angleB);
-            const y2 = 160 + r * Math.sin(angleB);
-            return (
-              <svg key={i} className={styles.edgeSvg}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--border-medium)" strokeWidth="1" />
-              </svg>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className={styles.legend}>
-        <span className={styles.legendTitle}>CONNECTIONS</span>
-        <div className={styles.legendRow}>
-          <span className={styles.legendDot} style={{ borderColor: 'var(--accent)' }} />
-          <span>Major Hub ({'>'}100KG)</span>
-        </div>
-        <div className={styles.legendRow}>
-          <span className={styles.legendDot} />
-          <span>Standard Node</span>
-        </div>
-      </div>
-
-      <div className={styles.table}>
-        <div className={styles.tableHeader}>
-          <span>CITY</span>
-          <span>STATE</span>
-          <span>KG</span>
-        </div>
-        {nodes.slice(0, 6).map((node) => (
-          <div key={node.id} className={styles.tableRow}>
-            <span>{node.label}</span>
-            <span>{node.state}</span>
-            <span>{node.weight.toFixed(0)}</span>
+        {/* Summary */}
+        <div className={styles.summaryGrid}>
+          <div className={styles.summaryCard}>
+            <span className={`${styles.summaryCardValue} ${styles['summaryCardValue--accent']}`}>{uniqueAgencies}</span>
+            <span className={styles.summaryCardLabel}>Agencies</span>
           </div>
-        ))}
+          <div className={styles.summaryCard}>
+            <span className={styles.summaryCardValue}>{stateEntries.length}</span>
+            <span className={styles.summaryCardLabel}>States</span>
+          </div>
+        </div>
+
+        {/* State breakdown */}
+        <div className={styles.chartSection}>
+          <div className={styles.sectionTitle}>BY STATE</div>
+          {stateEntries.map(([state, count], idx) => (
+            <div key={state} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '2px 0' }}>
+              <span style={{
+                fontSize: '9px', fontWeight: '700', color: idx === 0 ? 'var(--accent)' : 'var(--text-muted)',
+                fontFamily: 'var(--font-mono)', width: '18px', textAlign: 'right', flexShrink: 0,
+              }}>
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span style={{
+                flex: 1, fontSize: '11px', color: 'var(--text-secondary)',
+                fontFamily: 'var(--font-mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              }}>
+                {state}
+              </span>
+              <div style={{ width: '60px', height: '2px', background: 'var(--border-dim)', borderRadius: '1px', overflow: 'hidden', flexShrink: 0 }}>
+                <div style={{
+                  height: '100%', borderRadius: '1px',
+                  background: idx === 0 ? 'var(--accent)' : idx === 1 ? 'var(--sev-high)' : 'var(--border-mid)',
+                  width: `${Math.round((count / maxState) * 100)}%`,
+                  transition: 'width 380ms cubic-bezier(0.16,1,0.3,1)',
+                }} />
+              </div>
+              <span style={{
+                fontSize: '10px', fontVariantNumeric: 'tabular-nums', color: idx === 0 ? 'var(--text-primary)' : 'var(--text-muted)',
+                fontFamily: 'var(--font-mono)', width: '24px', textAlign: 'right', flexShrink: 0,
+              }}>
+                {count}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Agency breakdown */}
+        <div className={styles.chartSection}>
+          <div className={styles.sectionTitle}>TOP AGENCIES</div>
+          <div className={styles.agencyTable} role="list" aria-label="Agency rankings">
+            {agencyEntries.slice(0, 10).map(([agency, count], idx) => (
+              <div key={agency} className={styles.agencyRow} role="listitem">
+                <span className={`${styles.agencyRank} ${idx === 0 ? styles['agencyRank--top'] : ''}`}>
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <span className={styles.agencyName}>{agency}</span>
+                <div className={styles.agencyBar}>
+                  <div className={styles.agencyBarFill} style={{ width: `${Math.round((count / maxAgency) * 100)}%` }} />
+                </div>
+                <span className={`${styles.agencyCount} ${idx === 0 ? styles['agencyCount--top'] : ''}`}>{count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );

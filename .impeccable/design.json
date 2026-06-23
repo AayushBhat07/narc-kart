@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-13T00:00:00.000Z",
+  "title": "Design System: Narc Kart",
+  "extensions": {
+    "colorMeta": {
+      "bg-primary": { "role": "background", "displayName": "Pure Black", "canonical": "#000000", "tonalRamp": [] },
+      "bg-secondary": { "role": "surface", "displayName": "Near Black", "canonical": "#0F0F0F", "tonalRamp": [] },
+      "bg-tertiary": { "role": "surface", "displayName": "Dark Surface", "canonical": "#121212", "tonalRamp": [] },
+      "accent": { "role": "primary", "displayName": "Signal Red", "canonical": "#E83D3D", "tonalRamp": ["#FF6B6B", "#E83D3D", "#C93030", "#A02020"] },
+      "text-primary": { "role": "foreground", "displayName": "Pure White", "canonical": "#FFFFFF", "tonalRamp": [] },
+      "text-secondary": { "role": "foreground", "displayName": "Mid Gray", "canonical": "#8E8E8E", "tonalRamp": [] },
+      "text-muted": { "role": "foreground", "displayName": "Muted Gray", "canonical": "#626262", "tonalRamp": [] },
+      "border-subtle": { "role": "border", "displayName": "Subtle Border", "canonical": "#262626", "tonalRamp": [] },
+      "border-medium": { "role": "border", "displayName": "Medium Border", "canonical": "#333333", "tonalRamp": [] },
+      "border-light": { "role": "border", "displayName": "Light Border", "canonical": "#444444", "tonalRamp": [] },
+      "severity-critical": { "role": "semantic", "displayName": "Critical Red", "canonical": "#E83D3D", "tonalRamp": ["#FF6B6B", "#E83D3D", "#C93030"] },
+      "severity-high": { "role": "semantic", "displayName": "High Orange", "canonical": "#FF8C42", "tonalRamp": ["#FFA366", "#FF8C42", "#E67530"] },
+      "severity-low": { "role": "semantic", "displayName": "Low Amber", "canonical": "#FFCC00", "tonalRamp": ["#FFE066", "#FFCC00", "#E6B800"] },
+      "status-online": { "role": "semantic", "displayName": "Online Green", "canonical": "#22C55E", "tonalRamp": [] },
+      "map-marker": { "role": "accent", "displayName": "Map Cyan", "canonical": "#00FFFF", "tonalRamp": [] }
+    },
+    "typographyMeta": {
+      "body": { "displayName": "Body Mono", "purpose": "All primary UI text, values, and content. Monospace is the brand." },
+      "label": { "displayName": "Label", "purpose": "Section labels, badges, nav items. Uppercase, wide tracking." },
+      "section-title": { "displayName": "Section Title", "purpose": "Panel section headers. Most tracked of the label styles." }
+    },
+    "shadows": [
+      { "name": "map-popup", "value": "0 4px 20px rgba(0,0,0,0.6)", "purpose": "Leaflet seizure popup only. The single shadow in the entire design." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "ease-out", "purpose": "Default transition easing." },
+      { "name": "duration-fast", "value": "150ms", "purpose": "Hover state transitions." },
+      { "name": "duration-normal", "value": "200ms", "purpose": "Color and border transitions." }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Card",
+      "kind": "card",
+      "description": "Panel and content container. Flat surface with subtle border.",
+      "html": "<div class=\"ds-card\"></div>",
+      "css": ".ds-card { background: #0F0F0F; border: 1px solid #262626; border-radius: 12px; }"
+    },
+    {
+      "name": "Badge Live",
+      "kind": "chip",
+      "description": "LIVE / NEW pill. White on black — the only white-on-dark element in the palette.",
+      "html": "<span class=\"ds-badge-live\">LIVE</span>",
+      "css": ".ds-badge-live { display: inline-block; background: #FFFFFF; color: #000000; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 3px; line-height: 1.4; }"
+    },
+    {
+      "name": "Badge Severity",
+      "kind": "chip",
+      "description": "Severity encoding. Transparent bg, colored border + text. Three variants: critical/high/low.",
+      "html": "<span class=\"ds-badge-severity ds-badge-critical\">CRITICAL</span>",
+      "css": ".ds-badge-severity { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; background: transparent; }\n.ds-badge-critical { color: #E83D3D; border: 1px solid #E83D3D; background: rgba(232,61,61,0.15); }\n.ds-badge-high { color: #FF8C42; border: 1px solid #FF8C42; background: rgba(255,140,66,0.1); }\n.ds-badge-low { color: #FFCC00; border: 1px solid #FFCC00; background: rgba(255,204,0,0.08); }"
+    },
+    {
+      "name": "Button Primary",
+      "kind": "button",
+      "description": "Primary action button. Signal red bg, white text. Hover darkens.",
+      "html": "<button class=\"ds-btn-primary\">ACTION</button>",
+      "css": ".ds-btn-primary { background: #E83D3D; color: #FFFFFF; border: 1px solid #E83D3D; border-radius: 8px; padding: 8px 16px; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: background 0.2s, border-color 0.2s; }\n.ds-btn-primary:hover { background: #c93030; border-color: #c93030; }\n.ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Button Ghost",
+      "kind": "button",
+      "description": "Ghost button. Transparent bg, gray border, gray text. Hover lightens.",
+      "html": "<button class=\"ds-btn-ghost\">CANCEL</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: #8E8E8E; border: 1px solid #333333; border-radius: 8px; padding: 8px 16px; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: border-color 0.2s, color 0.2s; }\n.ds-btn-ghost:hover { color: #FFFFFF; border-color: #8E8E8E; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "description": "Text input. Black bg, medium border, mono font. Focus shifts border to accent red.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Search...\" />",
+      "css": ".ds-input { background: #000000; border: 1px solid #333333; color: #FFFFFF; padding: 8px 12px; font-family: 'Share Tech Mono', monospace; font-size: 13px; border-radius: 8px; outline: none; transition: border-color 0.2s; width: 100%; box-sizing: border-box; }\n.ds-input:focus { border-color: #E83D3D; }\n.ds-input::placeholder { color: #626262; }"
+    },
+    {
+      "name": "Nav Item",
+      "kind": "nav",
+      "description": "Sidebar navigation item. Transparent default, red left border on active.",
+      "html": "<button class=\"ds-nav-item\">RADAR</button>",
+      "css": ".ds-nav-item { background: transparent; border: none; border-left: 2px solid transparent; color: #626262; padding: 10px 12px; font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.08em; cursor: pointer; text-align: left; border-radius: 0 8px 8px 0; transition: color 0.2s, border-left-color 0.2s, background 0.2s; width: 100%; }\n.ds-nav-item:hover { color: #FFFFFF; background: rgba(255,255,255,0.04); }\n.ds-nav-item.active { background: rgba(232,61,61,0.08); color: #FFFFFF; border-left-color: #E83D3D; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Ops Center",
+    "overview": "A terminal-native intelligence dashboard that frames real Indian drug seizure data as a live mission-control surface. The aesthetic draws from 2000s ops-center HUDs — not cyberpunk pastiche, not SaaS dashboard. The map is the mission; the panels are briefing documents; the typography is monospace and tabular. Everything is dark, dense, and deliberate. Pure black body with tonal layering for depth, signal red as the single accent used sparingly, and severity encoding that doubles as data visualization.",
+    "keyCharacteristics": [
+      "Pure black body with tonal layering (no shadows on UI)",
+      "Signal red accent used sparingly (≤5% of any screen)",
+      "Share Tech Mono throughout — the brand font",
+      "Severity colors: red/orange/yellow for volume thresholds",
+      "Dot-grid background for tactical atmosphere"
+    ],
+    "rules": [
+      { "name": "The Signal Red Rule", "body": "The accent is used only on active states, critical badges, and the live pulse indicator. It never decorates a border or background. Its rarity is the point.", "section": "colors" },
+      { "name": "The Mono-Only Rule", "body": "All UI text is Share Tech Mono. No switching to sans-serif for 'readability'. The monospace is the aesthetic commitment.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "All surfaces are flat at rest. Borders and tonal background shifts create depth. Shadows appear in exactly one place: the Leaflet map popup.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use the signal red accent sparingly. Active nav, critical badges, and the live pulse only. Never on borders or decorative elements.",
+      "Do use severity colors consistently: red = critical (>200 count or >100kg), orange = high (>100 or >10kg), yellow = standard.",
+      "Do use Share Tech Mono for all UI text.",
+      "Do use tonal layering for depth instead of shadows.",
+      "Do use the dot-grid background pattern on the main app surface."
+    ],
+    "donts": [
+      "Don't use shadows on panel surfaces. The Leaflet popup is the only exception.",
+      "Don't use the accent color on borders or decorative elements.",
+      "Don't use gradient backgrounds, glassmorphism, or neon glow effects.",
+      "Don't use sans-serif fonts as the primary UI font.",
+      "Don't use severity colors for decoration — they encode meaning."
+    ]
+  }
+}

@@ -14,7 +14,7 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'network',  label: 'NETWORK',  icon: '⬡' },
   { id: 'trending', label: 'TRENDING', icon: '★' },
   { id: 'agency',   label: 'AGENCY',   icon: '◎' },
-  { id: 'compare',  label: 'COMPARE', icon: '⊞' },
+  { id: 'compare',  label: 'COMPARE',  icon: '⊞' },
   { id: 'terminal', label: 'TERMINAL', icon: '▣' },
 ];
 
@@ -22,8 +22,8 @@ export function Sidebar({ activeTab, onTabChange, onFilterToggle }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <span className={styles.logoIcon}>NK</span>
-        <span className={styles.logoText}>OPS CENTER</span>
+        <span className={styles.logoMark}>NK</span>
+        <span className={styles.logoSub}>OPS CENTER</span>
       </div>
 
       <nav className={styles.nav} role="navigation" aria-label="Main navigation">
@@ -34,24 +34,25 @@ export function Sidebar({ activeTab, onTabChange, onFilterToggle }: Props) {
             onClick={() => onTabChange(tab.id)}
             aria-current={activeTab === tab.id ? 'page' : undefined}
           >
-            <span className={styles.icon} aria-hidden="true">{tab.icon}</span>
-            <span className={styles.label}>{tab.label}</span>
+            <span className={styles.navIcon} aria-hidden="true">{tab.icon}</span>
+            <span className={styles.navLabel}>{tab.label}</span>
           </button>
         ))}
       </nav>
 
       <div className={styles.actions}>
         <button className={styles.actionBtn} onClick={onFilterToggle}>
-          ⚙ FILTERS
+          <span className={styles.actionIcon} aria-hidden="true">⚙</span>
+          <span>FILTERS</span>
         </button>
       </div>
 
       <div className={styles.footer}>
-        <div className={styles.statusItem}>
+        <div className={styles.statusRow}>
           <span className={styles.statusDot} />
-          <span>ONLINE</span>
+          <span className={styles.statusLabel}>ONLINE</span>
         </div>
-        <div className={styles.version}>v2.0</div>
+        <div className={styles.versionTag}>v2.0</div>
       </div>
     </div>
   );

@@ -1,155 +1,201 @@
-.container {
-  width: 100%;
-  height: 100%;
+/* IntelPanel — compact slide-in panel */
+.panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: var(--bg-secondary);
-  overflow-y: auto;
+  height: 100%;
 }
 
-.header {
+.panelHeader {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-subtle);
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
 }
 
-.icon {
-  font-size: 16px;
-  color: var(--accent);
-}
-
-.title {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--text-primary);
-  font-weight: bold;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  padding: 12px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.cardLabel {
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
+.panelTitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
   text-transform: uppercase;
 }
 
-.cardValue {
-  font-size: 20px;
-  color: var(--text-primary);
-  font-weight: bold;
+.panelClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
   font-family: var(--font-mono);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
 
+.panelClose:hover {
+  color: var(--text-primary);
+  border-color: var(--border-mid);
+}
+
+.panelBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ── Stat Row ─────────────────────────────────── */
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+
+.statCell {
+  background: var(--bg-void);
+  border: 1px solid var(--border-ghost);
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statCellValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.statCellValue--accent {
+  color: var(--accent);
+}
+
+.statCellLabel {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* ── Section ──────────────────────────────────── */
 .section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .sectionTitle {
   font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
   color: var(--text-muted);
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--sp-1);
+  border-bottom: 1px solid var(--border-ghost);
 }
 
-.bars {
+/* ── Drug Type Bars ──────────────────────────── */
+.drugBars {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--sp-2);
 }
 
-.barRow {
+.drugRow {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.barLabel {
+.drugLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.drugName {
   font-size: 10px;
+  letter-spacing: 0.06em;
   color: var(--text-secondary);
-  width: 70px;
-  flex-shrink: 0;
   font-family: var(--font-mono);
+  text-transform: uppercase;
 }
 
-.barTrack {
-  flex: 1;
-  height: 5px;
-  background: var(--bg-tertiary);
-  position: relative;
-  overflow: hidden;
-  border-radius: 3px;
-}
-
-.barFill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 3px;
-  transition: width 0.4s ease;
-}
-
-.barCount {
+.drugPct {
   font-size: 10px;
-  color: var(--text-muted);
-  width: 24px;
-  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
   font-family: var(--font-mono);
 }
 
-.list {
+.drugBarTrack {
+  height: 2px;
+  background: var(--border-dim);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.drugBarFill {
+  height: 100%;
+  border-radius: 1px;
+  background: var(--accent);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+.drugBarFill--meth   { background: var(--sev-high); }
+.drugBarFill--cannabis { background: var(--sev-low); }
+.drugBarFill--cocaine { background: var(--text-secondary); }
+
+/* ── Location List ────────────────────────────── */
+.locList {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 2px;
 }
 
-.listRow {
+.locRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--r-sm);
+  transition: background var(--dur-fast);
+}
+
+.locRow:hover {
+  background: var(--border-ghost);
+}
+
+.locName {
   font-size: 11px;
-}
-
-.listRow:last-child {
-  border-bottom: none;
-}
-
-.listLabel {
   color: var(--text-secondary);
-  font-size: 11px;
-}
-
-.listValue {
-  color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 11px;
 }
 
-.empty {
-  font-size: 11px;
+.locCount {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  font-style: italic;
+  font-family: var(--font-mono);
+}
+
+.locCount--top {
+  color: var(--accent);
+  font-weight: 700;
 }

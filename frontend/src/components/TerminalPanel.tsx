@@ -1,241 +1,190 @@
+/* Hallmark · genre: tactical · panel: terminal */
 import { useState, useRef, useEffect } from 'react';
-import { useApi } from '../hooks/useApi';
+import { Seizure } from '../types';
 import styles from './TerminalPanel.module.css';
 
-export function TerminalPanel() {
-    const { seizures, stats } = useApi();
-    const [lines, setLines] = useState<Array<{ type: 'input' | 'output' | 'error'; text: string }>>([
-        { type: 'output', text: 'NARC TERMINAL v2.0 — Type "help" for commands' },
-    ]);
-    const [input, setInput] = useState('');
-    const [cmdHistory, setCmdHistory] = useState<string[]>([]);
-    const [historyIdx, setHistoryIdx] = useState(-1);
-    const bottomRef = useRef<HTMLDivElement>(null);
+interface Props {
+  seizures: Seizure[];
+}
 
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [lines]);
+type LineType = 'system' | 'input' | 'output' | 'error' | 'success' | 'accent';
 
-    const addLine = (type: 'input' | 'output' | 'error', text: string, cmd?: string) => {
-        const newLines = [...lines];
-        if (cmd) newLines.push({ type: 'input', text: cmd });
-        newLines.push({ type, text });
-        setLines(newLines.slice(-100));
-    };
+interface Line {
+  type: LineType;
+  text: string;
+}
 
-    const doExport = () => {
-        const data = JSON.stringify({ seizures, stats, exportedAt: new Date().toISOString() }, null, 2);
-        const blob = new Blob([data], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `narc-kart-export-${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    };
+const HELP_TEXT = `
+NARC KART TERMINAL v2.0
+Available commands:
+  help           Show this help
+  stats          Display summary statistics
+  top <n>        Show top N seizures by volume (default 5)
+  find <drug>    Find seizures by drug type
+  states         List all states with seizure counts
+  agencies       List top agencies by volume
+  recent <n>     Show N most recent seizures (default 5)
+  clear          Clear terminal output
+  about          About NARC KART
+`.trim();
 
-    const searchSeizures = (query: string) => {
-        const q = query.toLowerCase();
-        const results = seizures.filter(s =>
-            s.location.city.toLowerCase().includes(q) ||
-            s.location.state.toLowerCase().includes(q) ||
-            s.drugType.toLowerCase().includes(q) ||
-            s.agency.toLowerCase().includes(q) ||
-            (s.description?.toLowerCase().includes(q) ?? false)
-        );
-        if (results.length === 0) return 'No results found';
-        return results.slice(0, 5).map((s, i) =>
-            `${i + 1}. [${s.drugType.toUpperCase()}] ${s.location.city}, ${s.location.state} — ${s.quantityKg}KG`
-        ).join('\n') + `\n\nFound ${results.length} total matches`;
-    };
+function formatKg(kg: number) { return `${kg.toFixed(1)}KG`; }
+function formatDate(d: string) {
+  try { return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
+  catch { return d; }
+}
 
-    const filterByDrug = (drug: string) => {
-        const d = drug.toLowerCase();
-        const results = seizures.filter(s => s.drugType.toLowerCase() === d);
-        if (results.length === 0) return `No seizures for drug: ${drug}`;
-        const total = results.reduce((sum, s) => sum + s.quantityKg, 0);
-        return `${results.length} seizures of ${drug.toUpperCase()}\nTotal: ${total.toFixed(1)}KG`;
-    };
+function getSeverity(kg: number) {
+  if (kg > 100) return 'CRIT';
+  if (kg > 10)  return 'HIGH';
+  return 'LOW';
+}
 
-    const filterByState = (state: string) => {
-        const s = state.toLowerCase();
-        const results = seizures.filter(se => se.location.state.toLowerCase() === s);
-        if (results.length === 0) return `No seizures in state: ${state}`;
-        const total = results.reduce((sum, se) => sum + se.quantityKg, 0);
-        return `${results.length} seizures in ${results[0].location.state}\nTotal: ${total.toFixed(1)}KG`;
-    };
+function buildStats(seizures: Seizure[]) {
+  const total = seizures.length;
+  const totalKg = seizures.reduce((s, sz) => s + (sz.quantityKg || 0), 0);
+  const byType: Record<string, number> = {};
+  seizures.forEach(s => { byType[s.drugType] = (byType[s.drugType] || 0) + 1; });
+  const topDrug = Object.entries(byType).sort((a, b) => b[1] - a[1])[0];
+  return { total, totalKg, topDrug: topDrug ? `${topDrug[0]} (${topDrug[1]})` : '—' };
+}
 
-    const showTop = (n = 5) => {
-        const sorted = [...seizures].sort((a, b) => b.quantityKg - a.quantityKg).slice(0, n);
-        return sorted.map((s, i) =>
-            `${i + 1}. ${s.quantityKg >= 1000 ? (s.quantityKg / 1000).toFixed(1) + 'T' : s.quantityKg + 'KG'} — ${s.location.city}, ${s.location.state} [${s.drugType.toUpperCase()}]`
-        ).join('\n');
-    };
+export function TerminalPanel({ seizures }: Props) {
+  const [lines, setLines] = useState<Line[]>([
+    { type: 'system', text: 'NARC KART TERMINAL v2.0 — Type "help" for commands' },
+    { type: 'accent', text: '──────────────────────────────────────────────────' },
+  ]);
+  const [input, setInput] = useState('');
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState(-1);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    const showStates = () => {
-        if (!stats?.byState) return 'No state data';
-        return Object.entries(stats.byState)
-            .sort(([, a], [, b]) => (b as number) - (a as number))
-            .slice(0, 10)
-            .map(([state, count]) => `${state}: ${count}`)
-            .join('\n');
-    };
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [lines]);
 
-    const execute = (raw: string) => {
-        const cmd = raw.trim().toLowerCase();
-        if (!cmd) return;
+  const addLine = (type: LineType, text: string) =>
+    setLines(l => [...l, { type, text }]);
 
-        setCmdHistory(h => [raw, ...h].slice(0, 50));
+  const runCommand = (raw: string) => {
+    const cmd = raw.trim().toLowerCase();
+    const args = raw.trim().split(/\s+/).slice(1);
+    addLine('input', `> ${raw}`);
+
+    if (cmd === 'help') {
+      HELP_TEXT.split('\n').forEach(l => addLine('output', l));
+    } else if (cmd === 'stats') {
+      const { total, totalKg, topDrug } = buildStats(seizures);
+      addLine('output', `TOTAL SEIZURES   : ${total}`);
+      addLine('output', `TOTAL VOLUME     : ${totalKg >= 1000 ? `${(totalKg/1000).toFixed(2)}T` : `${totalKg.toFixed(1)}KG`}`);
+      addLine('output', `TOP DRUG TYPE    : ${topDrug}`);
+    } else if (cmd === 'clear') {
+      setLines([{ type: 'system', text: 'Terminal cleared.' }]);
+    } else if (cmd === 'about') {
+      addLine('output', 'NARC KART — Indian Drug Seizure Intelligence Dashboard');
+      addLine('output', 'Data: Public NCB/News records | Built with React + Leaflet');
+    } else if (cmd.startsWith('top')) {
+      const n = Math.min(parseInt(args[0] || '5'), 20);
+      const sorted = [...seizures].sort((a, b) => (b.quantityKg || 0) - (a.quantityKg || 0)).slice(0, n);
+      addLine('output', `TOP ${n} SEIZURES BY VOLUME`);
+      sorted.forEach((sz, i) => {
+        const sev = getSeverity(sz.quantityKg || 0);
+        addLine('output', `[${String(i+1).padStart(2,'0')}] ${sev} ${sz.location?.city}, ${sz.location?.state} — ${sz.drugType} ${formatKg(sz.quantityKg || 0)}`);
+      });
+    } else if (cmd.startsWith('find')) {
+      const drug = args.join(' ').toUpperCase();
+      if (!drug) { addLine('error', 'Usage: find <drug-type>'); return; }
+      const results = seizures.filter(s => s.drugType.toUpperCase().includes(drug));
+      addLine('output', `${results.length} RESULTS FOR "${drug}"`);
+      results.slice(0, 10).forEach(sz => {
+        addLine('output', `  ${sz.location?.city}, ${sz.location?.state} — ${formatKg(sz.quantityKg || 0)} [${formatDate(sz.date)}]`);
+      });
+    } else if (cmd === 'states') {
+      const m: Record<string, number> = {};
+      seizures.forEach(s => { const st = s.location?.state || '?'; m[st] = (m[st] || 0) + 1; });
+      Object.entries(m).sort((a, b) => b[1] - a[1]).forEach(([st, cnt]) => {
+        addLine('output', `  ${st.padEnd(20)} ${String(cnt).padStart(4)} REC`);
+      });
+    } else if (cmd === 'agencies') {
+      const m: Record<string, number> = {};
+      seizures.forEach(s => { const a = s.agency || '?'; m[a] = (m[a] || 0) + 1; });
+      Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 10).forEach(([a, cnt]) => {
+        addLine('output', `  ${a.substring(0, 30).padEnd(30)} ${String(cnt).padStart(4)} REC`);
+      });
+    } else if (cmd.startsWith('recent')) {
+      const n = Math.min(parseInt(args[0] || '5'), 20);
+      const sorted = [...seizures].filter(s => s.date).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, n);
+      addLine('output', `${n} MOST RECENT SEIZURES`);
+      sorted.forEach((sz, i) => {
+        addLine('output', `[${String(i+1).padStart(2,'0')}] ${sz.location?.city}, ${sz.location?.state} — ${sz.drugType} ${formatKg(sz.quantityKg || 0)} [${formatDate(sz.date)}]`);
+      });
+    } else if (cmd === '') {
+      // just prompt
+    } else {
+      addLine('error', `Command not found: ${cmd}. Type "help" for available commands.`);
+    }
+  };
+
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const val = input.trim();
+      if (val) {
+        setCmdHistory(h => [val, ...h].slice(0, 30));
         setHistoryIdx(-1);
+        runCommand(val);
+      }
+      setInput('');
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const next = Math.min(historyIdx + 1, cmdHistory.length - 1);
+      setHistoryIdx(next);
+      if (cmdHistory[next]) setInput(cmdHistory[next]);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.max(historyIdx - 1, -1);
+      setHistoryIdx(next);
+      setInput(next === -1 ? '' : cmdHistory[next] || '');
+    }
+  };
 
-        if (cmd === 'clear') {
-            setLines([{ type: 'output', text: 'Terminal cleared' }]);
-            return;
-        }
+  return (
+    <div className={styles.panel} role="region" aria-label="Terminal">
+      <div className={styles.panelHeader}>
+        <span className={styles.panelTitle}>TERMINAL</span>
+        <button className={styles.panelClose} onClick={() => {
+          // parent handles close via onClose prop
+        }} aria-label="Close terminal">✕</button>
+      </div>
 
-        if (cmd === 'help') {
-            addLine('output', `Available commands:
-  help          Show this help
-  stats         Show overall statistics
-  seizures      Top 5 seizure locations
-  top           Top 5 seizures by quantity
-  states        Top 10 states by count
-  search <q>    Search seizures (city, drug, agency)
-  filter <drug>  Filter by drug type
-  state <name>  Filter by state
-  export        Export data as JSON
-  whoami        Show current user
-  date          Show current date/time
-  clear         Clear terminal`, raw);
-            return;
-        }
+      <div className={styles.terminal} role="log" aria-live="polite" aria-label="Terminal output">
+        {lines.map((line, i) => (
+          <div key={i} className={`${styles.outputLine} ${styles[`outputLine--${line.type}`]}`}>
+            {line.type === 'input' && <span className={styles.prompt} aria-hidden="true">{'>'}</span>}
+            <span className={styles.outputText}>{line.text}</span>
+          </div>
+        ))}
+        <div ref={bottomRef} />
+      </div>
 
-        if (cmd === 'whoami') {
-            addLine('output', 'narc.operator', raw);
-            return;
-        }
-
-        if (cmd === 'date') {
-            addLine('output', new Date().toISOString(), raw);
-            return;
-        }
-
-        if (cmd === 'stats') {
-            const out = `TOTAL SEIZURES  : ${stats?.totalSeizures ?? 0}
-RAID THIS WEEK   : ${stats?.raidsThisWeek ?? 0}
-TOTAL QUANTITY   : ${((stats?.totalQuantityKg ?? 0) / 1000).toFixed(1)} T
-STATES ACTIVE    : ${stats?.byState ? Object.keys(stats.byState).length : 0}
-DRUG TYPES       : ${stats?.byDrugType ? Object.keys(stats.byDrugType).length : 0}`;
-            addLine('output', out, raw);
-            return;
-        }
-
-        if (cmd === 'seizures') {
-            const out = stats?.topLocations?.slice(0, 5).map((l, i) =>
-                `${i + 1}. ${l.city}, ${l.state} — ${l.totalKg >= 1000 ? (l.totalKg / 1000).toFixed(1) + 'T' : l.totalKg.toFixed(0) + 'KG'}`
-            ).join('\n') || 'No data';
-            addLine('output', out, raw);
-            return;
-        }
-
-        if (cmd === 'top') {
-            addLine('output', showTop(5), raw);
-            return;
-        }
-
-        if (cmd === 'states') {
-            addLine('output', showStates(), raw);
-            return;
-        }
-
-        if (cmd.startsWith('search ')) {
-            const query = raw.substring(7).trim();
-            if (!query) {
-                addLine('error', 'Usage: search <query>', raw);
-                return;
-            }
-            addLine('output', searchSeizures(query), raw);
-            return;
-        }
-
-        if (cmd.startsWith('filter ')) {
-            const drug = raw.substring(7).trim();
-            if (!drug) {
-                addLine('error', 'Usage: filter <drug_type>', raw);
-                return;
-            }
-            addLine('output', filterByDrug(drug), raw);
-            return;
-        }
-
-        if (cmd.startsWith('state ')) {
-            const state = raw.substring(6).trim();
-            if (!state) {
-                addLine('error', 'Usage: state <state_name>', raw);
-                return;
-            }
-            addLine('output', filterByState(state), raw);
-            return;
-        }
-
-        if (cmd === 'export') {
-            doExport();
-            setLines(prev => [
-                { type: 'output', text: '✓ Data exported to JSON file' },
-                { type: 'input', text: raw },
-                ...prev.slice(-98),
-            ]);
-            return;
-        }
-
-        addLine('error', `Unknown command: ${cmd.split(' ')[0]}. Type "help" for available commands.`, raw);
-    };
-
-    const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            execute(input);
-            setInput('');
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            const next = Math.min(historyIdx + 1, cmdHistory.length - 1);
-            setHistoryIdx(next);
-            setInput(cmdHistory[next] || '');
-        } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            const next = Math.max(historyIdx - 1, -1);
-            setHistoryIdx(next);
-            setInput(next === -1 ? '' : cmdHistory[next] || '');
-        }
-    };
-
-    return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <span className={styles.icon}>▣</span>
-                <span className={styles.title}>TERMINAL</span>
-            </div>
-
-            <div className={styles.output}>
-                {lines.map((line, i) => (
-                    <div key={i} className={`${styles.line} ${styles[line.type]}`}>
-                        {line.type === 'input' && <span className={styles.prompt}>›</span>}
-                        <span className={line.type === 'input' ? styles.cmdText : styles.outText}>{line.text}</span>
-                    </div>
-                ))}
-                <div ref={bottomRef} />
-            </div>
-
-            <div className={styles.inputRow}>
-                <span className={styles.prompt}>NARC@TERMINAL&gt;</span>
-                <input
-                    className={styles.input}
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={handleKey}
-                    placeholder="enter command..."
-                    autoFocus
-                />
-            </div>
-        </div>
-    );
+      <div className={styles.inputRow}>
+        <label htmlFor="terminal-input" className={styles.inputPromptLabel} aria-hidden="true">NK{'>'}</label>
+        <input
+          id="terminal-input"
+          ref={inputRef}
+          className={styles.inputField}
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="type a command…"
+          aria-label="Terminal input"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+        />
+      </div>
+    </div>
+  );
 }

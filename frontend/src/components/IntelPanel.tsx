@@ -1,91 +1,125 @@
-import { useApi } from '../hooks/useApi';
+/* Hallmark · genre: tactical · panel: intel */
+import { ApiStats, Seizure } from '../types';
 import styles from './IntelPanel.module.css';
 
-export function IntelPanel() {
-  const { stats } = useApi();
+interface Props {
+  seizures: Seizure[];
+  stats: ApiStats | null;
+  onClose: () => void;
+}
+
+function getSeverity(kg: number) {
+  if (kg > 100) return 'critical';
+  if (kg > 10) return 'high';
+  return 'low';
+}
+
+// `getSeverity` is defined for future use in this panel; suppress unused warning
+// until it's wired into the JSX.
+void getSeverity;
+
+export function IntelPanel({ seizures, stats, onClose }: Props) {
+  const total = seizures.length;
+  const totalKg = seizures.reduce((s, sz) => s + (sz.quantityKg || 0), 0);
+  const criticalCount = seizures.filter(s => (s.quantityKg || 0) > 100).length;
+  const states = stats?.byState ? Object.keys(stats.byState).length : 0;
+
+  // Drug type breakdown
+  const drugMap: Record<string, number> = {};
+  seizures.forEach(s => {
+    const t = (s.drugType || 'Unknown').toUpperCase();
+    drugMap[t] = (drugMap[t] || 0) + (s.quantityKg || 0);
+  });
+  const drugEntries = Object.entries(drugMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+  const maxDrug = drugEntries[0]?.[1] || 1;
+
+  // Top locations
+  const locMap: Record<string, number> = {};
+  seizures.forEach(s => {
+    const loc = s.location?.state || 'Unknown';
+    locMap[loc] = (locMap[loc] || 0) + 1;
+  });
+  const locEntries = Object.entries(locMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.icon}>◉</span>
-        <span className={styles.title}>INTEL</span>
+    <div className={styles.panel} role="region" aria-label="Intelligence panel">
+      <div className={styles.panelHeader}>
+        <h2 className={styles.panelTitle}>INTEL BRIEFING</h2>
+        <button className={styles.panelClose} onClick={onClose} aria-label="Close panel">✕</button>
       </div>
 
-      <div className={styles.grid}>
-        <div className={styles.card}>
-          <span className={styles.cardLabel}>TOTAL SEIZURES</span>
-          <span className={styles.cardValue}>{stats?.totalSeizures ?? '—'}</span>
-        </div>
-        <div className={styles.card}>
-          <span className={styles.cardLabel}>THIS WEEK</span>
-          <span className={styles.cardValue}>{stats?.raidsThisWeek ?? '—'}</span>
-        </div>
-        <div className={styles.card}>
-          <span className={styles.cardLabel}>TOTAL KG</span>
-          <span className={styles.cardValue}>{stats?.totalQuantityKg?.toFixed(0) ?? '—'}</span>
-        </div>
-        <div className={styles.card}>
-          <span className={styles.cardLabel}>STATES</span>
-          <span className={styles.cardValue}>{stats?.byState ? Object.keys(stats.byState).length : '—'}</span>
-        </div>
-      </div>
+      <div className={styles.panelBody}>
 
-      <div className={styles.section}>
-        <span className={styles.sectionTitle}>BY DRUG TYPE</span>
-        <div className={styles.bars}>
-          {stats?.byDrugType ? (
-            Object.entries(stats.byDrugType).map(([drug, count]) => {
-              const max = Math.max(...Object.values(stats.byDrugType));
-              const pct = (count / max) * 100;
+        {/* Key Stats */}
+        <div className={styles.statRow}>
+          <div className={styles.statCell}>
+            <span className={styles.statCellValue}>{total.toLocaleString()}</span>
+            <span className={styles.statCellLabel}>Seizures</span>
+          </div>
+          <div className={styles.statCell}>
+            <span className={styles.statCellValue}>
+              {totalKg >= 1000 ? `${(totalKg/1000).toFixed(1)}T` : `${Math.round(totalKg)}K`}
+            </span>
+            <span className={styles.statCellLabel}>Volume</span>
+          </div>
+          <div className={styles.statCell}>
+            <span className={`${styles.statCellValue} ${styles['statCellValue--accent']}`}>{criticalCount}</span>
+            <span className={styles.statCellLabel}>Critical</span>
+          </div>
+        </div>
+
+        {/* Drug Type Breakdown */}
+        <div className={styles.section}>
+          <div className={styles.sectionTitle}>BY DRUG TYPE</div>
+          <div className={styles.drugBars}>
+            {drugEntries.map(([drug, qty]) => {
+              const pct = Math.round((qty / maxDrug) * 100);
+              const cls = drug.includes('METH') ? styles['drugBarFill--meth']
+                : drug.includes('CANNABIS') || drug.includes('Ganja') ? styles['drugBarFill--cannabis']
+                : drug.includes('COCA') ? styles['drugBarFill--cocaine']
+                : '';
               return (
-                <div key={drug} className={styles.barRow}>
-                  <span className={styles.barLabel}>{drug.toUpperCase()}</span>
-                  <div className={styles.barTrack}>
-                    <div className={styles.barFill} style={{ width: `${pct}%` }} />
+                <div key={drug} className={styles.drugRow}>
+                  <div className={styles.drugLabel}>
+                    <span className={styles.drugName}>{drug}</span>
+                    <span className={styles.drugPct}>{pct}%</span>
                   </div>
-                  <span className={styles.barCount}>{count as number}</span>
+                  <div className={styles.drugBarTrack}>
+                    <div
+                      className={`${styles.drugBarFill} ${cls}`}
+                      style={{ width: `${pct}%` }}
+                      role="meter"
+                      aria-valuenow={pct}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={`${drug}: ${pct}%`}
+                    />
+                  </div>
                 </div>
               );
-            })
-          ) : (
-            <span className={styles.empty}>NO DATA</span>
-          )}
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className={styles.section}>
-        <span className={styles.sectionTitle}>BY STATE</span>
-        <div className={styles.list}>
-          {stats?.byState ? (
-            Object.entries(stats.byState)
-              .sort(([, a], [, b]) => (b as number) - (a as number))
-              .slice(0, 8)
-              .map(([state, count]) => (
-                <div key={state} className={styles.listRow}>
-                  <span className={styles.listLabel}>{state}</span>
-                  <span className={styles.listValue}>{count as number}</span>
-                </div>
-              ))
-          ) : (
-            <span className={styles.empty}>NO DATA</span>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.section}>
-        <span className={styles.sectionTitle}>TOP LOCATIONS</span>
-        <div className={styles.list}>
-          {stats?.topLocations && stats.topLocations.length > 0 ? (
-            stats.topLocations.slice(0, 5).map((loc, i) => (
-              <div key={i} className={styles.listRow}>
-                <span className={styles.listLabel}>{loc.city}, {loc.state}</span>
-                <span className={styles.listValue}>{loc.totalKg.toFixed(1)} KG</span>
+        {/* Top States */}
+        <div className={styles.section}>
+          <div className={styles.sectionTitle}>TOP STATES ({states} TOTAL)</div>
+          <div className={styles.locList}>
+            {locEntries.map(([loc, count], idx) => (
+              <div key={loc} className={styles.locRow}>
+                <span className={styles.locName}>{idx + 1}. {loc}</span>
+                <span className={`${styles.locCount} ${idx === 0 ? styles['locCount--top'] : ''}`}>
+                  {count} REC
+                </span>
               </div>
-            ))
-          ) : (
-            <span className={styles.empty}>NO DATA</span>
-          )}
+            ))}
+          </div>
         </div>
+
       </div>
     </div>
   );
