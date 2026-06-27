@@ -3,7 +3,6 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { IndiaMap } from './components/IndiaMap';
 import { FilterPanel } from './components/FilterPanel';
-import { SeizureModal } from './components/SeizureModal';
 import { LoadingScreen } from './components/LoadingScreen';
 import { IntelPanel } from './components/IntelPanel';
 import { NetworkPanel } from './components/NetworkPanel';
@@ -18,8 +17,10 @@ import { RavePanel } from './components/RavePanel';
 import { useApi } from './hooks/useApi';
 import { useRaveData } from './hooks/useRaveData';
 import { Seizure, DistrictAggregate, DistrictFeature, DistrictFeatureCollection } from './types';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { point as turfPoint } from '@turf/helpers';
+import {
+  aggregateSeizuresByDistrict,
+  type DistrictPolygonIndex,
+} from './lib/districtAggregates';
 import 'leaflet/dist/leaflet.css';
 import './styles/global.css';
 import styles from './App.module.css';
@@ -61,77 +62,34 @@ function TickerItem({ item }: { item: typeof TICKER_ITEMS[number] }) {
 // Doubled once at module load (not per render) for the seamless marquee loop.
 const TICKER_ITEMS_DOUBLED: typeof TICKER_ITEMS = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
-/** City-name → GADM district-name alias map.
- *  Used by the rave aggregation's hint-key fast path so we don't have
- *  to fall back to a full point-in-polygon scan for cities whose
- *  colloquial name differs from the official 2011 GADM spelling
- *  (e.g. Bengaluru → Bangalore Urban, Gurugram → Gurgaon). Keys are
- *  lower-cased + trimmed before lookup. */
-const CITY_ALIASES: Record<string, string> = {
-  'bengaluru': 'bangalore urban',
-  'bangalore': 'bangalore urban',
-  'bombay': 'greater bombay',
-  'mumbai': 'greater bombay',
-  'gurugram': 'gurgaon',
-  'gurgaon': 'gurgaon',
-  'mangaluru': 'dakshin kannad',
-  'mangalore': 'dakshin kannad',
-  'raigarh': 'raigarh',          // Maharashtra Raigarh is also the spelling
-  'raigad': 'raigarh',
-  'pondicherry': 'puducherry',
-  'trivandrum': 'thiruvananthapuram',
-  'cochin': 'kochi',
-  'calcutta': 'kolkata',
-  'madras': 'chennai',
-  'baroda': 'vadodara',
-  'nasik': 'nashik',
-  'poona': 'pune',
-  'sholapur': 'solapur',
-  'gwalior': 'gwalior',
-};
-
-function canonicalDistrictName(city: string): string {
-  return (CITY_ALIASES[city.trim().toLowerCase()] ?? city.trim().toLowerCase());
-}
-
 export function App() {
   const [activeTab, setActiveTab] = useState<Tab>('rave');
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedSeizure, setSelectedSeizure] = useState<Seizure | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<DistrictAggregate | null>(null);
 
   const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate } = useApi();
   const { data: raveData } = useRaveData();
 
-  // District choropleth data — loaded once, keyed by `${NAME_2}|${NAME_1}`.
-  // We also keep the top-level unmatchedCount so the DistrictPanel footer
+  // District choropleth data — built reactively from the live
+  // `seizures` array (NCB/UNODC) and the GADM polygon index. Both
+  // the main (radar) and rave views share the same polygon index
+  // and the same hint-key / full-scan aggregation logic, so the
+  // actual work lives in `lib/districtAggregates.ts` and we just
+  // project the two seizure streams onto it.
+  //
+  // We keep the top-level unmatchedCount so the DistrictPanel footer
   // can be honest about how many source records didn't geocode.
+  const [districtIndex, setDistrictIndex] = useState<DistrictPolygonIndex | null>(null);
   const [byDistrict, setByDistrict] = useState<Record<string, DistrictAggregate> | null>(null);
-  const [unmatchedCount, setUnmatchedCount] = useState(0);
-  useEffect(() => {
-    let cancelled = false;
-    fetch('/data-by-district.json')
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((json: { byDistrict: Record<string, DistrictAggregate>; unmatchedCount?: number }) => {
-        if (cancelled) return;
-        setByDistrict(json.byDistrict);
-        setUnmatchedCount(json.unmatchedCount ?? 0);
-      })
-      .catch((err) => console.error('[App] District data load failed:', err));
-    return () => { cancelled = true; };
-  }, []);
-
-  // Rave district choropleth — built at runtime from /india-districts.geojson
-  // + the projected raveSeizures list. Each seizure's (lat, lon) is matched
-  // against the polygon set via point-in-polygon; we then aggregate by
-  // `${NAME_2}|${NAME_1}` (same key shape as the main byDistrict). Seizures
-  // that don't fall inside any district are logged once and dropped so the
-  // aggregates stay honest about coverage.
-  const [raveDistrictIndex, setRaveDistrictIndex] = useState<Record<string, DistrictFeature[]> | null>(null);
   const [byDistrictRave, setByDistrictRave] = useState<Record<string, DistrictAggregate> | null>(null);
+  const [unmatchedCount, setUnmatchedCount] = useState(0);
+
+  // Load the GADM district polygons once and build the
+  // (NAME_2, NAME_1) → Feature[] index. The 4.5MB GeoJSON is cached
+  // by the browser after the first fetch, so this only really hits
+  // the network on first load. While this is loading, `byDistrict`
+  // and `byDistrictRave` stay null and the DistrictLayer renders an
+  // empty choropleth rather than throwing on a missing key.
   useEffect(() => {
     let cancelled = false;
     fetch('/india-districts.geojson')
@@ -141,19 +99,19 @@ export function App() {
       })
       .then((json) => {
         if (cancelled) return;
-        // Build a (NAME_2, NAME_1) → Feature[] index once. If multiple
-        // polygons share a key (rare in GADM but possible for districts
-        // split across islands) they're treated as one district.
-        const polysByKey: Record<string, DistrictFeature[]> = {};
+        // Build the (NAME_2, NAME_1) → Feature[] index once. If
+        // multiple polygons share a key (rare in GADM but possible
+        // for districts split across islands) they're treated as
+        // one district.
+        const polysByKey: DistrictPolygonIndex = {};
         for (const f of json.features) {
           const props = f.properties ?? ({} as DistrictFeature['properties']);
           const key = `${props.NAME_2 ?? ''}|${props.NAME_1 ?? ''}`;
           (polysByKey[key] ||= []).push(f);
         }
-        setRaveDistrictIndex(polysByKey);
-        setByDistrictRave({}); // mark loaded (empty until seizures arrive)
+        setDistrictIndex(polysByKey);
       })
-      .catch((err) => console.error('[App] Rave district GeoJSON load failed:', err));
+      .catch((err) => console.error('[App] District GeoJSON load failed:', err));
     return () => { cancelled = true; };
   }, []);
 
@@ -187,85 +145,60 @@ export function App() {
       }));
   }, [raveData]);
 
-  // Aggregate the projected rave seizures by district whenever either
-  // the polygon index or the seizure list changes. Each seizure hits
-  // the index; we tally count + totalKg + per-drug breakdown by the
-  // same `${NAME_2}|${NAME_1}` key the main view uses, so panel
-  // consumers don't need a separate code path.
+  // Main (radar) choropleth — rebuilt reactively from the live
+  // `seizures` array whenever the polygon index is ready or the
+  // dataset changes. The seizures list is small (a few hundred
+  // records), so recomputing on every change is cheap. Gated on
+  // BOTH inputs being ready: if the polygons haven't loaded yet, or
+  // `seizures` is empty, we set `byDistrict = {}` so the DistrictLayer
+  // renders an empty choropleth rather than throwing on a null prop.
   useEffect(() => {
-    if (!raveDistrictIndex) return; // polygons still loading
+    if (!districtIndex) {
+      setByDistrict(null);
+      return;
+    }
+    if (seizures.length === 0) {
+      setByDistrict({});
+      setUnmatchedCount(0);
+      return;
+    }
+    const { byDistrict: aggregates, unmatchedCount: unmatched } =
+      aggregateSeizuresByDistrict(seizures, districtIndex);
+    if (unmatched > 0) {
+      console.warn(`[App] ${unmatched} main seizures did not fall inside any district polygon`);
+    }
+    setByDistrict(aggregates);
+    setUnmatchedCount(unmatched);
+  }, [seizures, districtIndex]);
+
+  // Rave (festival) choropleth — same shared helper, different input
+  // stream. The aggregate key shape is identical to the main view,
+  // so DistrictPanel can render the per-seizure list for either
+  // source without a separate code path.
+  useEffect(() => {
+    if (!districtIndex) {
+      setByDistrictRave(null);
+      return;
+    }
     if (raveSeizures.length === 0) {
       setByDistrictRave({});
       return;
     }
-    const polysByKey = raveDistrictIndex;
-    const aggregates: Record<string, DistrictAggregate> = {};
-    let unmatched = 0;
-    for (const sz of raveSeizures) {
-      const lat = sz.location.lat;
-      const lon = sz.location.lon;
-      const pt = turfPoint([lon, lat]); // GeoJSON is [lon, lat]
-      let matchedKey: string | null = null;
-      let matchedProps: DistrictFeature['properties'] | null = null;
-      // First pass: try the district key implied by the city/state hint.
-      // City-name → district-name aliases (Bengaluru→Bangalore Urban,
-      // Mumbai→Greater Bombay, Gurugram→Gurgaon, ...) let us hit the
-      // hint cache for colloquial spellings without a full scan.
-      // Falls back to scanning every polygon if no alias matches —
-      // point-in-polygon is then authoritative.
-      const canonicalCity = canonicalDistrictName(sz.location.city);
-      const hintKey = `${canonicalCity}|${sz.location.state}`;
-      const hintCandidates = polysByKey[hintKey];
-      const candidateSets: DistrictFeature[][] = hintCandidates
-        ? [hintCandidates]
-        : Object.values(polysByKey);
-      for (const candidates of candidateSets) {
-        for (const f of candidates) {
-          if (booleanPointInPolygon(pt, f)) {
-            const props = f.properties ?? ({} as DistrictFeature['properties']);
-            matchedKey = `${props.NAME_2 ?? ''}|${props.NAME_1 ?? ''}`;
-            matchedProps = props;
-            break;
-          }
-        }
-        if (matchedKey) break;
-      }
-      if (!matchedKey || !matchedProps) {
-        unmatched++;
-        continue;
-      }
-      let agg = aggregates[matchedKey];
-      if (!agg) {
-        agg = {
-          district: matchedProps.NAME_2 ?? '',
-          state: matchedProps.NAME_1 ?? '',
-          stateKey: matchedProps.NAME_1 ?? '',
-          count: 0,
-          totalKg: 0,
-          drugs: {},
-          seizures: [],
-        };
-        aggregates[matchedKey] = agg;
-      }
-      agg.count += 1;
-      agg.totalKg += sz.quantityKg ?? 0;
-      const drug = sz.drugType ?? 'other';
-      agg.drugs[drug] = (agg.drugs[drug] ?? 0) + (sz.quantityKg ?? 0);
-      // Keep the actual list of seizures so DistrictPanel can render
-      // date/drug/kg/event/agency for every incident in this district.
-      agg.seizures!.push(sz);
-    }
+    const { byDistrict: aggregates, unmatchedCount: unmatched } =
+      aggregateSeizuresByDistrict(raveSeizures, districtIndex);
     if (unmatched > 0) {
       console.warn(`[App] ${unmatched} rave seizures did not fall inside any district polygon`);
     }
     setByDistrictRave(aggregates);
-  }, [raveSeizures, raveDistrictIndex]);
+  }, [raveSeizures, districtIndex]);
 
-  // Stable callbacks + props so memoized children (panels, markers) skip work
-  // when their inputs haven't actually changed.
-  const handleSeizureClick = useCallback((seizure: Seizure) => {
-    setSelectedSeizure(seizure);
-  }, []);
+  // Track which mode the open district came from so DistrictPanel can
+  // pick the right footer copy ("NCB/UNODC reports" for the main radar
+  // view, "festival/event incidents" for the festival/rave view).
+  // Active tab determines the mode — the user is looking at one
+  // choropleth at a time, and the same district can have different
+  // aggregates in the two views.
+  const districtPanelMode: 'main' | 'rave' = activeTab === 'rave' ? 'rave' : 'main';
 
   const handleDistrictClick = useCallback(
     (aggregate: DistrictAggregate | null, _feature: DistrictFeature) => {
@@ -318,9 +251,6 @@ export function App() {
       {/* ── Map Layer ───────────────────────────────── */}
       <div className={styles.mapLayer}>
         <IndiaMap
-          seizures={seizures}
-          raveSeizures={raveSeizures}
-          onSeizureSelect={handleSeizureClick}
           byDistrict={byDistrict}
           byDistrictRave={byDistrictRave}
           onDistrictClick={handleDistrictClick}
@@ -448,19 +378,12 @@ export function App() {
         )}
       </AnimatePresence>
 
-      {/* ── Seizure Modal ────────────────────────────── */}
-      {selectedSeizure && (
-        <SeizureModal
-          seizure={selectedSeizure}
-          onClose={() => setSelectedSeizure(null)}
-        />
-      )}
-
       {/* ── District Panel (slide-in detail view) ────────── */}
       <DistrictPanel
         aggregate={selectedDistrict}
         onClose={closeDistrictPanel}
         unmatchedCount={unmatchedCount}
+        mode={districtPanelMode}
       />
 
       {/* ── Offline Badge ────────────────────────────── */}

@@ -47,11 +47,14 @@
 }
 
 :global(.district--none) {
-  /* No aggregate — country outline only, so the choropleth doesn't
-     look like a blank mask. fill-opacity 0 means Leaflet still
-     renders nothing, but stroke keeps the polygon clickable. */
-  fill: var(--dist-low);
-  fill-opacity: 0.04;
+  /* No aggregate — pure outline, no fill. Leaflet still receives a
+     transparent fill so the path stays hit-testable, but visually
+     it's just the country silhouette. The previous 4% orange tint
+     read as "white opacity" against the dark basemap and made every
+     unmatched district look faintly filled, which is what Aayush
+     didn't want. */
+  fill: none;
+  fill-opacity: 0;
   stroke: var(--dist-stroke-none);
   stroke-width: 0.4;
 }
@@ -60,7 +63,7 @@
 :global(.district--critical.leaflet-interactive:hover) { fill-opacity: 0.92; stroke-width: 1.2; }
 :global(.district--high.leaflet-interactive:hover)     { fill-opacity: 0.85; stroke-width: 1.1; }
 :global(.district--low.leaflet-interactive:hover)      { fill-opacity: 0.78; stroke-width: 1.0; }
-:global(.district--none.leaflet-interactive:hover)     { fill-opacity: 0.12; stroke-width: 0.9; }
+:global(.district--none.leaflet-interactive:hover)     { stroke-width: 0.9; }
 
 /* ── Tooltip styling — match war-room dark glass ─────────── */
 :global(.leaflet-tooltip.district-tooltip) {

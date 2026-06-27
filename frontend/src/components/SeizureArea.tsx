@@ -34,19 +34,21 @@ function getSeverity(quantityKg: number): Severity {
 
 // Geographic radius in meters — Leaflet converts to pixels at the
 // current zoom, so circles stay geographically meaningful when panning.
-// Sized for visibility at zoom 4 (full-India view): all three tiers
-// produce readable blobs. The relative spread (4× / 2× / 1×) carries
-// the intensity story without making low-severity dots invisible.
+// Sized so individual seizures read as distinct hotspots at zoom 4
+// (full-India view) while overlapping ones still merge into
+// intensity blobs. Critical sits at ~30px @ z4, high at ~17px, low at
+// ~9px — small enough to see distinct points, big enough that a few
+// nearby raids merge into a recognisable hotspot.
 const RADIUS_BY_SEVERITY: Record<Severity, number> = {
-  critical: 180_000, // 180 km — large intensity blob (~70px @ z4)
-  high:      90_000, //  90 km — medium blob (~35px @ z4)
-  low:       45_000, //  45 km — visible dot (~18px @ z4)
+  critical: 75_000, //  75 km — clear hotspot (~30px @ z4)
+  high:     40_000, //  40 km — visible spot (~17px @ z4)
+  low:      22_000, //  22 km — pinpoint dot (~9px @ z4)
 };
 
 const FILL_BY_SEVERITY: Record<Severity, { color: string; fillOpacity: number; strokeOpacity: number; weight: number }> = {
-  critical: { color: '#E83D3D', fillOpacity: 0.34, strokeOpacity: 0.75, weight: 1.4 },
-  high:     { color: '#FF8C42', fillOpacity: 0.24, strokeOpacity: 0.55, weight: 1.1 },
-  low:      { color: '#FFCC00', fillOpacity: 0.16, strokeOpacity: 0.45, weight: 0.9 },
+  critical: { color: '#E83D3D', fillOpacity: 0.42, strokeOpacity: 0.85, weight: 1.4 },
+  high:     { color: '#FF8C42', fillOpacity: 0.30, strokeOpacity: 0.65, weight: 1.1 },
+  low:      { color: '#FFCC00', fillOpacity: 0.22, strokeOpacity: 0.55, weight: 0.9 },
 };
 
 const RAVE_BY_SEVERITY: Record<Severity, { color: string; fillOpacity: number; strokeOpacity: number; weight: number }> = {

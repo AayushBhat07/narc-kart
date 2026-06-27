@@ -10,6 +10,13 @@ interface Props {
    *  Pass through from the top-level `unmatchedCount` in
    *  data-by-district.json so the footer copy is honest. */
   unmatchedCount?: number;
+  /** Which dataset this aggregate was built from. Drives the footer
+   *  source-line copy — the main (radar) view reports from NCB/UNODC,
+   *  the festival/rave view from event/festival reports. Now that
+   *  BOTH modes populate `aggregate.seizures`, the binary check the
+   *  panel used to make ("has seizures?") is no longer a reliable
+   *  signal — we need the caller to tell us explicitly. */
+  mode?: 'main' | 'rave';
 }
 
 type SeverityClass = 'critical' | 'high' | 'low' | 'none';
@@ -88,7 +95,7 @@ function truncate(s: string | undefined, max: number): string {
   return s.length > max ? `${s.slice(0, max - 1)}…` : s;
 }
 
-export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0 }: Props) {
+export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0, mode = 'main' }: Props) {
   // We always render the slot so framer-motion can animate the
   // empty ↔ filled transition. Inner content switches between
   // placeholder (no district) and full detail view.
@@ -261,7 +268,7 @@ export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0 }: Props)
                   <div className={styles.footer}>
                     Aggregated from{' '}
                     <span className={styles.footerNum}>{aggregate.count}</span>{' '}
-                    {aggregate.seizures ? 'festival/event incidents' : 'NCB/UNODC reports'} across{' '}
+                    {mode === 'rave' ? 'festival/event incidents' : 'NCB/UNODC reports'} across{' '}
                     <span className={styles.footerNum}>{aggregate.district}</span>{' '}
                     district.{' '}
                     {unmatchedCount > 0 && (

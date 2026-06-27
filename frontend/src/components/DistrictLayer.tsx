@@ -19,12 +19,23 @@ import './DistrictLayer.module.css';
 const TIER_CRITICAL_KG = 10_000;
 const TIER_HIGH_KG     = 100;
 
+export type DistrictLayerMode = 'main' | 'rave';
+
 export interface DistrictLayerProps {
   /** Pre-aggregated district data, keyed by `${NAME_2}|${NAME_1}`. */
   byDistrict: Record<string, DistrictAggregate> | null;
   /** Click handler. Receives the aggregate (null if district is unmatched) + the
    *  raw GeoJSON feature so callers can read extra properties if needed. */
   onDistrictClick?: (aggregate: DistrictAggregate | null, feature: DistrictFeature) => void;
+  /**
+   * Visual / copy mode. In `rave` mode, the unmatched-district tooltip
+   * copy is rewritten so it doesn't claim there are "no seizures" — in
+   * festival intel the absence of a rave/festival incident is not the
+   * same as zero overall enforcement activity, and the original copy
+   * was misleading Aayush when most districts (where there are no rave
+   * seizures) lit up with "0 seizures" tooltips. Defaults to 'main'.
+   */
+  mode?: DistrictLayerMode;
 }
 
 function tierFor(totalKg: number | undefined): DistrictTier | 'none' {
@@ -47,7 +58,7 @@ function buildLookupKey(feature: DistrictFeature): string {
   return `${district}|${state}`;
 }
 
-export function DistrictLayer({ byDistrict, onDistrictClick }: DistrictLayerProps) {
+export function DistrictLayer({ byDistrict, onDistrictClick, mode = 'main' }: DistrictLayerProps) {
   const [geoData, setGeoData] = useState<DistrictFeatureCollection | null>(null);
 
   // Load the heavy 4.5MB GeoJSON once at mount. While loading or on
@@ -92,10 +103,20 @@ export function DistrictLayer({ byDistrict, onDistrictClick }: DistrictLayerProp
           opacity: 1,
         });
       } else {
-        // Even unmatched districts get a tooltip — just the name.
+        // Even unmatched districts get a tooltip — just the name. Copy
+        // adapts to the active layer mode: in `rave` mode a district
+        // without a rave/festival incident isn't the same as a district
+        // with zero overall enforcement activity, so we surface that
+        // distinction instead of saying "no recorded seizures" (which
+        // was misleading Aayush on the festival view, where most
+        // districts in India legitimately have no rave seizure yet
+        // still report thousands of regular seizures).
         const props = typedFeature.properties ?? ({} as DistrictFeature['properties']);
+        const tipBody = mode === 'rave'
+          ? 'No rave/festival incidents on record'
+          : 'No recorded seizures';
         layerWithPath.bindTooltip(
-          `${props.NAME_2 ?? 'Unknown'} · ${props.NAME_1 ?? ''}\nNo recorded seizures`,
+          `${props.NAME_2 ?? 'Unknown'} · ${props.NAME_1 ?? ''}\n${tipBody}`,
           {
             sticky: true,
             direction: 'top',
@@ -110,7 +131,7 @@ export function DistrictLayer({ byDistrict, onDistrictClick }: DistrictLayerProp
         onDistrictClick?.(aggregate, typedFeature);
       });
     },
-    [byDistrict, onDistrictClick]
+    [byDistrict, onDistrictClick, mode]
   );
 
   // Stable style fn: tier className drives the actual color via CSS

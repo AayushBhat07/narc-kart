@@ -1,18 +1,11 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { Seizure, DistrictAggregate, DistrictFeature } from '../types';
+import { DistrictAggregate, DistrictFeature } from '../types';
 import { DistrictLayer } from './DistrictLayer';
 import styles from './IndiaMap.module.css';
 
 interface Props {
-  seizures: Seizure[];
-  /** Festival/rave seizure list — still accepted as a prop for forward-compat
-   *  (e.g. upcoming side-panel filter hooks may read it), but no longer
-   *  rendered as per-seizure circles. The district choropleth carries the
-   *  intensity story for the rave view instead. */
-  raveSeizures?: Seizure[];
-  onSeizureSelect: (seizure: Seizure) => void;
   /** Pre-aggregated per-district data for the main (radar) view. */
   byDistrict?: Record<string, DistrictAggregate> | null;
   /** Pre-aggregated per-district data for the festival/rave view. */
@@ -24,23 +17,12 @@ interface Props {
 const INDIA_CENTER: L.LatLngExpression = [20.5937, 78.9625];
 
 export function IndiaMap({
-  seizures,
-  raveSeizures,
-  onSeizureSelect,
   byDistrict = null,
   byDistrictRave = null,
   onDistrictClick,
 }: Props) {
   const mapRef = useRef<L.Map | null>(null);
   const geoJsonAdded = useRef(false);
-
-  // Both `seizures` and `raveSeizures` are intentionally not rendered as
-  // per-seizure circles — the district choropleth below carries the
-  // intensity story for both the main and rave views. Acknowledged so
-  // future filter hooks can still rely on the prop shape.
-  void seizures;
-  void raveSeizures;
-  void onSeizureSelect;
 
   // India outline — cyan, no fill. Loaded once and never rebuilt.
   useEffect(() => {
@@ -97,10 +79,16 @@ export function IndiaMap({
         {/* District choropleth — festival/rave view: aggregates the
             rave seizure dataset by district. Palette is driven entirely
             by [data-mode="rave"] on the shell (see design-system.css),
-            so the same component swaps colors automatically. */}
+            so the same component swaps colors automatically. We pass
+            `mode="rave"` so the unmatched-district tooltip copy knows
+            to say "No rave/festival incidents" instead of misleading
+            the user with "No recorded seizures" — most Indian
+            districts legitimately have zero festival/rave seizures
+            even when they're high-trafficking for regular ones. */}
         <DistrictLayer
           byDistrict={byDistrictRave}
           onDistrictClick={onDistrictClick}
+          mode="rave"
         />
       </MapContainer>
     </div>
