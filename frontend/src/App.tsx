@@ -3,7 +3,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { IndiaMap } from './components/IndiaMap';
 import { FilterPanel } from './components/FilterPanel';
-import { LoadingScreen } from './components/LoadingScreen';
+
 import { IntelPanel } from './components/IntelPanel';
 import { NetworkPanel } from './components/NetworkPanel';
 import { TerminalPanel } from './components/TerminalPanel';
@@ -67,7 +67,7 @@ export function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<DistrictAggregate | null>(null);
 
-  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate } = useApi();
+  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error } = useApi();
   const { data: raveData } = useRaveData();
 
   // District choropleth data — built reactively from the live
@@ -250,7 +250,22 @@ export function App() {
     >
 
       {/* ── Loading ─────────────────────────────────── */}
-      {seizures.length === 0 && <LoadingScreen />}
+      {seizures.length === 0 && !error && (
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 200,
+          background: 'var(--bg-primary)', display: 'flex',
+          alignItems: 'center', justifyContent: 'center',
+          flexDirection: 'column', gap: '16px'
+        }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)', fontSize: '11px',
+            letterSpacing: '0.2em', color: 'var(--accent)',
+            animation: 'pulse 1.5s ease-in-out infinite'
+          }}>
+            LOADING INTELLIGENCE FEED...
+          </div>
+        </div>
+      )}
 
       {/* ── Map Layer ───────────────────────────────── */}
       <div className={styles.mapLayer}>
