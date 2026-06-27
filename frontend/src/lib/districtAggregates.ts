@@ -15,6 +15,7 @@ import type {
   DistrictFeature,
   Seizure,
 } from '../types';
+import { estimateSeizureCost } from './drugPrices';
 
 /** City-name → GADM district-name alias map.
  *  Used by the hint-key fast path so we don't have to fall back to a
@@ -132,15 +133,18 @@ export function aggregateSeizuresByDistrict(
         stateKey: matchedProps.NAME_1 ?? '',
         count: 0,
         totalKg: 0,
+        estimatedCost: 0,
         drugs: {},
         seizures: [],
       };
       byDistrict[matchedKey] = agg;
     }
+    const qty = sz.quantityKg ?? 0;
     agg.count += 1;
-    agg.totalKg += sz.quantityKg ?? 0;
+    agg.totalKg += qty;
+    agg.estimatedCost += estimateSeizureCost(sz.drugType, qty);
     const drug = sz.drugType ?? 'other';
-    agg.drugs[drug] = (agg.drugs[drug] ?? 0) + (sz.quantityKg ?? 0);
+    agg.drugs[drug] = (agg.drugs[drug] ?? 0) + qty;
     // Keep the actual list so DistrictPanel can render per-incident detail.
     agg.seizures!.push(sz);
   }

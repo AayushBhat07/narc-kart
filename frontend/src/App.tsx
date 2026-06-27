@@ -63,7 +63,7 @@ function TickerItem({ item }: { item: typeof TICKER_ITEMS[number] }) {
 const TICKER_ITEMS_DOUBLED: typeof TICKER_ITEMS = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('rave');
+  const [activeTab, setActiveTab] = useState<Tab>('radar');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<DistrictAggregate | null>(null);
 
@@ -154,16 +154,20 @@ export function App() {
   // renders an empty choropleth rather than throwing on a null prop.
   useEffect(() => {
     if (!districtIndex) {
+      console.log('[App] aggregation skipped: districtIndex not ready');
       setByDistrict(null);
       return;
     }
     if (seizures.length === 0) {
+      console.log('[App] aggregation skipped: seizures empty');
       setByDistrict({});
       setUnmatchedCount(0);
       return;
     }
+    console.log('[App] Running aggregation:', seizures.length, 'seizures,', Object.keys(districtIndex).length, 'districts');
     const { byDistrict: aggregates, unmatchedCount: unmatched } =
       aggregateSeizuresByDistrict(seizures, districtIndex);
+    console.log('[App] Aggregation result:', Object.keys(aggregates).length, 'districts matched,', unmatched, 'unmatched');
     if (unmatched > 0) {
       console.warn(`[App] ${unmatched} main seizures did not fall inside any district polygon`);
     }

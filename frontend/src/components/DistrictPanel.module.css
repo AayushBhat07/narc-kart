@@ -114,10 +114,10 @@
   line-height: 1.6;
 }
 
-/* ── Stat row (3 cells) ───────────────────────────────── */
+/* ── Stat row (4 cells) ───────────────────────────────── */
 .statRow {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-2);
 }
 
@@ -282,6 +282,15 @@
   font-variant-numeric: tabular-nums;
 }
 
+.seizureRowCost {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+
 .seizureRowTitle {
   font-size: 10px;
   font-weight: 600;
@@ -341,6 +350,24 @@
   -webkit-box-orient: vertical;
   line-clamp: 2;
   overflow: hidden;
+}
+
+.seizureRowSource {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity var(--dur-fast) var(--ease-out);
+  margin-top: 2px;
+  display: inline-block;
+}
+
+.seizureRowSource:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 /* ── Footer / source note ──────────────────────────────── */

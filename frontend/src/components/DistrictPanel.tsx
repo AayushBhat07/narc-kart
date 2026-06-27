@@ -1,6 +1,7 @@
 /* Hallmark · genre: tactical · panel: district detail */
 import { motion, AnimatePresence } from 'framer-motion';
 import { DistrictAggregate, Seizure } from '../types';
+import { formatInr, estimateSeizureCost } from '../lib/drugPrices';
 import styles from './DistrictPanel.module.css';
 
 interface Props {
@@ -163,6 +164,12 @@ export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0, mode = '
                       <span className={styles.statCellLabel}>Volume</span>
                     </div>
                     <div className={styles.statCell}>
+                      <span className={statCellValueClass(tier)}>
+                        {formatInr(aggregate.estimatedCost)}
+                      </span>
+                      <span className={styles.statCellLabel}>Est. Value</span>
+                    </div>
+                    <div className={styles.statCell}>
                       <span className={styles.statCellValue}>
                         {distinctDrugs}
                       </span>
@@ -228,6 +235,9 @@ export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0, mode = '
                                 <span className={styles.seizureRowKg}>
                                   {formatKg(sz.quantityKg ?? 0)}
                                 </span>
+                                <span className={styles.seizureRowCost}>
+                                  {formatInr(estimateSeizureCost(sz.drugType, sz.quantityKg ?? 0))}
+                                </span>
                               </div>
                               <div className={styles.seizureRowTitle}>
                                 {truncate(seizureTitle(sz), 64)}
@@ -253,6 +263,17 @@ export function DistrictPanel({ aggregate, onClose, unmatchedCount = 0, mode = '
                                   </>
                                 )}
                               </div>
+                              {sz.source?.url && (
+                                <a
+                                  className={styles.seizureRowSource}
+                                  href={sz.source.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={e => e.stopPropagation()}
+                                >
+                                  {sz.source.name || 'Source Link'} ↗
+                                </a>
+                              )}
                               {sz.description && (
                                 <div className={styles.seizureRowDesc}>
                                   {truncate(sz.description, 90)}

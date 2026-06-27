@@ -58,6 +58,9 @@ export interface DistrictAggregate {
   stateKey: string;
   count: number;
   totalKg: number;
+  /** Estimated INR value of all seizures in this district.
+   *  Computed at aggregate time from quantityKg × Indian market rate. */
+  estimatedCost: number;
   drugs: Record<string, number>;
   /** Per-seizure records that fell inside this district.
    *  Optional because the main (radar) view's pre-aggregated
