@@ -4,6 +4,17 @@ import path from 'path';
 
 export default defineConfig({
   base: '/narc-kart/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+  define: {
+    // Force a fresh deploy by embedding the commit hash
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   plugins: [react()],
   resolve: {
     alias: {

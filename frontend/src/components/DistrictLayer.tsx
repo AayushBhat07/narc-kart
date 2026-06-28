@@ -144,14 +144,8 @@ export function DistrictLayer({ byDistrict, onDistrictClick, mode = 'main' }: Di
     const tier = tierFor(aggregate?.totalKg);
     const base: PathOptions = {
       className: `district district--${tier}`,
-      // Fill is owned by CSS, but Leaflet requires *something* here or
-      // the default blue flash shows through for a paint. The CSS rule
-      // overrides these on render.
-      fillColor: '#888',
-      fillOpacity: 0.5,
-      color: '#000',
-      weight: 0.5,
-      // Allow the tooltip to be a normal hover affordance.
+      // Fill is driven entirely by CSS (DistrictLayer.module.css).
+      // Leaflet needs interactive: true for click events.
       interactive: true,
     };
     return base;

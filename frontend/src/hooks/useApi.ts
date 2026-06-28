@@ -137,7 +137,6 @@ export function useApi() {
     setError(null);
     try {
       const { seizures, stats } = await fetchStaticData();
-      console.log('[useApi] fetchStatic got', seizures.length, 'seizures from data.json');
       if (!mountedRef.current) return;
       setSeizures(seizures);
       setStats(stats);
