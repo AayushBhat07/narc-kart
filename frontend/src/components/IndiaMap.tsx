@@ -29,7 +29,7 @@ export function IndiaMap({
     if (!mapRef.current || geoJsonAdded.current) return;
     geoJsonAdded.current = true;
 
-    fetch('/india-boundary.geojson')
+    fetch(`${import.meta.env.BASE_URL}india-boundary.geojson`)
       .then(res => res.json())
       .then(data => {
         if (!mapRef.current) return;

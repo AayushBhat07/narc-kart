@@ -66,7 +66,7 @@ export function DistrictLayer({ byDistrict, onDistrictClick, mode = 'main' }: Di
   // choropleth, so a slow load never breaks the rest of the app.
   useEffect(() => {
     let cancelled = false;
-    fetch('/india-districts.geojson')
+    fetch(`${import.meta.env.BASE_URL}india-districts.geojson`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json() as Promise<DistrictFeatureCollection>;

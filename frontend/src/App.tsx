@@ -92,7 +92,7 @@ export function App() {
   // empty choropleth rather than throwing on a missing key.
   useEffect(() => {
     let cancelled = false;
-    fetch('/india-districts.geojson')
+    fetch(`${import.meta.env.BASE_URL}india-districts.geojson`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json() as Promise<DistrictFeatureCollection>;

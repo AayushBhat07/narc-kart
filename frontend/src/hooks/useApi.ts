@@ -65,7 +65,7 @@ function isStaticMode(): boolean {
 }
 
 async function fetchStaticData(): Promise<{ seizures: Seizure[]; stats: ApiStats }> {
-  const res = await fetch('/data.json');
+  const res = await fetch(`${import.meta.env.BASE_URL}data.json`);
   const data = await res.json();
   const seizures: Seizure[] = data.seizures.map((s: any) => ({
     id: s.id,
