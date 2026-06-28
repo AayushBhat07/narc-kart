@@ -142,10 +142,22 @@ export function DistrictLayer({ byDistrict, onDistrictClick, mode = 'main' }: Di
     const key = feature ? buildLookupKey(feature) : '';
     const aggregate = byDistrict?.[key];
     const tier = tierFor(aggregate?.totalKg);
+
+    const TIER_COLORS = {
+      critical: { fill: '#E83D3D', fillOpacity: 0.70, stroke: 'rgba(0,0,0,0.55)', weight: 0.5 },
+      high:     { fill: '#FF7043', fillOpacity: 0.62, stroke: 'rgba(0,0,0,0.55)', weight: 0.5 },
+      low:      { fill: '#FFB300', fillOpacity: 0.55, stroke: 'rgba(0,0,0,0.55)', weight: 0.5 },
+      none:     { fill: 'none',    fillOpacity: 0,    stroke: 'rgba(255,255,255,0.10)', weight: 0.4 },
+    };
+
+    const colors = TIER_COLORS[tier] ?? TIER_COLORS.none;
+
     const base: PathOptions = {
       className: `district district--${tier}`,
-      // Fill is driven entirely by CSS (DistrictLayer.module.css).
-      // Leaflet needs interactive: true for click events.
+      fillColor: colors.fill,
+      fillOpacity: colors.fillOpacity,
+      color: colors.stroke,
+      weight: colors.weight,
       interactive: true,
     };
     return base;

@@ -26,23 +26,23 @@
 
 /* ── Tier fills ────────────────────────────────────────── */
 :global(.district--critical) {
-  fill: var(--dist-critical, #E83D3D);
+  fill: #E83D3D;
   fill-opacity: 0.70;
-  stroke: var(--dist-stroke, rgba(0, 0, 0, 0.55));
+  stroke: rgba(0, 0, 0, 0.55);
   stroke-width: 0.5;
 }
 
 :global(.district--high) {
-  fill: var(--dist-high, #FF7043);
+  fill: #FF7043;
   fill-opacity: 0.62;
-  stroke: var(--dist-stroke, rgba(0, 0, 0, 0.55));
+  stroke: rgba(0, 0, 0, 0.55);
   stroke-width: 0.5;
 }
 
 :global(.district--low) {
-  fill: var(--dist-low, #FFB300);
+  fill: #FFB300;
   fill-opacity: 0.55;
-  stroke: var(--dist-stroke, rgba(0, 0, 0, 0.55));
+  stroke: rgba(0, 0, 0, 0.55);
   stroke-width: 0.5;
 }
 
