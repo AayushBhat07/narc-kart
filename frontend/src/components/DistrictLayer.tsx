@@ -16,8 +16,8 @@ import './DistrictLayer.module.css';
    Mumbai 349 kg → high; Wardha 302k kg → critical; Delhi 33k kg → critical;
    Goa 57 kg → low. Tuned so a few "anchor" districts anchor the
    heatmap while the long tail still reads as high/orange. */
-const TIER_CRITICAL_KG = 10_000;
-const TIER_HIGH_KG     = 100;
+const TIER_CRITICAL_KG = 1000;
+const TIER_HIGH_KG     = 10;
 
 export type DistrictLayerMode = 'main' | 'rave';
 
