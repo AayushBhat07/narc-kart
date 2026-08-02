@@ -1,41 +1,13 @@
 {
-  "seizures": [
-    {
-      "id": "sz-4ddd8bac",
-      "caseNo": "IE-MUM-2026-0100",
-      "city": "Mumbai",
-      "state": "Delhi",
-      "lat": 19.076,
-      "lon": 72.877,
-      "drugType": "meth",
-      "quantityKg": 11.0,
-      "date": "2026-07-26",
-      "sourceName": "Indian Express",
-      "sourceUrl": "https://indianexpress.com/article/india/1-25-billion-reasons-why-hum-honge-kaamyab-jantar-mantar-10803759/",
-      "agency": "Local Police / Indian Express",
-      "description": "\n\n\n\n\n1.25 billion reasons why ‘Hum honge kaamyab’ @Jantar Mantar | India News - The Indian Express\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n \n\n\n\n\n\n\n\nskip to content\n\n\n\n\n\n\n\nSections\n\n\n\n\n\n\n\nEditionIndiaInternational\n\n\n\nEnglishதமிழ்বাংলাമലയാളംગુજરાતીहिंदीमराठीBusiness \n\n\n\n\nNewsletters  \n\n\n \n\n\n\n\n\n\n\nWeather\n\n ePaper \n Today’s Paper\n\n\n\n\n\n\n\n\nJournalism of Courage\n\n\n \n\n\n\n\n\nHome ePaper CJP Protests Politics Explained Opinion India Business Premium Legal Cities UPSC Cinema Sports World CWG 2026  ",
-      "images": []
-    }
-  ],
+  "seizures": [],
   "stats": {
-    "total_seizures": 1,
-    "total_quantity_kg": 11.0,
-    "raids_this_week": 1,
-    "by_state": {
-      "Delhi": 1
-    },
-    "by_drug_type": {
-      "meth": 1
-    },
-    "by_month": {
-      "2026-07": 1
-    },
-    "top_locations": [
-      {
-        "location": "Mumbai, Delhi",
-        "count": 1
-      }
-    ]
+    "total_seizures": 0,
+    "total_quantity_kg": 0,
+    "raids_this_week": 0,
+    "by_state": {},
+    "by_drug_type": {},
+    "by_month": {},
+    "top_locations": []
   },
-  "lastUpdated": "2026-07-26T14:09:51.764186"
+  "lastUpdated": "2026-08-02T14:09:25.904362"
 }
