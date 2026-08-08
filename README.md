@@ -85,6 +85,27 @@ npm run build
 
 Static output lands in `frontend/dist/` — deploy straight to Vercel, Netlify, or any static host.
 
+### Vercel environment variables
+
+The current production path is static mode. If `VITE_API_BASE` is not set, the frontend reads `frontend/public/data.json` and does not require backend, database, or Supabase variables.
+
+Only configure live API variables when you intentionally enable the API routes:
+
+| Variable | Scope | Required when | Notes |
+|----------|-------|---------------|-------|
+| `VITE_API_BASE` | Frontend build | Using a live API instead of static JSON | Use `/api` for same-project Vercel API routes or a full backend URL. |
+| `SUPABASE_URL` | Vercel serverless API | Using `frontend/api/*` routes | Server-side only. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel serverless API | Using `frontend/api/*` routes | Server-side secret; never expose in client code. |
+| `CRON_SECRET` | Vercel serverless API | Protecting `/api/scrape` | Optional bearer token for scrape triggers. |
+
+Templates:
+
+- Root Vercel template: `.env.vercel.example`
+- Frontend local template: `frontend/.env.example`
+- Archived backend template: `backend/.env.example`
+
+The root `vercel.json` already builds from `frontend/` and outputs `frontend/dist/`.
+
 ---
 
 ## 🧪 Project Structure
