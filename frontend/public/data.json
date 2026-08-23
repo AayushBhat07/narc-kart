@@ -1,13 +1,41 @@
 {
-  "seizures": [],
+  "seizures": [
+    {
+      "id": "sz-858ef336",
+      "caseNo": "DB-PAT-2026-0100",
+      "city": "Patna",
+      "state": "Haryana",
+      "lat": 25.594,
+      "lon": 85.138,
+      "drugType": "meth",
+      "quantityKg": null,
+      "date": "2026-08-23",
+      "sourceName": "Dainik Bhaskar",
+      "sourceUrl": "https://www.bhaskar.com/local/bihar/muzaffarpur/news/muzaffarpur-mla-amit-ranu-house-raid-land-dispute-cctv-footage-138808687.html",
+      "agency": "Local Police / Dainik Bhaskar",
+      "description": "Muzaffarpur MLA Amit Ranu House Raid | Land Dispute Controversyहोमवीडियोसर्चवॉचवेब स्टोरीजई-पेपरटॉप न्यूज़राज्य-शहरभास्कर इन्वेस्टिगेशनक्रिकेटभास्कर खासDB ओरिजिनलस्पोर्ट्सबॉलीवुडजॉब - एजुकेशनबिजनेसलाइफस्टाइलजीवन मंत्रवुमनदेशविदेशराशिफलटेक - ऑटोफेक न्यूज एक्सपोज़ओपिनियनमधुरिमामैगजीनयूटिलिटीलाइफ - साइंसमध्य प्रदेशउत्तरप्रदेशराजस्थानबिहारयूपी खासHindi NewsLocalBiharMuzaffarpurMuzaffarpur MLA Amit Ranu House Raid | Land Dispute ControversyLIVEचिराग की पार्टी के विधायक के घर रेड, भाई फरार:अवैध हथियार स",
+      "images": []
+    }
+  ],
   "stats": {
-    "total_seizures": 0,
+    "total_seizures": 1,
     "total_quantity_kg": 0,
-    "raids_this_week": 0,
-    "by_state": {},
-    "by_drug_type": {},
-    "by_month": {},
-    "top_locations": []
+    "raids_this_week": 1,
+    "by_state": {
+      "Haryana": 1
+    },
+    "by_drug_type": {
+      "meth": 1
+    },
+    "by_month": {
+      "2026-08": 1
+    },
+    "top_locations": [
+      {
+        "location": "Patna, Haryana",
+        "count": 1
+      }
+    ]
   },
-  "lastUpdated": "2026-08-16T13:10:38.786217"
+  "lastUpdated": "2026-08-23T13:11:49.731962"
 }
