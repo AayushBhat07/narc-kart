@@ -9,7 +9,7 @@ import styles from './SeizureGlobe.module.css';
 
 /* Black globe drawn with white hairlines: graticule, country borders,
    Indian state borders and (fainter) district borders. Seizures are
-   pins; selecting one flies the camera along a great-circle "hop"
+   HUD callouts; selecting one flies the camera along a great-circle "hop"
    from wherever the camera is to the new city. */
 
 interface Props {
@@ -27,6 +27,14 @@ interface Pin {
 
 type LngLat = [number, number];
 
+interface Callout {
+  el: HTMLElement;
+  pin: Pin;
+  kg: number;
+  selected: boolean;
+  width: number;
+}
+
 const INDIA_VIEW = { lat: 22, lng: 80, altitude: 1.9 };
 const LANDING_ALTITUDE = 0.55;
 
@@ -40,6 +48,10 @@ function severityColor(kg: number, mode: 'main' | 'rave') {
   if (kg > 100) return p.critical;
   if (kg > 10) return p.high;
   return p.low;
+}
+
+function formatKg(kg: number) {
+  return kg >= 1000 ? `${(kg / 1000).toFixed(1)}T` : `${kg >= 10 ? Math.round(kg) : kg.toFixed(1)}KG`;
 }
 
 function prefersReducedMotion() {
@@ -101,6 +113,29 @@ function toPins(seizures: Seizure[]): Pin[] {
     });
 }
 
+/** Show as many callout labels as fit without overlapping: the selected
+    seizure first, then the heaviest. Runs whenever the camera moves. */
+function declutter(globe: GlobeInstance, callouts: Callout[]) {
+  const taken: { x0: number; y0: number; x1: number; y1: number }[] = [];
+  const ranked = callouts
+    .filter((c) => c.el.style.display !== 'none' && (c.selected || c.kg > 10))
+    .sort((a, b) => Number(b.selected) - Number(a.selected) || b.kg - a.kg);
+  const shown = new Set<Callout>();
+  for (const c of ranked) {
+    const { x, y } = globe.getScreenCoords(c.pin.lat, c.pin.lng, 0.002);
+    const box = { x0: x + 20, y0: y - 26, x1: x + 26 + c.width, y1: y - 10 };
+    if (!c.selected && taken.some((t) => box.x0 < t.x1 && box.x1 > t.x0 && box.y0 < t.y1 && box.y1 > t.y0)) continue;
+    taken.push(box);
+    // Keep other labels off the selected marker itself.
+    if (c.selected) taken.push({ x0: x - 10, y0: y - 10, x1: x + 10, y1: y + 10 });
+    shown.add(c);
+  }
+  for (const c of callouts) {
+    if (shown.has(c)) c.el.dataset.callout = '';
+    else delete c.el.dataset.callout;
+  }
+}
+
 /* ── Fly-to: great-circle path with an altitude hop ───────────── */
 
 function toVec(lat: number, lng: number) {
@@ -141,6 +176,8 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
   const arcTimerRef = useRef<number | null>(null);
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const calloutsRef = useRef<Callout[]>([]);
+  const declutterRef = useRef<() => void>(() => {});
 
   // Create the globe once.
   useEffect(() => {
@@ -201,25 +238,25 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       .catch((err) => console.warn('[globe] India borders failed to load', err));
 
     globe
-      .pointLat('lat')
-      .pointLng('lng')
-      .pointRadius(0.13)
-      .pointResolution(10)
-      .pointsTransitionDuration(0)
-      .pointAltitude((d) => {
-        const kg = (d as Pin).seizure.quantityKg || 0;
-        return 0.004 + Math.min(0.06, Math.log10(kg + 1) * 0.015);
-      })
-      .pointLabel((d) => {
-        const s = (d as Pin).seizure;
-        const kg = s.quantityKg >= 1000 ? `${(s.quantityKg / 1000).toFixed(1)} T` : `${(s.quantityKg || 0).toFixed(1)} KG`;
-        const wrap = document.createElement('div');
-        wrap.className = styles.tooltip;
-        wrap.textContent = `${s.location.city.toUpperCase()} · ${s.drugType.toUpperCase()} · ${kg}`;
-        return wrap;
-      })
-      .onPointClick((d) => onSelectRef.current((d as Pin).seizure))
-      .onPointHover((d) => { el.style.cursor = d ? 'pointer' : ''; });
+      .htmlLat('lat')
+      .htmlLng('lng')
+      .htmlAltitude(0.002)
+      .htmlTransitionDuration(0)
+      .htmlElementVisibilityModifier((node, visible) => {
+        node.style.display = visible ? '' : 'none';
+      });
+
+    // Re-pack labels as the camera moves, at most once per frame.
+    let declutterFrame = 0;
+    const scheduleDeclutter = () => {
+      if (declutterFrame) return;
+      declutterFrame = requestAnimationFrame(() => {
+        declutterFrame = 0;
+        declutter(globe, calloutsRef.current);
+      });
+    };
+    declutterRef.current = scheduleDeclutter;
+    controls.addEventListener('change', scheduleDeclutter);
 
     globe
       .ringLat('lat')
@@ -235,7 +272,10 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       .arcDashGap(1.5)
       .arcDashInitialGap(1);
 
-    const resize = () => globe.width(el.clientWidth).height(el.clientHeight);
+    const resize = () => {
+      globe.width(el.clientWidth).height(el.clientHeight);
+      scheduleDeclutter();
+    };
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(el);
@@ -244,6 +284,8 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       cancelled = true;
       ro.disconnect();
       controls.removeEventListener('start', stopIdleSpin);
+      controls.removeEventListener('change', scheduleDeclutter);
+      cancelAnimationFrame(declutterFrame);
       if (flightRef.current) cancelAnimationFrame(flightRef.current);
       if (arcTimerRef.current) window.clearTimeout(arcTimerRef.current);
       layers.forEach((l) => {
@@ -257,16 +299,51 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
     };
   }, []);
 
-  // Pins.
+  // HUD callouts: a small square per seizure; seizures over 10 kg (and the
+  // selected one) get a leader line and label wherever there's room.
   useEffect(() => {
     const globe = globeRef.current;
     if (!globe) return;
-    globe
-      .pointsData(toPins(seizures))
-      .pointColor((d) => {
-        const s = (d as Pin).seizure;
-        return s.id === selected?.id ? '#FFFFFF' : severityColor(s.quantityKg || 0, mode);
+    const callouts: Callout[] = [];
+
+    globe.htmlElementsData(toPins(seizures)).htmlElement((d) => {
+      const pin = d as Pin;
+      const s = pin.seizure;
+      const kg = s.quantityKg || 0;
+      const isSelected = s.id === selected?.id;
+      const text = `${s.location.city.toUpperCase()} ${formatKg(kg)}`;
+
+      const el = document.createElement('div');
+      el.className = styles.marker;
+      el.style.setProperty('--c', isSelected ? '#FFFFFF' : severityColor(kg, mode));
+      if (kg > 10) el.dataset.filled = '';
+      if (isSelected) el.dataset.selected = '';
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', `${s.location.city}, ${s.drugType}, ${formatKg(kg)}`);
+      el.innerHTML =
+        `<span class="${styles.box}"></span>` +
+        `<svg class="${styles.leader}" width="22" height="22" aria-hidden="true"><path d="M0 22 L12 6 L22 6"/></svg>` +
+        `<span class="${styles.label}"></span>`;
+      const label = el.querySelector(`.${styles.label}`)!;
+      label.textContent = `${s.location.city.toUpperCase()} `;
+      const qty = document.createElement('b');
+      qty.textContent = formatKg(kg);
+      label.appendChild(qty);
+
+      const choose = () => onSelectRef.current(s);
+      el.addEventListener('click', choose);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); }
       });
+
+      // ~7px per mono glyph at 10px with 0.08em tracking, plus padding.
+      callouts.push({ el, pin, kg, selected: isSelected, width: text.length * 7.2 + 14 });
+      return el;
+    });
+
+    calloutsRef.current = callouts;
+    declutterRef.current();
   }, [seizures, selected, mode]);
 
   // Fly to the selected seizure.
@@ -315,6 +392,7 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       const { lat, lng } = fromVec(slerp(a, b, e));
       const altitude = start.altitude + (LANDING_ALTITUDE - start.altitude) * e + hop * Math.sin(Math.PI * e);
       globe.pointOfView({ lat, lng, altitude }, 0);
+      declutterRef.current();
       flightRef.current = t < 1 ? requestAnimationFrame(step) : null;
     };
     flightRef.current = requestAnimationFrame(step);
