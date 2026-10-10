@@ -113,21 +113,74 @@ function toPins(seizures: Seizure[]): Pin[] {
     });
 }
 
-/** Show as many callout labels as fit without overlapping: the selected
-    seizure first, then the heaviest. Runs whenever the camera moves. */
+const FAN_GAP = 16; // px between markers fanned out from one spot
+
+/** Two passes, run whenever the camera moves:
+    1. Markers that land within a few pixels of each other on screen (same
+       city, or neighbouring cities when zoomed out) fan out in a small ring
+       and get nudged apart, so every one of them stays clickable.
+    2. Labels are packed so none overlap: the selected seizure first, then
+       the heaviest. */
 function declutter(globe: GlobeInstance, callouts: Callout[]) {
-  const taken: { x0: number; y0: number; x1: number; y1: number }[] = [];
-  const ranked = callouts
-    .filter((c) => c.el.style.display !== 'none' && (c.selected || c.kg > 10))
+  const visible = callouts
+    .filter((c) => c.el.style.display !== 'none')
     .sort((a, b) => Number(b.selected) - Number(a.selected) || b.kg - a.kg);
+
+  const clusters: { x: number; y: number; members: Callout[] }[] = [];
+  const anchor = new Map<Callout, { x: number; y: number }>();
+  const pos = new Map<Callout, { x: number; y: number }>();
+  for (const c of visible) {
+    const p = globe.getScreenCoords(c.pin.lat, c.pin.lng, 0.002);
+    anchor.set(c, p);
+    const near = clusters.find((k) => Math.hypot(k.x - p.x, k.y - p.y) < FAN_GAP - 4);
+    if (near) near.members.push(c);
+    else clusters.push({ ...p, members: [c] });
+  }
+  for (const k of clusters) {
+    const n = k.members.length;
+    const r = n > 1 ? Math.max(FAN_GAP * 0.75, (FAN_GAP * n) / (2 * Math.PI)) : 0;
+    k.members.forEach((c, i) => {
+      const a = (i / n) * 2 * Math.PI - Math.PI / 2;
+      pos.set(c, { x: k.x + r * Math.cos(a), y: k.y + r * Math.sin(a) });
+    });
+  }
+  // A ring can still land on a neighbouring city's marker: nudge any pair
+  // that's too close apart until each square has its own spot.
+  const pts = [...pos.values()];
+  for (let iter = 0; iter < 8; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[j].x - pts[i].x;
+        const dy = pts[j].y - pts[i].y;
+        const d = Math.hypot(dx, dy);
+        if (d >= FAN_GAP - 2) continue;
+        const push = (FAN_GAP - d) / 2;
+        const ux = d > 0.01 ? dx / d : 1;
+        const uy = d > 0.01 ? dy / d : 0;
+        pts[i].x -= ux * push; pts[i].y -= uy * push;
+        pts[j].x += ux * push; pts[j].y += uy * push;
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  for (const [c, p] of pos) {
+    const a = anchor.get(c)!;
+    const dx = Math.round(p.x - a.x);
+    const dy = Math.round(p.y - a.y);
+    c.el.style.translate = dx || dy ? `${dx}px ${dy}px` : '';
+  }
+
+  // Boxes are obstacles too, so a label never hides another marker.
+  const taken = [...pos.values()].map(({ x, y }) => ({ x0: x - 6, y0: y - 6, x1: x + 6, y1: y + 6 }));
   const shown = new Set<Callout>();
-  for (const c of ranked) {
-    const { x, y } = globe.getScreenCoords(c.pin.lat, c.pin.lng, 0.002);
+  for (const c of visible) {
+    if (!c.selected && c.kg <= 10) continue;
+    const { x, y } = pos.get(c)!;
     const box = { x0: x + 20, y0: y - 26, x1: x + 26 + c.width, y1: y - 10 };
     if (!c.selected && taken.some((t) => box.x0 < t.x1 && box.x1 > t.x0 && box.y0 < t.y1 && box.y1 > t.y0)) continue;
     taken.push(box);
-    // Keep other labels off the selected marker itself.
-    if (c.selected) taken.push({ x0: x - 10, y0: y - 10, x1: x + 10, y1: y + 10 });
     shown.add(c);
   }
   for (const c of callouts) {
@@ -301,6 +354,7 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
 
   // HUD callouts: a small square per seizure; seizures over 10 kg (and the
   // selected one) get a leader line and label wherever there's room.
+  // Only the square takes clicks, so a label never blocks a marker under it.
   useEffect(() => {
     const globe = globeRef.current;
     if (!globe) return;
