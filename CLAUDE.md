@@ -82,7 +82,7 @@ When working on frontend code, the `impeccable` design skill at `.github/skills/
 
 ## Deployment
 
-- **Production**: Vercel's GitHub integration (projects `narc-kart`, `narc-kart-v2`, `nk-dashboard`) deploys every push; no workflow or secrets needed. `frontend/vercel.json` builds `frontend/` and serves `frontend/dist/`. Vite `base` is `/`.
+- **Production**: Vercel's GitHub integration (projects `narc-kart`, `narc-kart-v2`, `nk-dashboard`) deploys every push; no workflow or secrets needed. The root `vercel.json` builds `frontend/` and serves `frontend/dist/` (the Vercel projects use the repo root as their root directory). Vite `base` is `/`.
 
 ---
 
