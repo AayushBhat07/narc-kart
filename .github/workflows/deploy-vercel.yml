@@ -3,13 +3,21 @@ name: Deploy to Vercel
 on:
   push:
     branches: [main]
+  # Pushes made by the weekly data job don't trigger `push` workflows,
+  # so deploy again once that job finishes.
+  workflow_run:
+    workflows: ['Weekly Drug Seizure Data Update']
+    types: [completed]
   workflow_dispatch:
 
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: amondnet/vercel-action@v25
         with:

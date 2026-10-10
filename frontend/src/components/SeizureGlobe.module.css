@@ -1,0 +1,22 @@
+.globe {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-void);
+  overflow: hidden;
+  cursor: grab;
+}
+
+.globe:active {
+  cursor: grabbing;
+}
+
+.tooltip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-mid);
+  padding: var(--sp-1) var(--sp-2);
+  white-space: nowrap;
+}
