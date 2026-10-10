@@ -11,7 +11,7 @@
       "quantityKg": 0.6,
       "date": "2025-04-10",
       "sourceName": "BLR Police",
-      "sourceUrl": "https://public Bengaluru police.gov.in",
+      "sourceUrl": "https://ksp.karnataka.gov.in",
       "agency": "Bengaluru Police",
       "description": "EDM festival MDMA supply ring",
       "images": []
@@ -44,22 +44,6 @@
       "date": "2025-04-08",
       "sourceName": "BLR Police",
       "sourceUrl": "https://public.blorepolice.gov.in",
-      "agency": "Bengaluru Police",
-      "description": "Electronic City MDMA distribution",
-      "images": []
-    },
-    {
-      "id": "sz-f962d29b",
-      "caseNo": "NK-2025-0059",
-      "city": "Bengaluru",
-      "state": "Karnataka",
-      "lat": 12.971,
-      "lon": 77.594,
-      "drugType": "mdma",
-      "quantityKg": 2.8,
-      "date": "2025-04-08",
-      "sourceName": "BLR Police",
-      "sourceUrl": "https://public.blorepolice.gov.in/mdma-0.15341421160845448",
       "agency": "Bengaluru Police",
       "description": "Electronic City MDMA distribution",
       "images": []
@@ -1202,13 +1186,13 @@
     }
   ],
   "stats": {
-    "total_seizures": 75,
-    "total_quantity_kg": 2478.0,
+    "total_seizures": 74,
+    "total_quantity_kg": 2475.2,
     "raids_this_week": 0,
     "by_state": {
       "Maharashtra": 7,
-      "Karnataka": 6,
       "Gujarat": 6,
+      "Karnataka": 5,
       "Tamil Nadu": 5,
       "Punjab": 5,
       "Delhi": 5,
@@ -1233,7 +1217,7 @@
       "heroin": 15,
       "cocaine": 10,
       "opium": 5,
-      "mdma": 4
+      "mdma": 3
     },
     "by_month": {
       "2024-11": 1,
@@ -1241,7 +1225,7 @@
       "2025-01": 5,
       "2025-02": 20,
       "2025-03": 30,
-      "2025-04": 18
+      "2025-04": 17
     },
     "top_locations": [
       {
@@ -1257,13 +1241,6 @@
         "state": "Maharashtra",
         "count": 4,
         "kg": 173.7
-      },
-      {
-        "location": "Bengaluru, Karnataka",
-        "city": "Bengaluru",
-        "state": "Karnataka",
-        "count": 3,
-        "kg": 6.2
       },
       {
         "location": "Surat, Gujarat",
@@ -1313,6 +1290,13 @@
         "state": "Kerala",
         "count": 2,
         "kg": 107.0
+      },
+      {
+        "location": "Jaipur, Rajasthan",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "count": 2,
+        "kg": 103.0
       }
     ]
   },

@@ -176,6 +176,7 @@ def is_valid(r) -> bool:
             and lat_min <= float(r["lat"]) <= lat_max
             and lon_min <= float(r["lon"]) <= lon_max
             and re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["date"]) is not None
+            and re.fullmatch(r"https?://[^\s/]+\.[^\s/]+(/\S*)?", r.get("sourceUrl") or "") is not None
             and len(r.get("description") or "") <= 600
         )
     except (KeyError, TypeError, ValueError):
@@ -257,12 +258,14 @@ def main():
     merged = sorted(existing + added, key=lambda s: s["date"], reverse=True)
     assert len(merged) >= before, "refusing to shrink the dataset"
 
-    if args.dry_run or not added:
+    if args.dry_run:
         return
 
+    # Recompute stats every run: raids_this_week moves with the calendar.
     data["seizures"] = merged
     data["stats"] = compute_stats(merged)
-    data["lastUpdated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    if added:
+        data["lastUpdated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
