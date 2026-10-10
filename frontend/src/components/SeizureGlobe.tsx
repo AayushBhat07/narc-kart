@@ -6,11 +6,12 @@ import type { Topology, GeometryCollection } from 'topojson-specification';
 import worldUrl from 'world-atlas/countries-50m.json?url';
 import { Seizure } from '../types';
 import styles from './SeizureGlobe.module.css';
+import { createCurtainTrail, type CurtainTrail } from './curtainTrail';
 
 /* Black globe drawn with white hairlines: graticule, country borders,
    Indian state borders and (fainter) district borders. Seizures are
    HUD callouts; selecting one flies the camera along a great-circle "hop"
-   from wherever the camera is to the new city. */
+   to the new city while a hairline curtain trail draws in from the last one. */
 
 interface Props {
   seizures: Seizure[];
@@ -37,6 +38,11 @@ interface Callout {
 
 const INDIA_VIEW = { lat: 22, lng: 80, altitude: 1.9 };
 const LANDING_ALTITUDE = 0.55;
+const MIN_DISTANCE = 112;
+/** Mid-flight, the camera tips forward towards the destination (0 = straight down). */
+const FLIGHT_TILT = 0.95;
+/** ...and flies this far to the side of the trail (fraction of the hop) so it's seen at an angle. */
+const FLIGHT_SIDE = 0.6;
 
 const PALETTE = {
   main: { critical: '#E83D3D', high: '#FF7043', low: '#FFB300', ring: '232,61,61' },
@@ -211,6 +217,13 @@ function slerp(a: number[], b: number[], t: number) {
   return [a[0] * ka + b[0] * kb, a[1] * ka + b[1] * kb, a[2] * ka + b[2] * kb];
 }
 
+const cross = (u: number[], v: number[]) => [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+
+function normalize(u: number[]) {
+  const l = Math.hypot(u[0], u[1], u[2]) || 1;
+  return [u[0] / l, u[1] / l, u[2] / l];
+}
+
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 function angularDistanceDeg(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
@@ -226,7 +239,9 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
   const containerRef = useRef<HTMLDivElement>(null);
   const globeRef = useRef<GlobeInstance | null>(null);
   const flightRef = useRef<number | null>(null);
-  const arcTimerRef = useRef<number | null>(null);
+  const trailTimerRef = useRef<number | null>(null);
+  const trailRef = useRef<CurtainTrail | null>(null);
+  const lastStopRef = useRef<{ lat: number; lng: number } | null>(null);
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const calloutsRef = useRef<Callout[]>([]);
@@ -252,7 +267,7 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
     controls.autoRotate = !prefersReducedMotion();
     controls.autoRotateSpeed = 0.3;
     controls.enableDamping = true;
-    controls.minDistance = 112;
+    controls.minDistance = MIN_DISTANCE;
     controls.maxDistance = 650;
     const stopIdleSpin = () => { controls.autoRotate = false; };
     controls.addEventListener('start', stopIdleSpin);
@@ -318,13 +333,6 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       .ringPropagationSpeed(1.6)
       .ringRepeatPeriod(1100);
 
-    globe
-      .arcStroke(0.35)
-      .arcAltitudeAutoScale(0.35)
-      .arcDashLength(0.5)
-      .arcDashGap(1.5)
-      .arcDashInitialGap(1);
-
     const resize = () => {
       globe.width(el.clientWidth).height(el.clientHeight);
       scheduleDeclutter();
@@ -340,7 +348,9 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       controls.removeEventListener('change', scheduleDeclutter);
       cancelAnimationFrame(declutterFrame);
       if (flightRef.current) cancelAnimationFrame(flightRef.current);
-      if (arcTimerRef.current) window.clearTimeout(arcTimerRef.current);
+      if (trailTimerRef.current) window.clearTimeout(trailTimerRef.current);
+      trailRef.current?.dispose();
+      trailRef.current = null;
       layers.forEach((l) => {
         scene.remove(l);
         l.geometry.dispose();
@@ -400,10 +410,23 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
     declutterRef.current();
   }, [seizures, selected, mode]);
 
-  // Fly to the selected seizure.
+  // Fly to the selected seizure: a great-circle hop with the camera tipped
+  // forward and off to one side, drawing the curtain trail as it goes.
   useEffect(() => {
     const globe = globeRef.current;
-    if (!globe) return;
+    const el = containerRef.current;
+    if (!globe || !el) return;
+    const controls = globe.controls();
+
+    const endFlight = () => {
+      if (flightRef.current) cancelAnimationFrame(flightRef.current);
+      flightRef.current = null;
+      if (!globeRef.current) return; // unmounting: the globe is already gone
+      controls.target.set(0, 0, 0);
+      controls.minDistance = MIN_DISTANCE;
+      controls.update();
+      delete el.dataset.flying;
+    };
 
     if (!selected) {
       globe.ringsData([]);
@@ -413,13 +436,17 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
     const ring = PALETTE[mode].ring;
     const target = { lat: selected.location.lat, lng: selected.location.lon };
     globe.ringColor(() => (t: number) => `rgba(${ring},${1 - t})`).ringsData([target]);
-    globe.controls().autoRotate = false;
+    controls.autoRotate = false;
+
+    endFlight();
+    if (trailTimerRef.current) window.clearTimeout(trailTimerRef.current);
+    trailRef.current?.dispose();
+    trailRef.current = null;
 
     const start = globe.pointOfView();
+    const from = lastStopRef.current ?? start;
+    lastStopRef.current = target;
     const distance = angularDistanceDeg(start, target);
-
-    if (flightRef.current) cancelAnimationFrame(flightRef.current);
-    if (arcTimerRef.current) window.clearTimeout(arcTimerRef.current);
 
     if (prefersReducedMotion() || distance < 0.01) {
       globe.pointOfView({ ...target, altitude: LANDING_ALTITUDE }, prefersReducedMotion() ? 0 : 600);
@@ -427,29 +454,61 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
     }
 
     const duration = Math.min(2600, 1000 + distance * 45);
-    const hop = Math.min(1.4, 0.15 + distance / 18);
+    const hop = Math.min(0.25, 0.08 + distance / 45);
 
-    // The jump trail: a dashed arc that travels with the camera.
-    globe
-      .arcColor(() => ['rgba(255,255,255,0.15)', PALETTE[mode].critical])
-      .arcDashAnimateTime(duration)
-      .arcsData([{ startLat: start.lat, startLng: start.lng, endLat: target.lat, endLng: target.lng }]);
-    arcTimerRef.current = window.setTimeout(() => globe.arcsData([]), duration + 1200);
+    const trail = createCurtainTrail(globe, from, target);
+    trailRef.current = trail;
+    trailTimerRef.current = window.setTimeout(() => {
+      const f0 = performance.now();
+      const fadeOut = (now: number) => {
+        if (trailRef.current !== trail) return;
+        const f = 1 - (now - f0) / 900;
+        if (f <= 0) {
+          trail.dispose();
+          trailRef.current = null;
+          return;
+        }
+        trail.fade(f);
+        requestAnimationFrame(fadeOut);
+      };
+      requestAnimationFrame(fadeOut);
+    }, duration + 1400);
 
+    // The trail is drawn from the last seizure; the camera flies from wherever it is.
+    const trailLength = angularDistanceDeg(from, target);
     const a = toVec(start.lat, start.lng);
     const b = toVec(target.lat, target.lng);
+    const side = normalize(cross(a, b));
+    const sideAmount = FLIGHT_SIDE * Math.min(0.35, (distance * Math.PI) / 180);
+    const ground = globe.getCoords(target.lat, target.lng, 0);
     const t0 = performance.now();
+
+    el.dataset.flying = '';
+    controls.minDistance = 0; // the look-at target sits near the surface mid-flight
 
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / duration);
       const e = easeInOut(t);
-      const { lat, lng } = fromVec(slerp(a, b, e));
+      const p = slerp(a, b, e);
+      const k = sideAmount * Math.sin(Math.PI * e);
+      const { lat, lng } = fromVec(normalize([p[0] + side[0] * k, p[1] + side[1] * k, p[2] + side[2] * k]));
       const altitude = start.altitude + (LANDING_ALTITUDE - start.altitude) * e + hop * Math.sin(Math.PI * e);
       globe.pointOfView({ lat, lng, altitude }, 0);
+
+      // Look towards the destination. Once the camera is above it, that's the
+      // same view as looking at the centre, so landing needs no snap.
+      const w = FLIGHT_TILT * Math.min(1, e * 2.2);
+      controls.target.set(ground.x * w, ground.y * w, ground.z * w);
+      controls.update();
+
+      trail.reveal(trailLength > 0.01 ? e : 1);
       declutterRef.current();
-      flightRef.current = t < 1 ? requestAnimationFrame(step) : null;
+      if (t < 1) flightRef.current = requestAnimationFrame(step);
+      else endFlight();
     };
     flightRef.current = requestAnimationFrame(step);
+
+    return endFlight;
   }, [selected, mode]);
 
   return <div ref={containerRef} className={styles.globe} aria-label="Interactive globe of seizure locations" />;

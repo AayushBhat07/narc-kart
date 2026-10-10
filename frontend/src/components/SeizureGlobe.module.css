@@ -114,3 +114,12 @@
   outline: 1px solid var(--text-primary);
   outline-offset: 2px;
 }
+
+/* While the camera flies, the hairline trail is the hero. */
+.globe[data-flying] .marker:not([data-selected]) {
+  opacity: 0.25;
+}
+
+.marker {
+  transition: opacity 200ms;
+}
