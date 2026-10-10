@@ -1,7 +1,6 @@
 /* Hallmark · genre: tactical ops-center · macrostructure: war-room · design-system: DESIGN.md */
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { IndiaMap } from './components/IndiaMap';
+import { useState, useCallback, useMemo, useEffect, lazy, Suspense } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FilterPanel } from './components/FilterPanel';
 
 import { IntelPanel } from './components/IntelPanel';
@@ -10,35 +9,20 @@ import { TerminalPanel } from './components/TerminalPanel';
 import { TrendingPanel } from './components/TrendingPanel';
 import { AgencyPanel } from './components/AgencyPanel';
 import { ComparePanel } from './components/ComparePanel';
-import { DistrictPanel } from './components/DistrictPanel';
+import { SeizurePopup } from './components/SeizurePopup';
 import { OfflineBadge } from './components/OfflineBadge';
 import { Clock } from './components/Clock';
 import { RavePanel } from './components/RavePanel';
 import { useApi } from './hooks/useApi';
 import { useRaveData } from './hooks/useRaveData';
-import { Seizure, DistrictAggregate, DistrictFeature, DistrictFeatureCollection } from './types';
-import {
-  aggregateSeizuresByDistrict,
-  type DistrictPolygonIndex,
-} from './lib/districtAggregates';
-import 'leaflet/dist/leaflet.css';
+import { Seizure } from './types';
 import './styles/global.css';
 import styles from './App.module.css';
 
-type Tab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'agency' | 'compare' | 'rave';
+// three.js is heavy; keep it out of the first chunk.
+const SeizureGlobe = lazy(() => import('./components/SeizureGlobe'));
 
-const TICKER_ITEMS = [
-  { sev: 'CRIT', city: 'MUMBAI', drug: 'HEROIN', kg: '340KG' },
-  { sev: 'HIGH', city: 'DELHI', drug: 'METH', kg: '89KG' },
-  { sev: 'LOW', city: 'PUNE', drug: 'CANNABIS', kg: '12KG' },
-  { sev: 'CRIT', city: 'SRINAGAR', drug: 'HEROIN', kg: '210KG' },
-  { sev: 'HIGH', city: 'AHMEDABAD', drug: 'METH', kg: '45KG' },
-  { sev: 'LOW', city: 'KOLKATA', drug: 'COCAINE', kg: '8KG' },
-  { sev: 'HIGH', city: 'CHENNAI', drug: 'METH', kg: '67KG' },
-  { sev: 'CRIT', city: 'JAMMU', drug: 'HEROIN', kg: '180KG' },
-  { sev: 'LOW', city: 'GOA', drug: 'CANNABIS', kg: '22KG' },
-  { sev: 'HIGH', city: 'PATNA', drug: 'METH', kg: '34KG' },
-];
+type Tab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'agency' | 'compare' | 'rave';
 
 function getSeverityClass(kg: number) {
   if (kg > 100) return styles['sev--critical'];
@@ -46,74 +30,36 @@ function getSeverityClass(kg: number) {
   return styles['sev--low'];
 }
 
-function TickerItem({ item }: { item: typeof TICKER_ITEMS[number] }) {
-  const kg = parseFloat(item.kg.replace(/[^0-9.]/g, ''));
-  return (
-    <span className={styles.tickerItem}>
-      <span className={`${styles.sev} ${getSeverityClass(kg)}`}>{item.sev}</span>
-      <span className={styles.loc}>{item.city}</span>
-      <span className={styles.drug}>{item.drug}</span>
-      <span className={styles.sep}>·</span>
-      <span>{item.kg}</span>
-    </span>
-  );
+function severityLabel(kg: number) {
+  if (kg > 100) return 'CRIT';
+  if (kg > 10) return 'HIGH';
+  return 'LOW';
 }
 
-// Doubled once at module load (not per render) for the seamless marquee loop.
-const TICKER_ITEMS_DOUBLED: typeof TICKER_ITEMS = [...TICKER_ITEMS, ...TICKER_ITEMS];
+function formatKg(kg: number) {
+  return kg >= 1000 ? `${(kg / 1000).toFixed(1)}T` : `${Math.round(kg * 10) / 10}KG`;
+}
+
+function TickerItem({ seizure, onSelect }: { seizure: Seizure; onSelect: (s: Seizure) => void }) {
+  const kg = seizure.quantityKg || 0;
+  return (
+    <button type="button" className={styles.tickerItem} onClick={() => onSelect(seizure)} tabIndex={-1}>
+      <span className={`${styles.sev} ${getSeverityClass(kg)}`}>{severityLabel(kg)}</span>
+      <span className={styles.loc}>{seizure.location.city.toUpperCase()}</span>
+      <span className={styles.drug}>{seizure.drugType.toUpperCase()}</span>
+      <span className={styles.sep}>·</span>
+      <span>{formatKg(kg)}</span>
+    </button>
+  );
+}
 
 export function App() {
   const [activeTab, setActiveTab] = useState<Tab>('radar');
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState<DistrictAggregate | null>(null);
+  const [selectedSeizure, setSelectedSeizure] = useState<Seizure | null>(null);
 
-  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error } = useApi();
+  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
   const { data: raveData } = useRaveData();
-
-  // District choropleth data — built reactively from the live
-  // `seizures` array (NCB/UNODC) and the GADM polygon index. Both
-  // the main (radar) and rave views share the same polygon index
-  // and the same hint-key / full-scan aggregation logic, so the
-  // actual work lives in `lib/districtAggregates.ts` and we just
-  // project the two seizure streams onto it.
-  //
-  // We keep the top-level unmatchedCount so the DistrictPanel footer
-  // can be honest about how many source records didn't geocode.
-  const [districtIndex, setDistrictIndex] = useState<DistrictPolygonIndex | null>(null);
-  const [byDistrict, setByDistrict] = useState<Record<string, DistrictAggregate> | null>(null);
-  const [byDistrictRave, setByDistrictRave] = useState<Record<string, DistrictAggregate> | null>(null);
-  const [unmatchedCount, setUnmatchedCount] = useState(0);
-
-  // Load the GADM district polygons once and build the
-  // (NAME_2, NAME_1) → Feature[] index. The 4.5MB GeoJSON is cached
-  // by the browser after the first fetch, so this only really hits
-  // the network on first load. While this is loading, `byDistrict`
-  // and `byDistrictRave` stay null and the DistrictLayer renders an
-  // empty choropleth rather than throwing on a missing key.
-  useEffect(() => {
-    let cancelled = false;
-    fetch(`${import.meta.env.BASE_URL}india-districts.geojson`)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<DistrictFeatureCollection>;
-      })
-      .then((json) => {
-        if (cancelled) return;
-        // Build the (NAME_2, NAME_1) → Feature[] index once. If
-        // multiple polygons share a key (rare in GADM but possible
-        // for districts split across islands) they're treated as
-        // one district.
-        const polysByKey: DistrictPolygonIndex = {};
-        for (const f of json.features) {
-          const props = f.properties ?? ({} as DistrictFeature['properties']);
-          const key = `${props.NAME_2 ?? ''}|${props.NAME_1 ?? ''}`;
-          (polysByKey[key] ||= []).push(f);
-        }
-        setDistrictIndex(polysByKey);
-      })
-      .catch((err) => console.error('[App] District GeoJSON load failed:', err));
-    return () => { cancelled = true; };
-  }, []);
 
   // Project the rave dataset into the standard Seizure shape so we can render
   // them on the same map. Rave seizures may have a slightly different field
@@ -145,71 +91,23 @@ export function App() {
       }));
   }, [raveData]);
 
-  // Main (radar) choropleth — rebuilt reactively from the live
-  // `seizures` array whenever the polygon index is ready or the
-  // dataset changes. The seizures list is small (a few hundred
-  // records), so recomputing on every change is cheap. Gated on
-  // BOTH inputs being ready: if the polygons haven't loaded yet, or
-  // `seizures` is empty, we set `byDistrict = {}` so the DistrictLayer
-  // renders an empty choropleth rather than throwing on a null prop.
+  const isRave = activeTab === 'rave';
+  const globeSeizures = isRave ? raveSeizures : seizures;
+
+  // Drop the selection when it's no longer on the globe (filters / tab switch).
   useEffect(() => {
-    if (!districtIndex) {
-      setByDistrict(null);
-      return;
+    if (selectedSeizure && !globeSeizures.some((s) => s.id === selectedSeizure.id)) {
+      setSelectedSeizure(null);
     }
-    if (seizures.length === 0) {
-      setByDistrict({});
-      setUnmatchedCount(0);
-      return;
-    }
-    const { byDistrict: aggregates, unmatchedCount: unmatched } =
-      aggregateSeizuresByDistrict(seizures, districtIndex);
-    if (unmatched > 0) {
-      console.warn(`[App] ${unmatched} main seizures did not fall inside any district polygon`);
-    }
-    setByDistrict(aggregates);
-    setUnmatchedCount(unmatched);
-  }, [seizures, districtIndex]);
+  }, [globeSeizures, selectedSeizure]);
 
-  // Rave (festival) choropleth — same shared helper, different input
-  // stream. The aggregate key shape is identical to the main view,
-  // so DistrictPanel can render the per-seizure list for either
-  // source without a separate code path.
+  const closeCaseFile = useCallback(() => setSelectedSeizure(null), []);
+
   useEffect(() => {
-    if (!districtIndex) {
-      setByDistrictRave(null);
-      return;
-    }
-    if (raveSeizures.length === 0) {
-      setByDistrictRave({});
-      return;
-    }
-    const { byDistrict: aggregates, unmatchedCount: unmatched } =
-      aggregateSeizuresByDistrict(raveSeizures, districtIndex);
-    if (unmatched > 0) {
-      console.warn(`[App] ${unmatched} rave seizures did not fall inside any district polygon`);
-    }
-    setByDistrictRave(aggregates);
-  }, [raveSeizures, districtIndex]);
-
-  // Track which mode the open district came from so DistrictPanel can
-  // pick the right footer copy ("NCB/UNODC reports" for the main radar
-  // view, "festival/event incidents" for the festival/rave view).
-  // Active tab determines the mode — the user is looking at one
-  // choropleth at a time, and the same district can have different
-  // aggregates in the two views.
-  const districtPanelMode: 'main' | 'rave' = activeTab === 'rave' ? 'rave' : 'main';
-
-  const handleDistrictClick = useCallback(
-    (aggregate: DistrictAggregate | null, _feature: DistrictFeature) => {
-      // Null aggregate = user clicked an unmatched (no-data) district.
-      // We just dismiss any open panel; nothing to show.
-      setSelectedDistrict(aggregate);
-    },
-    []
-  );
-
-  const closeDistrictPanel = useCallback(() => setSelectedDistrict(null), []);
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedSeizure(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const closePanel = useCallback(() => setActiveTab('radar'), []);
 
@@ -218,7 +116,11 @@ export function App() {
     [seizures, stats, closePanel]
   );
 
-  const tickerItems = useMemo(() => TICKER_ITEMS_DOUBLED, []);
+  // Latest seizures, doubled for the seamless marquee loop.
+  const tickerItems = useMemo(() => {
+    const latest = [...seizures].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 12);
+    return [...latest, ...latest];
+  }, [seizures]);
 
   const panelComponent = useMemo(() => {
     switch (activeTab) {
@@ -242,11 +144,12 @@ export function App() {
   return (
     <div
       className={styles.shell}
-      data-mode={activeTab === 'rave' ? 'rave' : undefined}
+      data-mode={isRave ? 'rave' : undefined}
+      data-panel-open={activeTab !== 'radar' ? '' : undefined}
     >
 
       {/* ── Loading ─────────────────────────────────── */}
-      {seizures.length === 0 && !error && (
+      {loading && seizures.length === 0 && !error && (
         <div style={{
           position: 'absolute', inset: 0, zIndex: 200,
           background: 'var(--bg-primary)', display: 'flex',
@@ -263,13 +166,16 @@ export function App() {
         </div>
       )}
 
-      {/* ── Map Layer ───────────────────────────────── */}
+      {/* ── Globe Layer ─────────────────────────────── */}
       <div className={styles.mapLayer}>
-        <IndiaMap
-          byDistrict={byDistrict}
-          byDistrictRave={byDistrictRave}
-          onDistrictClick={handleDistrictClick}
-        />
+        <Suspense fallback={null}>
+          <SeizureGlobe
+            seizures={globeSeizures}
+            selected={selectedSeizure}
+            onSelect={setSelectedSeizure}
+            mode={isRave ? 'rave' : 'main'}
+          />
+        </Suspense>
       </div>
 
       {/* ── Classified Watermark / Kaleidoscope badge ───── */}
@@ -373,8 +279,8 @@ export function App() {
         </div>
         <div className={styles.tickerTrack} aria-hidden="true">
           <div className={styles.tickerScroll}>
-            {tickerItems.map((item, i) => (
-              <TickerItem key={`${i}-${item.city}`} item={item} />
+            {tickerItems.map((s, i) => (
+              <TickerItem key={`${i}-${s.id}`} seizure={s} onSelect={setSelectedSeizure} />
             ))}
           </div>
         </div>
@@ -393,13 +299,23 @@ export function App() {
         )}
       </AnimatePresence>
 
-      {/* ── District Panel (slide-in detail view) ────────── */}
-      <DistrictPanel
-        aggregate={selectedDistrict}
-        onClose={closeDistrictPanel}
-        unmatchedCount={unmatchedCount}
-        mode={districtPanelMode}
-      />
+      {/* ── Case File (selected seizure) ─────────────── */}
+      <AnimatePresence>
+        {selectedSeizure && (
+          <motion.aside
+            key="case-file"
+            className={styles.caseFile}
+            role="dialog"
+            aria-label="Seizure case file"
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 24 }}
+            transition={{ duration: 0.22 }}
+          >
+            <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+          </motion.aside>
+        )}
+      </AnimatePresence>
 
       {/* ── Offline Badge ────────────────────────────── */}
       {isOffline && <OfflineBadge lastUpdate={lastUpdate} />}

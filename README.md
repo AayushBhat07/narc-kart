@@ -18,6 +18,7 @@ The project went through a few phases:
 - 🔧 **Full-stack** — FastAPI + SQLite + React
 - 🌐 **Cloudflare tunnels** — backend hosted on a local tunnel (pain)
 - 📦 **Static mode** — everything baked into one JSON file, zero backend needed, just works on Vercel
+- 🌍 **Globe** — black hairline globe, data refreshed weekly by a GitHub Action
 
 > **Current state:** Fully static frontend deployed at [dist-e73wjyxqx-aayushbhat07s-projects.vercel.app](https://dist-e73wjyxqx-aayushbhat07s-projects.vercel.app). No backend, no tunnels, no CORS headaches.
 
@@ -27,7 +28,7 @@ The project went through a few phases:
 
 | Tab | What it does |
 |-----|-------------|
-| **RADAR** 🗺️ | Interactive Leaflet map with seizure markers across India |
+| **RADAR** 🌍 | Draggable 3D wireframe globe; click a seizure and the camera hops there |
 | **INTEL** 📊 | Stats breakdown by state, drug type, monthly trends |
 | **NETWORK** 🔗 | Node-graph showing agency connections (WIP) |
 | **TERMINAL** 💻 | Command-line style interface for power users |
@@ -43,18 +44,19 @@ The project went through a few phases:
 ## 🛠️ Tech Stack
 
 ```
-Frontend
+Frontend (the whole product)
 ├── React 19 + TypeScript
 ├── Vite 6 (build tool)
-├── Leaflet + React-Leaflet (maps)
+├── globe.gl + three.js (3D wireframe globe)
+├── world-atlas + topojson-client (country / state borders)
 ├── CSS Modules (styling)
-└── Vercel (hosting)
+└── Vercel Hobby (free static hosting)
 
-Backend (archived/static mode)
-├── FastAPI + Uvicorn
-├── SQLite database
-└── Python scraper + Ollama AI
+Data
+└── scripts/update_data.py — weekly GitHub Action, merges new seizures into data.json
 ```
+
+No backend, no database, nothing to pay for.
 
 ---
 
@@ -93,56 +95,33 @@ Static output lands in `frontend/dist/` — deploy straight to Vercel, Netlify, 
 narc-kart/
 ├── frontend/
 │   ├── public/
-│   │   └── data.json        ← all seizure data lives here (static mode)
+│   │   ├── data.json                ← all seizure data (static)
+│   │   └── india-districts.topojson ← Indian state/district borders for the globe
 │   └── src/
-│       ├── components/
-│       │   ├── Header.tsx
-│       │   ├── Sidebar.tsx
-│       │   ├── IndiaMap.tsx
-│       │   ├── SeizureModal.tsx
-│       │   ├── IntelPanel.tsx
-│       │   └── LiveFeed.tsx
-│       ├── hooks/
-│       │   └── useApi.ts   ← static/API mode toggle
-│       ├── types/
+│       ├── components/SeizureGlobe.tsx ← the 3D globe + fly-to transitions
+│       ├── hooks/useApi.ts             ← loads data.json, client-side filters
 │       └── App.tsx
-├── backend/                ← FastAPI backend (static mode not needed)
-│   ├── api/
-│   ├── database.py
-│   └── scraper/
-└── SPEC.md                 ← full project spec
+├── scripts/
+│   ├── update_data.py               ← weekly updater (stdlib only)
+│   └── data/cities.json             ← city → state + coordinates lookup
+└── .github/workflows/
+    ├── scrape-weekly.yml            ← Sundays 18:00 IST: update data.json
+    └── ci.yml                       ← build + data.json validation
 ```
 
 ---
 
-## 📦 Adding New Data
+## 📦 Data updates
 
-Edit `frontend/public/data.json` to add or modify seizure records:
+Every Sunday a GitHub Action runs `scripts/update_data.py`. It reads Google News RSS for
+Indian drug-seizure headlines, keeps only the ones that name a drug, a quantity and a
+known city, and **merges** them into `frontend/public/data.json` (it never deletes
+records). If anything changed it commits, and Vercel's GitHub integration redeploys.
 
-```json
-{
-  "seizures": [
-    {
-      "id": "sz-021",
-      "city": "Pune",
-      "state": "Maharashtra",
-      "lat": 18.520,
-      "lon": 73.856,
-      "drugType": "heroin",
-      "quantityKg": 42.0,
-      "date": "2026-04-26",
-      "sourceName": "Maharashtra Police",
-      "sourceUrl": "https://mahapolice.gov.in",
-      "agency": "Maharashtra Police",
-      "description": "Seizure description here.",
-      "images": []
-    }
-  ],
-  "stats": { ... }
-}
+```bash
+python scripts/update_data.py --dry-run   # see what would be added
+python scripts/update_data.py             # update data.json locally
 ```
-
-Then rebuild + redeploy. That's it. No database, no backend.
 
 ---
 

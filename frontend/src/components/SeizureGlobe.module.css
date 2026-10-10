@@ -1,0 +1,125 @@
+.globe {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-void);
+  overflow: hidden;
+  cursor: grab;
+}
+
+.globe:active {
+  cursor: grabbing;
+}
+
+/* ── HUD callout markers ── */
+
+.marker {
+  position: relative;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  font-family: var(--font-mono);
+}
+
+.box {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 9px;
+  height: 9px;
+  box-sizing: border-box;
+  border: 1px solid var(--c);
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Bigger hit area than the 9px square. */
+.box::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+}
+
+.marker[data-filled] .box {
+  background: var(--c);
+}
+
+.marker[data-selected] .box {
+  left: -7px;
+  top: -7px;
+  width: 13px;
+  height: 13px;
+  background: transparent;
+  outline: 1px solid var(--c);
+  outline-offset: 2px;
+}
+
+.leader,
+.label {
+  display: none;
+}
+
+.leader {
+  position: absolute;
+  left: 0;
+  top: -22px;
+  overflow: visible;
+}
+
+.leader path {
+  stroke: var(--c);
+  stroke-width: 1;
+  fill: none;
+}
+
+.label {
+  position: absolute;
+  left: 24px;
+  top: -24px;
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.7);
+  border-left: 1px solid var(--c);
+  padding: 1px 4px;
+}
+
+.label b {
+  font-weight: normal;
+  color: var(--c);
+}
+
+.marker[data-callout] .leader,
+.marker[data-callout] .label,
+.marker:hover .leader,
+.marker:hover .label,
+.marker:focus-visible .leader,
+.marker:focus-visible .label {
+  display: block;
+}
+
+.marker:hover,
+.marker:focus-visible,
+.marker[data-selected] {
+  z-index: 2;
+}
+
+.marker:focus-visible {
+  outline: none;
+}
+
+.marker:focus-visible .box {
+  outline: 1px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* While the camera flies, the hairline trail is the hero. */
+.globe[data-flying] .marker:not([data-selected]) {
+  opacity: 0.25;
+}
+
+.marker {
+  transition: opacity 200ms;
+}

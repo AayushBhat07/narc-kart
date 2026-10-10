@@ -24,6 +24,8 @@ const DRUG_TYPES: { value: DrugType; label: string }[] = [
   { value: 'cocaine', label: 'COCAINE' },
   { value: 'meth', label: 'METH' },
   { value: 'cannabis', label: 'CANNABIS' },
+  { value: 'mdma', label: 'MDMA' },
+  { value: 'opium', label: 'OPIUM' },
   { value: 'methaqualone', label: 'METHOLONE' },
   { value: 'other', label: 'OTHER' },
 ];
