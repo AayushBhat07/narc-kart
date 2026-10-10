@@ -44,7 +44,7 @@ Static only. `useApi` (`frontend/src/hooks/useApi.ts`) fetches `/data.json`, map
 ### Data pipeline
 
 1. `.github/workflows/scrape-weekly.yml` (Sun 18:00 IST) runs `scripts/update_data.py`: Google News RSS → keep headlines with drug + quantity + known city → **merge** into `data.json` (never shrinks it) → recompute `stats`.
-2. If `data.json` changed, the job commits it. `deploy-vercel.yml` runs after the job (`workflow_run`), because bot pushes don't trigger `push` workflows.
+2. If `data.json` changed, the job commits it. Vercel's GitHub integration deploys every push to `main`, including the bot's.
 3. `ci.yml` builds the frontend and validates every record and the `stats` keys.
 
 The `stats` block uses snake_case keys (`total_seizures`, `by_state`, ...). `fetchStaticData()` throws if they're missing, so don't hand-edit them; rerun the script.
@@ -82,7 +82,7 @@ When working on frontend code, the `impeccable` design skill at `.github/skills/
 
 ## Deployment
 
-- **Production**: Vercel, via `deploy-vercel.yml` (needs `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` repo secrets). `frontend/vercel.json` builds `frontend/` and serves `frontend/dist/`. Vite `base` is `/`.
+- **Production**: Vercel's GitHub integration (projects `narc-kart`, `narc-kart-v2`, `nk-dashboard`) deploys every push; no workflow or secrets needed. `frontend/vercel.json` builds `frontend/` and serves `frontend/dist/`. Vite `base` is `/`.
 
 ---
 

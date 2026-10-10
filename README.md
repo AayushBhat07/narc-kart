@@ -106,7 +106,6 @@ narc-kart/
 │   └── data/cities.json             ← city → state + coordinates lookup
 └── .github/workflows/
     ├── scrape-weekly.yml            ← Sundays 18:00 IST: update data.json
-    ├── deploy-vercel.yml            ← deploys on push and after each data update
     └── ci.yml                       ← build + data.json validation
 ```
 
@@ -117,7 +116,7 @@ narc-kart/
 Every Sunday a GitHub Action runs `scripts/update_data.py`. It reads Google News RSS for
 Indian drug-seizure headlines, keeps only the ones that name a drug, a quantity and a
 known city, and **merges** them into `frontend/public/data.json` (it never deletes
-records). If anything changed it commits, and the deploy workflow ships it to Vercel.
+records). If anything changed it commits, and Vercel's GitHub integration redeploys.
 
 ```bash
 python scripts/update_data.py --dry-run   # see what would be added
