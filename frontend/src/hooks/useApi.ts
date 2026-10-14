@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Seizure, FilterState, ApiStats } from '../types';
+import { safeUrl } from '../utils/safeUrl';
 
 // The site is fully static: everything comes from /data.json, which a
 // weekly GitHub Action refreshes. Filters are applied client-side.
@@ -18,9 +19,11 @@ async function fetchStaticData(): Promise<{ seizures: Seizure[]; stats: ApiStats
     drugType: s.drugType,
     quantityKg: s.quantityKg,
     date: s.date,
-    source: { name: s.sourceName || '', url: s.sourceUrl || '' },
+    source: { name: s.sourceName || '', url: safeUrl(s.sourceUrl) ?? '' },
     agency: s.agency || '',
-    images: s.images || [],
+    images: Array.isArray(s.images)
+      ? s.images.map(safeUrl).filter((u: string | undefined): u is string => !!u)
+      : [],
     caseNo: s.caseNo,
     description: s.description,
   }));

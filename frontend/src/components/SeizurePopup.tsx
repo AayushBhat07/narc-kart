@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 import { Seizure } from '../types';
+import { safeUrl } from '../utils/safeUrl';
 import styles from './SeizurePopup.module.css';
 
 interface Props {
@@ -27,6 +28,10 @@ function getSeverityClass(kg: number): string {
 }
 
 export function SeizurePopup({ seizure, onClose }: Props) {
+  // Re-check at render: the localStorage cache can hold records that never
+  // went through fetchStaticData's filtering.
+  const imageUrl = safeUrl(seizure.images[0]);
+  const sourceUrl = safeUrl(seizure.source.url);
   return (
     <div className={styles.container}>
       <div className={styles.classified}>CLASSIFIED</div>
@@ -47,10 +52,10 @@ export function SeizurePopup({ seizure, onClose }: Props) {
           </span>
         </div>
 
-        {seizure.images.length > 0 && (
+        {imageUrl && (
           <div className={styles.imageContainer}>
             <img
-              src={seizure.images[0]}
+              src={imageUrl}
               alt="Drug seizure"
               className={styles.image}
               onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -81,14 +86,18 @@ export function SeizurePopup({ seizure, onClose }: Props) {
           </div>
           <div className={styles.dataRow}>
             <span className={styles.label}>SOURCE</span>
-            <a
-              href={seizure.source.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              {seizure.source.name} ↗
-            </a>
+            {sourceUrl ? (
+              <a
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {seizure.source.name} ↗
+              </a>
+            ) : (
+              <span className={styles.value}>{seizure.source.name}</span>
+            )}
           </div>
         </div>
 

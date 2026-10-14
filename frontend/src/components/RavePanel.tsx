@@ -4,6 +4,7 @@
 import { useMemo } from 'react';
 import { useRaveData, RaveSeizure } from '../hooks/useRaveData';
 import styles from './RavePanel.module.css';
+import { safeUrl } from '../utils/safeUrl';
 
 interface Props {
   onClose: () => void;
@@ -173,7 +174,7 @@ function RaveRow({ seizure }: { seizure: RaveSeizure }) {
       </div>
       <a
         className={styles.sourceLink}
-        href={seizure.sourceUrl}
+        href={safeUrl(seizure.sourceUrl)}
         target="_blank"
         rel="noreferrer noopener"
         title={seizure.headline}

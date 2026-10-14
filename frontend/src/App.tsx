@@ -13,6 +13,7 @@ import { SeizurePopup } from './components/SeizurePopup';
 import { OfflineBadge } from './components/OfflineBadge';
 import { Clock } from './components/Clock';
 import { RavePanel } from './components/RavePanel';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { useApi } from './hooks/useApi';
 import { useRaveData } from './hooks/useRaveData';
 import { Seizure } from './types';
@@ -168,14 +169,16 @@ export function App() {
 
       {/* ── Globe Layer ─────────────────────────────── */}
       <div className={styles.mapLayer}>
-        <Suspense fallback={null}>
-          <SeizureGlobe
-            seizures={globeSeizures}
-            selected={selectedSeizure}
-            onSelect={setSelectedSeizure}
-            mode={isRave ? 'rave' : 'main'}
-          />
-        </Suspense>
+        <ErrorBoundary label="GLOBE">
+          <Suspense fallback={null}>
+            <SeizureGlobe
+              seizures={globeSeizures}
+              selected={selectedSeizure}
+              onSelect={setSelectedSeizure}
+              mode={isRave ? 'rave' : 'main'}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
       {/* ── Classified Watermark / Kaleidoscope badge ───── */}
@@ -266,7 +269,9 @@ export function App() {
       <main className={styles.mainViewport} role="main">
         {activeTab !== 'radar' && (
           <aside className={styles.viewportPanel} role="complementary" aria-label="Panel">
-            {panelComponent}
+            <ErrorBoundary label={activeTab.toUpperCase()} resetKeys={[activeTab]}>
+              {panelComponent}
+            </ErrorBoundary>
           </aside>
         )}
       </main>
@@ -289,13 +294,15 @@ export function App() {
       {/* ── Filter Panel ─────────────────────────────── */}
       <AnimatePresence>
         {showFilters && (
-          <FilterPanel
-            isOpen={showFilters}
-            filters={filters}
-            onApply={applyFilters}
-            onReset={resetFilters}
-            onClose={() => setShowFilters(false)}
-          />
+          <ErrorBoundary label="FILTERS">
+            <FilterPanel
+              isOpen={showFilters}
+              filters={filters}
+              onApply={applyFilters}
+              onReset={resetFilters}
+              onClose={() => setShowFilters(false)}
+            />
+          </ErrorBoundary>
         )}
       </AnimatePresence>
 
@@ -312,7 +319,9 @@ export function App() {
             exit={{ opacity: 0, x: 24 }}
             transition={{ duration: 0.22 }}
           >
-            <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+            <ErrorBoundary label="CASE FILE" resetKeys={[selectedSeizure.id]}>
+              <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+            </ErrorBoundary>
           </motion.aside>
         )}
       </AnimatePresence>
