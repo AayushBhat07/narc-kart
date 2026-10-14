@@ -1,0 +1,367 @@
+/* ── DrugIntelCard — cited drug dossier (issue #17) ───────────
+   Flat, mono, hairline-ruled. Red accent only on critical-severity
+   values (meaning) and focus rings — never decoration. */
+
+.card {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* Embedded in the case file: ruled off from the rows above. */
+.section {
+  margin-top: var(--sp-3);
+  border-top: 1px solid var(--border-dim);
+}
+
+/* Standalone dossier: its own framed surface. */
+.dossier {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-xs);
+  max-height: calc(100vh - 2 * var(--sp-8));
+  overflow-y: auto;
+}
+
+/* ── Headers ─────────────────────────────────────────────── */
+.sectionHead {
+  padding-top: var(--sp-2);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.classBar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border-dim);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.fileNo {
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.closeBtn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  color: var(--text-secondary);
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-bright);
+}
+
+/* ── Body ────────────────────────────────────────────────── */
+.dossier .body {
+  padding: var(--sp-3);
+}
+
+.section .body {
+  padding-top: var(--sp-2);
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-1) var(--sp-3);
+}
+
+.name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.drugClass {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.block {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border-ghost);
+}
+
+.blockLabel {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-1);
+}
+
+.empty {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.sub {
+  color: var(--text-secondary);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+}
+
+.note {
+  margin-top: 2px;
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ── Live stats (key / value rows) ───────────────────────── */
+.kv {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.kvRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-3);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-ghost);
+  font-size: 11px;
+}
+
+.kvRow:last-child {
+  border-bottom: none;
+}
+
+.kvRow dt {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.kvRow dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.critical { color: var(--sev-critical); }
+.high     { color: var(--sev-high); }
+.low      { color: var(--sev-low); }
+
+/* ── Lists ───────────────────────────────────────────────── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.list li {
+  padding-left: 12px;
+  position: relative;
+}
+
+.list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+
+/* ── Thresholds table ────────────────────────────────────── */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.table th {
+  text-align: left;
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  padding: 2px 0;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.table th:not(:first-child),
+.table td.num {
+  text-align: right;
+  padding-left: var(--sp-2);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 4px 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-ghost);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Citations & sources ─────────────────────────────────── */
+.cite {
+  font-size: 9px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cite:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.sources li {
+  display: flex;
+  gap: var(--sp-1);
+}
+
+.srcIdx {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sources a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.sources a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer {
+  margin-top: var(--sp-3);
+  padding: var(--sp-2) 0 0;
+  border-top: 1px solid var(--border-dim);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.dossier .footer {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-raised);
+}
+
+/* ── Modal overlay (mirrors SeizureModal) ────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: var(--sp-4);
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  outline: none;
+}
+
+/* Wide screens: two-column dossier so it fits without scrolling. */
+@media (min-width: 900px) {
+  .modal {
+    max-width: 720px;
+  }
+
+  .dossier .body {
+    columns: 2;
+    column-gap: var(--sp-6);
+  }
+
+  .dossier .titleRow {
+    column-span: all;
+  }
+
+  .dossier .block {
+    break-inside: avoid;
+  }
+
+  .dossier .block:last-child {
+    column-span: all;
+  }
+}
+
+/* ── Case-file teaser (summary + open button) ────────────── */
+.teaser {
+  margin-top: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3) var(--sp-3);
+  border: 1px solid var(--border-mid);
+  font-family: var(--font-mono);
+}
+
+.openBtn {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: transparent;
+  border: 1px solid var(--border-mid);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.openBtn:hover {
+  border-color: var(--border-bright);
+  background: var(--bg-raised);
+}
+
+.openBtn:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}

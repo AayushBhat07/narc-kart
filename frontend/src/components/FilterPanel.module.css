@@ -244,3 +244,31 @@
   color: var(--text-primary);
   border-color: var(--border-strong);
 }
+
+/* ── Drug chip + intel-card opener (issue #17) ───────────── */
+.chipPair {
+  display: inline-flex;
+}
+
+.chipPair .chip {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.intelBtn {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-medium);
+  border-left: none;
+  color: var(--text-secondary);
+  padding: 4px 6px;
+  font-size: 9px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.intelBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}

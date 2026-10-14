@@ -643,7 +643,9 @@
   width: 340px;
   max-height: calc(100% - 104px - 56px);
   overflow-y: auto;
-  z-index: 95;
+  /* Below the nav rail and ticker (90) so an open case file can never sit
+     on top of the tabs and swallow their clicks; above the panels (10). */
+  z-index: 85;
   background: var(--bg-glass);
   border: 1px solid var(--border-mid);
 }
@@ -655,7 +657,7 @@
 @media (max-width: 760px) {
   .caseFile,
   .shell[data-panel-open] .caseFile {
-    left: var(--sp-4);
+    left: calc(56px + var(--sp-4)); /* clear of the 56px nav rail */
     right: var(--sp-4);
     width: auto;
     top: auto;

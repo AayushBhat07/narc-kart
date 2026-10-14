@@ -7,12 +7,14 @@ import { IntelPanel } from './components/IntelPanel';
 import { NetworkPanel } from './components/NetworkPanel';
 import { TerminalPanel } from './components/TerminalPanel';
 import { TrendingPanel } from './components/TrendingPanel';
+import { BustsPanel } from './components/BustsPanel';
 import { AgencyPanel } from './components/AgencyPanel';
 import { ComparePanel } from './components/ComparePanel';
 import { SeizurePopup } from './components/SeizurePopup';
 import { OfflineBadge } from './components/OfflineBadge';
 import { Clock } from './components/Clock';
 import { RavePanel } from './components/RavePanel';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { useApi } from './hooks/useApi';
 import { useRaveData } from './hooks/useRaveData';
 import { Seizure } from './types';
@@ -22,7 +24,7 @@ import styles from './App.module.css';
 // three.js is heavy; keep it out of the first chunk.
 const SeizureGlobe = lazy(() => import('./components/SeizureGlobe'));
 
-type Tab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'agency' | 'compare' | 'rave';
+type Tab = 'radar' | 'intel' | 'network' | 'terminal' | 'trending' | 'busts' | 'agency' | 'compare' | 'rave';
 
 function getSeverityClass(kg: number) {
   if (kg > 100) return styles['sev--critical'];
@@ -58,7 +60,7 @@ export function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedSeizure, setSelectedSeizure] = useState<Seizure | null>(null);
 
-  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
+  const { seizures, allSeizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
   const { data: raveData } = useRaveData();
 
   // Project the rave dataset into the standard Seizure shape so we can render
@@ -111,6 +113,12 @@ export function App() {
 
   const closePanel = useCallback(() => setActiveTab('radar'), []);
 
+  // Leaderboard row → back to the globe, which flies to the selection and opens its case file.
+  const selectFromPanel = useCallback((s: Seizure) => {
+    setSelectedSeizure(s);
+    setActiveTab('radar');
+  }, []);
+
   const panelProps = useMemo(
     () => ({ seizures, stats, onClose: closePanel }),
     [seizures, stats, closePanel]
@@ -127,13 +135,14 @@ export function App() {
       case 'intel':    return <IntelPanel {...panelProps} />;
       case 'network':  return <NetworkPanel {...panelProps} />;
       case 'trending': return <TrendingPanel {...panelProps} />;
+      case 'busts':    return <BustsPanel {...panelProps} onSelect={selectFromPanel} />;
       case 'agency':   return <AgencyPanel {...panelProps} />;
       case 'compare':  return <ComparePanel {...panelProps} />;
       case 'terminal': return <TerminalPanel seizures={seizures} />;
       case 'rave':     return <RavePanel onClose={closePanel} />;
       default:         return null;
     }
-  }, [activeTab, panelProps, seizures, closePanel]);
+  }, [activeTab, panelProps, seizures, closePanel, selectFromPanel]);
 
   const totalSeizures = seizures.length;
   const totalKg = seizures.reduce((s, sz) => s + (sz.quantityKg || 0), 0);
@@ -168,14 +177,16 @@ export function App() {
 
       {/* ── Globe Layer ─────────────────────────────── */}
       <div className={styles.mapLayer}>
-        <Suspense fallback={null}>
-          <SeizureGlobe
-            seizures={globeSeizures}
-            selected={selectedSeizure}
-            onSelect={setSelectedSeizure}
-            mode={isRave ? 'rave' : 'main'}
-          />
-        </Suspense>
+        <ErrorBoundary label="GLOBE">
+          <Suspense fallback={null}>
+            <SeizureGlobe
+              seizures={globeSeizures}
+              selected={selectedSeizure}
+              onSelect={setSelectedSeizure}
+              mode={isRave ? 'rave' : 'main'}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
       {/* ── Classified Watermark / Kaleidoscope badge ───── */}
@@ -231,6 +242,7 @@ export function App() {
           { id: 'intel',    icon: '◈', label: 'INTEL' },
           { id: 'network',  icon: '⬡', label: 'NETWORK' },
           { id: 'trending', icon: '▲', label: 'TRENDING' },
+          { id: 'busts',    icon: '◆', label: 'BUSTS' },
           { id: 'agency',   icon: '◎', label: 'AGENCY' },
           { id: 'compare',  icon: '⊞', label: 'COMPARE' },
           { id: 'rave',     icon: '✺', label: 'FESTIVAL' },
@@ -266,7 +278,9 @@ export function App() {
       <main className={styles.mainViewport} role="main">
         {activeTab !== 'radar' && (
           <aside className={styles.viewportPanel} role="complementary" aria-label="Panel">
-            {panelComponent}
+            <ErrorBoundary label={activeTab.toUpperCase()} resetKeys={[activeTab]}>
+              {panelComponent}
+            </ErrorBoundary>
           </aside>
         )}
       </main>
@@ -289,13 +303,16 @@ export function App() {
       {/* ── Filter Panel ─────────────────────────────── */}
       <AnimatePresence>
         {showFilters && (
-          <FilterPanel
-            isOpen={showFilters}
-            filters={filters}
-            onApply={applyFilters}
-            onReset={resetFilters}
-            onClose={() => setShowFilters(false)}
-          />
+          <ErrorBoundary label="FILTERS" overlay>
+            <FilterPanel
+              isOpen={showFilters}
+              filters={filters}
+              onApply={applyFilters}
+              onReset={resetFilters}
+              onClose={() => setShowFilters(false)}
+              seizures={allSeizures}
+            />
+          </ErrorBoundary>
         )}
       </AnimatePresence>
 
@@ -312,7 +329,9 @@ export function App() {
             exit={{ opacity: 0, x: 24 }}
             transition={{ duration: 0.22 }}
           >
-            <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+            <ErrorBoundary label="CASE FILE" resetKeys={[selectedSeizure.id]}>
+              <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} seizures={allSeizures} />
+            </ErrorBoundary>
           </motion.aside>
         )}
       </AnimatePresence>
