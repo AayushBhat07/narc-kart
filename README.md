@@ -4,9 +4,9 @@
 
 **India's drug seizure tracker, built as a tactical ops-center dashboard.**
 
-[**Live site → narc-kart.vercel.app**](https://narc-kart.vercel.app) · [Watch the demo (66s)](docs/media/narc-kart-demo.mp4)
+[**Live site → narc-kart.vercel.app**](https://narc-kart.vercel.app) · [Watch the intel brief with sound (36s)](docs/media/narc-kart-intel-brief.mp4)
 
-[![NARC KART demo](docs/media/narc-kart-teaser.gif)](docs/media/narc-kart-demo.mp4)
+[![NARC KART intel brief](docs/media/narc-kart-intel-brief.gif)](docs/media/narc-kart-intel-brief.mp4)
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
@@ -56,10 +56,17 @@ records are real reports about real crimes.
 The header always shows total seizures, total volume and the top state, and a live
 ticker of the latest busts runs along the bottom.
 
-<p align="center">
-  <img src="docs/media/busts.jpg" width="49%" alt="Most wanted: the biggest busts next to the globe" />
-  <img src="docs/media/dossier.jpg" width="49%" alt="Cannabis drug dossier with NDPS thresholds and sources" />
-</p>
+### Most wanted
+
+The ten biggest busts, ranked next to the globe. Click a row and the camera flies to it.
+
+![Most wanted: the biggest busts next to the globe](docs/media/busts.jpg)
+
+### Drug dossier
+
+Live stats, street names, NDPS quantity limits and trafficking routes for each drug, every claim with a source.
+
+![Cannabis drug dossier with NDPS thresholds and sources](docs/media/dossier.jpg)
 
 ---
 
@@ -133,17 +140,10 @@ narc-kart/
 ├── scripts/
 │   ├── update_data.py                weekly news → data.json updater
 │   └── data/cities.json              city → state + coordinates
-├── video/                            Remotion source for the demo video
+├── docs/media/                       intel brief video and screenshots
+├── video/                            Remotion project for recording demo videos
 └── .github/workflows/                ci.yml, scrape-weekly.yml
 ```
-
----
-
-## Demo video
-
-The video above was made with [Remotion](https://www.remotion.dev/) from a scripted
-browser recording of the real app. See [`video/README.md`](video/README.md) to
-re-record and re-render it.
 
 ---
 
