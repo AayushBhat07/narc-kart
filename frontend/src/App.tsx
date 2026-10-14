@@ -111,6 +111,33 @@ export function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // A trackpad pinch would zoom the whole page and push the HUD and case file
+  // off screen. Chromium sends it as ctrl+wheel, Safari as gesture events.
+  // Blocking the default leaves the event to reach the globe, which zooms
+  // itself; keyboard zoom (Cmd/Ctrl +) still works and reflows the layout.
+  // If the page is already zoomed (browsers restore it on reload), a pinch
+  // out is let through so it can be undone instead of staying stuck.
+  useEffect(() => {
+    const pageZoomed = () => (window.visualViewport?.scale ?? 1) > 1.01;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return;
+      if (pageZoomed() && e.deltaY > 0) {
+        e.stopPropagation(); // keep the globe's controls from cancelling it
+        return;
+      }
+      e.preventDefault();
+    };
+    const onGesture = (e: Event) => { if (!pageZoomed()) e.preventDefault(); };
+    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    window.addEventListener('gesturestart', onGesture);
+    window.addEventListener('gesturechange', onGesture);
+    return () => {
+      window.removeEventListener('wheel', onWheel, { capture: true });
+      window.removeEventListener('gesturestart', onGesture);
+      window.removeEventListener('gesturechange', onGesture);
+    };
+  }, []);
+
   const closePanel = useCallback(() => setActiveTab('radar'), []);
 
   // Leaderboard row → back to the globe, which flies to the selection and opens its case file.
