@@ -1,0 +1,19 @@
+{
+  "name": "narc-kart-video",
+  "private": true,
+  "description": "Remotion source for the NARC KART demo video in docs/media.",
+  "scripts": {
+    "record": "node record.mjs",
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts Demo out/demo.mp4 --crf=23"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.535",
+    "remotion": "4.0.535",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}
