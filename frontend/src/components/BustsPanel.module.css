@@ -1,0 +1,106 @@
+/* BustsPanel — "most wanted" leaderboard of the largest seizures */
+.panel { display: flex; flex-direction: column; height: 100%; }
+.panelHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border-dim); flex-shrink: 0;
+}
+.titleBlock { display: flex; flex-direction: column; gap: 2px; }
+.panelTitle {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--text-primary); font-family: var(--font-mono); text-transform: uppercase;
+}
+.panelSub {
+  font-size: 9px; letter-spacing: 0.16em; color: var(--text-secondary); font-family: var(--font-mono);
+}
+.panelClose {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; background: transparent;
+  border: 1px solid var(--border-dim); border-radius: var(--r-sm);
+  color: var(--text-muted); cursor: pointer; font-size: 12px; font-family: var(--font-mono);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.panelClose:hover { color: var(--text-primary); border-color: var(--border-mid); }
+
+/* Drug filter chips */
+.chips {
+  display: flex; flex-wrap: wrap; gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border-ghost); flex-shrink: 0;
+}
+.chip {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+  padding: 3px 8px; border-radius: 2px; cursor: pointer;
+  background: transparent; color: var(--text-secondary); border: 1px solid var(--border-dim);
+  transition: color var(--dur-fast), border-color var(--dur-fast), background var(--dur-fast);
+}
+.chip:hover { color: var(--text-primary); border-color: var(--border-mid); }
+.chipActive,
+.chipActive:hover {
+  color: var(--text-inverse); background: var(--text-primary); border-color: var(--text-primary);
+}
+
+.panelBody {
+  flex: 1; overflow-y: auto; padding: var(--sp-2) var(--sp-4) var(--sp-4);
+  display: flex; flex-direction: column;
+}
+
+/* Column header + rows share one grid */
+.colHead,
+.row {
+  display: grid; grid-template-columns: 24px 84px minmax(0, 1fr);
+  column-gap: var(--sp-3); align-items: center;
+}
+.colHead {
+  padding: var(--sp-2); font-size: 8px; letter-spacing: 0.18em;
+  color: var(--text-muted); font-family: var(--font-mono);
+  border-bottom: 1px solid var(--border-ghost);
+}
+.colQty { text-align: right; }
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.list li { border-bottom: 1px solid var(--border-ghost); }
+
+.row {
+  width: 100%; padding: var(--sp-2); text-align: left; cursor: pointer;
+  background: transparent; border: 1px solid transparent; border-radius: 2px;
+  color: inherit; font-family: var(--font-mono);
+  transition: background var(--dur-fast), border-color var(--dur-fast);
+}
+.row:hover { background: var(--border-ghost); border-color: var(--border-dim); }
+.row:focus-visible { background: var(--border-ghost); }
+
+.rank {
+  font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.rankTop { color: var(--text-primary); }
+
+.qty {
+  font-size: 13px; font-weight: 700; text-align: right; white-space: nowrap;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+}
+.sev--critical { color: var(--sev-critical); }
+.sev--high     { color: var(--sev-high); }
+.sev--low      { color: var(--sev-low); }
+
+.detail { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lineMain,
+.lineMeta { display: flex; gap: var(--sp-2); align-items: baseline; min-width: 0; }
+.drugName { font-size: 11px; color: var(--text-primary); letter-spacing: 0.1em; flex-shrink: 0; }
+.loc,
+.agency { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.loc { font-size: 10px; color: var(--text-secondary); letter-spacing: 0.06em; }
+.lineMeta { font-size: 9px; color: var(--text-secondary); letter-spacing: 0.08em; }
+.date { flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.sep { color: var(--text-muted); }
+
+.empty {
+  margin-top: var(--sp-6); padding: var(--sp-6) var(--sp-4); text-align: center;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-secondary);
+  border: 1px dashed var(--border-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .row,
+  .panelClose { transition: none; }
+}
