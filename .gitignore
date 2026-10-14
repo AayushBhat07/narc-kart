@@ -14,3 +14,6 @@ __pycache__/
 .env*.local
 .worktrees/
 frontend/tsconfig.tsbuildinfo
+video/recording/
+video/out/
+video/public/rec.mp4
