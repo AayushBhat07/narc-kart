@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { Seizure } from '../types';
 import { safeUrl } from '../utils/safeUrl';
-import { DrugIntelCard } from './DrugIntelCard';
+import { DrugIntelModal, DrugIntelTeaser } from './DrugIntelCard';
 import styles from './SeizurePopup.module.css';
 
 interface Props {
@@ -35,6 +36,8 @@ export function SeizurePopup({ seizure, onClose, seizures }: Props) {
   // went through fetchStaticData's filtering.
   const imageUrl = safeUrl(seizure.images[0]);
   const sourceUrl = safeUrl(seizure.source.url);
+  const [intelOpen, setIntelOpen] = useState(false);
+  useEffect(() => setIntelOpen(false), [seizure.id]);
   return (
     <div className={styles.container}>
       <div className={styles.classified}>CLASSIFIED</div>
@@ -111,7 +114,11 @@ export function SeizurePopup({ seizure, onClose, seizures }: Props) {
           </div>
         )}
 
-        <DrugIntelCard drugType={seizure.drugType} seizures={seizures} />
+        <DrugIntelTeaser
+          drugType={seizure.drugType}
+          seizures={seizures}
+          onOpen={() => setIntelOpen(true)}
+        />
       </div>
 
       <div className={styles.footer}>
@@ -119,6 +126,12 @@ export function SeizurePopup({ seizure, onClose, seizures }: Props) {
           {new Date(seizure.date).toISOString()}
         </span>
       </div>
+
+      <DrugIntelModal
+        drugType={intelOpen ? seizure.drugType : null}
+        seizures={seizures}
+        onClose={() => setIntelOpen(false)}
+      />
     </div>
   );
 }

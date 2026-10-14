@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { DrugType, Seizure } from '../types';
 import { DRUG_INTEL, type IntelSource } from '../data/drugIntel';
@@ -202,6 +203,59 @@ export function DrugIntelCard({ drugType, seizures, variant = 'section', onClose
   );
 }
 
+interface TeaserProps {
+  drugType: DrugType;
+  seizures?: readonly Seizure[];
+  onOpen: () => void;
+}
+
+/**
+ * Three-line drug summary for the case file. The full dossier opens in
+ * DrugIntelModal so the case file stays short.
+ */
+export function DrugIntelTeaser({ drugType, seizures, onOpen }: TeaserProps) {
+  const intel = DRUG_INTEL[drugType] ?? DRUG_INTEL.other;
+  const stats = useMemo(
+    () => (seizures ? computeDrugStats(seizures, drugType) : null),
+    [seizures, drugType]
+  );
+  const commercial = intel.thresholds[0]?.commercial;
+
+  return (
+    <section className={styles.teaser} aria-label={`${intel.name} drug intel summary`}>
+      <div className={styles.blockLabel}>
+        <span aria-hidden="true">▣</span> {intel.name} · NATIONWIDE
+      </div>
+      <dl className={styles.kv}>
+        {stats && (
+          <div className={styles.kvRow}>
+            <dt>SEIZURES</dt>
+            <dd>{stats.count === 0 ? 'NONE' : `${stats.count} · ${formatKg(stats.totalKg)}`}</dd>
+          </div>
+        )}
+        {intel.streetNames.length > 0 && (
+          <div className={styles.kvRow}>
+            <dt>AKA</dt>
+            <dd>{intel.streetNames.map((n) => n.text.replace(/\s*\(.*\)$/, '')).join(', ')}</dd>
+          </div>
+        )}
+        {commercial && (
+          <div className={styles.kvRow}>
+            <dt>COMMERCIAL ≥</dt>
+            <dd>
+              {commercial} <span className={styles.sub}>NDPS</span>
+            </dd>
+          </div>
+        )}
+      </dl>
+      <button type="button" className={styles.openBtn} onClick={onOpen} aria-haspopup="dialog">
+        <span>OPEN DRUG DOSSIER</span>
+        <span aria-hidden="true">▣</span>
+      </button>
+    </section>
+  );
+}
+
 interface ModalProps {
   drugType: DrugType | null;
   seizures?: readonly Seizure[];
@@ -230,7 +284,9 @@ export function DrugIntelModal({ drugType, seizures, onClose }: ModalProps) {
     };
   }, [drugType, onClose]);
 
-  return (
+  // Portal: the case file is a transformed (animated) aside, which would
+  // otherwise trap this fixed overlay inside it.
+  return createPortal(
     <AnimatePresence>
       {drugType && (
         <motion.div
@@ -260,6 +316,7 @@ export function DrugIntelModal({ drugType, seizures, onClose }: ModalProps) {
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
