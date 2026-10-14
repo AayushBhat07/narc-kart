@@ -20,6 +20,13 @@
   z-index: 1000;
 }
 
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 2000; /* same layer as FilterPanel's .overlay */
+}
+
 .frame {
   display: flex;
   flex-direction: column;

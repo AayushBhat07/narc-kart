@@ -294,7 +294,7 @@ export function App() {
       {/* ── Filter Panel ─────────────────────────────── */}
       <AnimatePresence>
         {showFilters && (
-          <ErrorBoundary label="FILTERS">
+          <ErrorBoundary label="FILTERS" overlay>
             <FilterPanel
               isOpen={showFilters}
               filters={filters}

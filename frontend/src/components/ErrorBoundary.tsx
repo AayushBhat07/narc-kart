@@ -7,6 +7,8 @@ interface Props {
   label?: string;
   /** Full-viewport fallback (app root) vs. one that fills its container. */
   fullscreen?: boolean;
+  /** Fixed, centred above the globe: for boundaries around overlays/modals. */
+  overlay?: boolean;
   /** When any of these change, a tripped boundary resets and retries. */
   resetKeys?: unknown[];
 }
@@ -44,9 +46,10 @@ export class ErrorBoundary extends Component<Props, State> {
     const { error } = this.state;
     if (!error) return this.props.children;
 
-    const { label, fullscreen } = this.props;
+    const { label, fullscreen, overlay } = this.props;
+    const variant = fullscreen ? styles.fullscreen : overlay ? styles.overlay : '';
     return (
-      <div className={`${styles.fallback} ${fullscreen ? styles.fullscreen : ''}`} role="alert">
+      <div className={`${styles.fallback} ${variant}`} role="alert">
         <div className={styles.frame}>
           <span className={styles.tag}>ERR · {label ?? 'SYSTEM'}</span>
           <h2 className={styles.title}>SIGNAL LOST</h2>
