@@ -130,7 +130,7 @@ export const DRUG_INTEL: Record<DrugType, DrugIntel> = {
     sources: [
       SO_1055,
       DOR_QTY,
-      { label: 'PIB / MHA, 16 Mar 2025 — NCB seizes methamphetamine tablets, Imphal & Guwahati zones', url: 'https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2111585' },
+      { label: 'PIB / MHA, 16 Mar 2025 — NCB seizes methamphetamine tablets, Imphal & Guwahati zones', url: 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2111585' },
       { label: 'UNODC, Jun 2023 — Synthetic drugs in East & Southeast Asia report launch', url: 'https://www.unodc.org/unodc/en/frontpage/2023/June/synthetic-drug-supply-remains-at-extreme-levels-and-diversifies-in-east-and-southeast-asia--according-to-new-unodc-report.html' },
       { label: 'PIB / MoF, 22 Jan 2025 — DRI seizes 32 kg methamphetamine tablets in NE region', url: 'https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2095227' },
     ],
