@@ -167,6 +167,14 @@ def item_to_record(item, cities):
     return record
 
 
+def is_http_url(u) -> bool:
+    """Only plain http(s) URLs may reach the site's <a href> / <img src>."""
+    if not isinstance(u, str) or re.fullmatch(r"https?://[^\s/]+\.[^\s/]+(/\S*)?", u) is None:
+        return False
+    parts = urllib.parse.urlsplit(u)
+    return parts.scheme in ("http", "https") and bool(parts.netloc)
+
+
 def is_valid(r) -> bool:
     lat_min, lat_max, lon_min, lon_max = INDIA_BBOX
     try:
@@ -176,7 +184,9 @@ def is_valid(r) -> bool:
             and lat_min <= float(r["lat"]) <= lat_max
             and lon_min <= float(r["lon"]) <= lon_max
             and re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["date"]) is not None
-            and re.fullmatch(r"https?://[^\s/]+\.[^\s/]+(/\S*)?", r.get("sourceUrl") or "") is not None
+            and is_http_url(r.get("sourceUrl"))
+            and isinstance(r.get("images", []), list)
+            and all(is_http_url(u) for u in r.get("images", []))
             and len(r.get("description") or "") <= 600
         )
     except (KeyError, TypeError, ValueError):
