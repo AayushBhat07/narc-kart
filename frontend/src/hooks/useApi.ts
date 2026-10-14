@@ -139,6 +139,8 @@ export function useApi() {
 
   return {
     seizures,
+    /** Unfiltered dataset (e.g. for drug intel live stats). */
+    allSeizures,
     stats,
     filters,
     loading,

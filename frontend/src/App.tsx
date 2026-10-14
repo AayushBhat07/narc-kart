@@ -58,7 +58,7 @@ export function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedSeizure, setSelectedSeizure] = useState<Seizure | null>(null);
 
-  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
+  const { seizures, allSeizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
   const { data: raveData } = useRaveData();
 
   // Project the rave dataset into the standard Seizure shape so we can render
@@ -295,6 +295,7 @@ export function App() {
             onApply={applyFilters}
             onReset={resetFilters}
             onClose={() => setShowFilters(false)}
+            seizures={allSeizures}
           />
         )}
       </AnimatePresence>
@@ -312,7 +313,7 @@ export function App() {
             exit={{ opacity: 0, x: 24 }}
             transition={{ duration: 0.22 }}
           >
-            <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+            <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} seizures={allSeizures} />
           </motion.aside>
         )}
       </AnimatePresence>
