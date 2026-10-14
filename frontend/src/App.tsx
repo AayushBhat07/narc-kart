@@ -60,7 +60,7 @@ export function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedSeizure, setSelectedSeizure] = useState<Seizure | null>(null);
 
-  const { seizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
+  const { seizures, allSeizures, stats, filters, applyFilters, resetFilters, isOffline, lastUpdate, error, loading } = useApi();
   const { data: raveData } = useRaveData();
 
   // Project the rave dataset into the standard Seizure shape so we can render
@@ -310,6 +310,7 @@ export function App() {
               onApply={applyFilters}
               onReset={resetFilters}
               onClose={() => setShowFilters(false)}
+              seizures={allSeizures}
             />
           </ErrorBoundary>
         )}
@@ -329,7 +330,7 @@ export function App() {
             transition={{ duration: 0.22 }}
           >
             <ErrorBoundary label="CASE FILE" resetKeys={[selectedSeizure.id]}>
-              <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} />
+              <SeizurePopup seizure={selectedSeizure} onClose={closeCaseFile} seizures={allSeizures} />
             </ErrorBoundary>
           </motion.aside>
         )}

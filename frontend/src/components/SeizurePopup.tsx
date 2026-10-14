@@ -1,11 +1,14 @@
 import DOMPurify from 'dompurify';
 import { Seizure } from '../types';
 import { safeUrl } from '../utils/safeUrl';
+import { DrugIntelCard } from './DrugIntelCard';
 import styles from './SeizurePopup.module.css';
 
 interface Props {
   seizure: Seizure;
   onClose: () => void;
+  /** Full (unfiltered) dataset, for the DRUG INTEL live stats. */
+  seizures?: readonly Seizure[];
 }
 
 function formatDate(iso: string): string {
@@ -27,7 +30,7 @@ function getSeverityClass(kg: number): string {
   return styles.low;
 }
 
-export function SeizurePopup({ seizure, onClose }: Props) {
+export function SeizurePopup({ seizure, onClose, seizures }: Props) {
   // Re-check at render: the localStorage cache can hold records that never
   // went through fetchStaticData's filtering.
   const imageUrl = safeUrl(seizure.images[0]);
@@ -107,6 +110,8 @@ export function SeizurePopup({ seizure, onClose }: Props) {
             <p>{DOMPurify.sanitize(seizure.description)}</p>
           </div>
         )}
+
+        <DrugIntelCard drugType={seizure.drugType} seizures={seizures} />
       </div>
 
       <div className={styles.footer}>

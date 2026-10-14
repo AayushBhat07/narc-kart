@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FilterState, DrugType } from '../types';
+import { FilterState, DrugType, Seizure } from '../types';
+import { DrugIntelModal } from './DrugIntelCard';
 import styles from './FilterPanel.module.css';
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
   filters: FilterState;
   onApply: (filters: FilterState) => void;
   onReset: () => void;
+  /** Full dataset, for live stats on the drug intel card. */
+  seizures?: readonly Seizure[];
 }
 
 const TIME_PERIODS = [
@@ -37,8 +40,10 @@ const STATES = [
   'Bihar', 'Odisha', 'Assam', 'Jharkhand',
 ];
 
-export function FilterPanel({ isOpen, onClose, filters, onApply, onReset }: Props) {
+export function FilterPanel({ isOpen, onClose, filters, onApply, onReset, seizures }: Props) {
   const [localFilters, setLocalFilters] = useState<FilterState>(filters);
+  const [intelDrug, setIntelDrug] = useState<DrugType | null>(null);
+  const closeIntel = useCallback(() => setIntelDrug(null), []);
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocalFilters({ ...localFilters, timePeriod: e.target.value as FilterState['timePeriod'] });
@@ -134,15 +139,26 @@ export function FilterPanel({ isOpen, onClose, filters, onApply, onReset }: Prop
                 <label className={styles.label}>DRUG TYPE</label>
                 <div className={styles.chipGroup}>
                   {DRUG_TYPES.map((d) => (
-                    <button
-                      key={d.value}
-                      className={`${styles.chip} ${
-                        localFilters.drugTypes.includes(d.value) ? styles.active : ''
-                      }`}
-                      onClick={() => handleDrugToggle(d.value)}
-                    >
-                      {d.label}
-                    </button>
+                    <span key={d.value} className={styles.chipPair}>
+                      <button
+                        className={`${styles.chip} ${
+                          localFilters.drugTypes.includes(d.value) ? styles.active : ''
+                        }`}
+                        onClick={() => handleDrugToggle(d.value)}
+                        aria-pressed={localFilters.drugTypes.includes(d.value)}
+                      >
+                        {d.label}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.intelBtn}
+                        onClick={() => setIntelDrug(d.value)}
+                        aria-label={`Open ${d.label} intel card`}
+                        title={`${d.label} intel card`}
+                      >
+                        ▣
+                      </button>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -206,6 +222,7 @@ export function FilterPanel({ isOpen, onClose, filters, onApply, onReset }: Prop
           </div>
         </motion.div>
       )}
+      <DrugIntelModal key="drug-intel" drugType={intelDrug} seizures={seizures} onClose={closeIntel} />
     </AnimatePresence>
   );
 }
