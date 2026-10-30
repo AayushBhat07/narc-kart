@@ -149,7 +149,7 @@ narc-kart/
 
 ## Author
 
-**Aayush Bhat**: [LinkedIn](https://linkedin.com/in/aayush-bhat07/) · [GitHub](https://github.com/AayushBhat07)
+**Aayush Bhat**: [LinkedIn](https://linkedin.com/in/aayush-bhat07/) · [GitHub](https://github.com/AayushBhat07) · [Portfolio](https://aayushbhat.vercel.app)
 
 ## License
 
