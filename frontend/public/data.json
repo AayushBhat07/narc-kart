@@ -1,6 +1,214 @@
 {
   "seizures": [
     {
+      "city": "Delhi",
+      "state": "Delhi",
+      "lat": 28.704,
+      "lon": 77.102,
+      "drugType": "heroin",
+      "quantityKg": 2.25,
+      "date": "2026-11-15",
+      "sourceName": "Dailyhunt",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMihgJBVV95cUxPeUpwVFZvSG5wazczeWtVRkYwb3RMNTgyX2kzRWNUQW9KZjlPcmdqSHlYU05TNXhjcmRpZUxrNlNGOFZtazUzeGFIR295T0xXek5jVy1YXzMxN09Xc1RoMTFmZnZQYmowcnRVLUNsQS0yWU1TM20xTTJrSkRJUURIUDByYl9tXzFpUTlud1dlSWVwUVRIdm5PcVdsV2FmbldFTzFXeC1MLWJKMmRWMG52X0ZTRmtvMWo4NjlHOHZRYmNwRGFrcmlKRms0cDRxWjFrWUNOb2tpV3FzWHdCZkNkd3lTR3ktNkkxRXNpQWVXVkJVX3hMdDIwY3hIZWJPTnI5OGFEbG13?oc=5",
+      "agency": "Dailyhunt",
+      "description": "Delhi Police bust family-run heroin network, arrest six; seize 2.25 kg drugs worth Rs 5 crore",
+      "images": [],
+      "id": "sz-f999d5b3",
+      "caseNo": "NK-2026-F999D5"
+    },
+    {
+      "city": "Udaipur",
+      "state": "Rajasthan",
+      "lat": 24.585,
+      "lon": 73.712,
+      "drugType": "opium",
+      "quantityKg": 95.0,
+      "date": "2026-11-15",
+      "sourceName": "Udaipur Kiran",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQY291U2FhX2VDZTRVUFg3dFpvWUZseUgtV0pKcEx4aWxuTmJ3dFNIcW5uY3puVm1iRk9tT29GbzB5eXpxRm1JRUNPaG1jZXBaVjFnODdTV0hZRnJ0dkVCR3Vsd3UxTGh2RDI5ekp4RWdSNlRlMEE0ZC1Oc2w5WG8ySTdHSHRQeHhHUGU2LWpSckZrc1BDdGdKM2ZHbzMyY0tqZV82VmxoTWN2QQ?oc=5",
+      "agency": "Udaipur Kiran",
+      "description": "95 Kg of Poppy Husk Seized from Two Cars in Udaipur; Smugglers Escape into Forest",
+      "images": [],
+      "id": "sz-329d0c72",
+      "caseNo": "NK-2026-329D0C"
+    },
+    {
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "lat": 23.022,
+      "lon": 72.571,
+      "drugType": "meth",
+      "quantityKg": 130.0,
+      "date": "2026-11-15",
+      "sourceName": "Gujarat Samachar",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQZUNEV1hJZ2dzMkpISTR3XzRkOTl1VWNBZTNEV2p4X1BwWF9KS3dxV2tqeXR1cFROQU5nV1ktTTJSOVU5SFhEbmYyLWtWQV9ZdGFrM0ZHNEpzd2N2bWhnWkhjY25hVTRpYlJBMENhVlRnM2s1LUwtRS1wRmY3YnlLTHZ0WlUwT2VlN2RydEw0dEZBcFV3TE1ncUw2VTlRakN5S1U0SEpxUFZRQ0FmM2kyUzRvTDdscTFVUWdLSjFZckhsTGJ0U2FEWkdHVGQwb1NKUDdpQjhmNXJ0NnBlNVlGa0RDYmtORU5NV2tGajhVUTg2MThwSkZ6ZjJR?oc=5",
+      "agency": "Gujarat Samachar",
+      "description": "Inside Alleged MD Drug Lab in Ahmedabad's Sarkhej: 130 Kg C…",
+      "images": [],
+      "id": "sz-244a6de5",
+      "caseNo": "NK-2026-244A6D"
+    },
+    {
+      "city": "Ludhiana",
+      "state": "Punjab",
+      "lat": 30.9,
+      "lon": 75.857,
+      "drugType": "cannabis",
+      "quantityKg": 16.47,
+      "date": "2026-11-15",
+      "sourceName": "Babushahi.com",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxNS09Td2pkaDVXQ2FWa0NlS0d0alNPTExhMTdnVHVYaC1LTTZpWC1mVHpmV0ZyYlV1TGJpRHNvakxqblRReGZpd0pjSmJUYmNRQl9sYkJBZEhpd1Vrc1ZwcVVmcEJTRHlNZVpReEMxMTIya09tR3lwdmlPelV0X0pIQldKWlZYZ004MDhYbjBUTEVjdHBJZERCWmo5di1QMEhEQWg3RnNtT1ktd1pLaUwzWWZOUWd0R3lydjlYbHBSTkRPVW1jcFUyYWEwZVdMeUZTak5kSllhTWF1d2ZQWG1NXzhNUQ?oc=5",
+      "agency": "Babushahi.com",
+      "description": "Breaking: Ludhiana Court sentences accused to 10 years in 16.47-Kg Charas Trafficking Case",
+      "images": [],
+      "id": "sz-ad145de5",
+      "caseNo": "NK-2026-AD145D"
+    },
+    {
+      "city": "Amritsar",
+      "state": "Punjab",
+      "lat": 31.634,
+      "lon": 74.874,
+      "drugType": "heroin",
+      "quantityKg": 4.0,
+      "date": "2026-11-14",
+      "sourceName": "Punjab Newsline",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOUG9Pc2R4M29IWlQtZU1XaDA0MXFkZDh5NE9KREcyTy00WTg0c2dfQ3ZKejFiVXA5b3cwN1FLSnVScVU1eDEwNk1laS1ocXpRdk44Mk9JZVRkbVNsWE1CMldqblVQeWl3MDEwYTEzb1JERi16LU9HZFR1dlZkTURtS2pDcnBITm42VG5oTVB4NzR2TDNuQngzT3U2Y3lZN3hTVC1WLUtCTnN1dw?oc=5",
+      "agency": "Punjab Newsline",
+      "description": "Amritsar police nab nine in arms, drug trafficking cases; 4 Kg heroin seized",
+      "images": [],
+      "id": "sz-7a521abf",
+      "caseNo": "NK-2026-7A521A"
+    },
+    {
+      "city": "Agartala",
+      "state": "Tripura",
+      "lat": 23.841,
+      "lon": 91.286,
+      "drugType": "cannabis",
+      "quantityKg": 9.985,
+      "date": "2026-11-14",
+      "sourceName": "TRIPURA STAR NEWS",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNcnF6WnUwRU5OOHczV1hjSXhsQ3N5UTV2OE9yWm12eUZ3Q2o3YXJVYUxnMVVHV2NBZnQwWTJHZ1o0STNXUFZPWFBic2p3N2hPN0F4MXNtRHZSb21IRkswdWZPNHRuZi1PdnVYd1kwVjZaYmZJTnVuazctX0VmT0tPTWFxaDZWVjNYUTU1VUVKUHI4NUZ2MEtqWFQtTjI3QVhNTnNmOTUzWjdCN21PazJvN3hXYWdJT3I3bWt3OXpWcHA3RzRzaXVLcUtZbVJPUGpiMkRkQUo0cm9iTlRFLUpwdjlWS3lzQmla?oc=5",
+      "agency": "TRIPURA STAR NEWS",
+      "description": "Tripura Railway Police Seizes 9.985 Kg Of Cannabis Worth ₹5 Lakh With 1 Drug Peddler In Agartala Railway Station.",
+      "images": [],
+      "id": "sz-bc5a5af9",
+      "caseNo": "NK-2026-BC5A5A"
+    },
+    {
+      "city": "Rohtak",
+      "state": "Haryana",
+      "lat": 28.895,
+      "lon": 76.59,
+      "drugType": "cannabis",
+      "quantityKg": 28.0,
+      "date": "2026-11-13",
+      "sourceName": "The Times of India",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPd2llOEpNZkR1eFVjMWsyM3NSR1RadVo1LW5fcGtmX1FEaEZGaEhNR0xWY3NEZHp5MzhKNU5Qb25mOHlDaTZibEpIUzhNM1k4WVlpTWh2Q2VxNUFnM21KWVZRYzc0M2d5ME0yTW16U0dnOE56MkIxUGFVX0xnbDNCdXQxbzJCYm9mQVVBanF3cDFwVjc2eFBHZEd0VEc4NEYtZU5fYUR1b2o0eFlhXzFSX2d0bXZGT1ZIQTl4clhR0gHDAUFVX3lxTFB0ZnZrOGVKRjE5Yld2QjN4TGFsXzMxZzgyWGJiemkwTUtxRFpuZzdaenRPUTB0aEQ4UmhTYU1mZERVVnI5bnJCVktOaHEwWHF3UHk3U3pxejh2SWo5VDZJZ001WXB1MHBnZFZfZmd2QTIwTHVMNGY0U1REcnpXQ3VlVXVWUG04Qy10b3hQS2RYYWdtUzd1MXlOZUFQd2toVFNYbTdPTlRiU1lJT0hFbjFzcEg5NEZKV1NVWVhoTEczd0ZScw?oc=5",
+      "agency": "The Times of India",
+      "description": "1 held, over 28 kg cannabis seized in Rohtak",
+      "images": [],
+      "id": "sz-d259a2d0",
+      "caseNo": "NK-2026-D259A2"
+    },
+    {
+      "city": "Anantnag",
+      "state": "Jammu and Kashmir",
+      "lat": 33.729,
+      "lon": 75.151,
+      "drugType": "heroin",
+      "quantityKg": 4.5,
+      "date": "2026-11-13",
+      "sourceName": "Kashmir Independent Media Service",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMirAFBVV95cUxObm9ib2FzZmFzQXZNUk4zaWc1UTJvamw5aFhCMjdaUXA3eGxDZXIzRUhQRHJUQS1qa2RWUVl2TzJITGlWeDFpSEZoX3lCaDB3MWNmcTFzRGJJQ092TnZMcmNIdE5CR1Z5VkI5UXM4V1U5ZGhPeUtyYjc2VUtuRlVyU0hmWEpPTGhJS0NuNXZMSDNoTk5BSlliVEs1c05NdHFOaWV4dUZJVEpGX3lu?oc=5",
+      "agency": "Kashmir Independent Media Service",
+      "description": "Two alleged drug peddlers arrested in Anantnag; 4.5 kg cannabis powder, heroin seized",
+      "images": [],
+      "id": "sz-c1ab5d5f",
+      "caseNo": "NK-2026-C1AB5D"
+    },
+    {
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "lat": 17.385,
+      "lon": 78.485,
+      "drugType": "cannabis",
+      "quantityKg": 1.1,
+      "date": "2026-11-12",
+      "sourceName": "The Siasat Daily",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPWlJpdnhabkhRaEh1Y2NqeVNMYWhIaGZITFBRRzh6Z2VpTVR4dmR5TGJqRHl1d0dMVTU1dlo5ZFdBWVdTa0tLd1RDQVNtVlpWd2hJd2NlazZnU0h3OFZNckVWUzhRZGxqMm9nNjVvLXlWczdpOVhQV2xnZE9QM0Nabzd6dWozUTIzbWItem5nY9IBlAFBVV95cUxPTTVBcm9IZ09FdDFrZWtUcmJPSEdsZW1NNzVmYndmWC0xOWVITk53YTRpcWZXb1pBeHdmLUdxSFJpLUZoS09qaF9mZGZhSk8ySUtNUzNLWEp6M1o0Slo3MDhZaXU1VGIyOGdjaU16RUEwc2RZXzFSeU5iRWxVVTdreFMyeEd6bVRyOFFmSnJZek83bFN4?oc=5",
+      "agency": "The Siasat Daily",
+      "description": "Hyderabad: Woman arrested with 1.1 kg ganja in Dhoolpet",
+      "images": [],
+      "id": "sz-ff37ce26",
+      "caseNo": "NK-2026-FF37CE"
+    },
+    {
+      "city": "Delhi",
+      "state": "Delhi",
+      "lat": 28.704,
+      "lon": 77.102,
+      "drugType": "cocaine",
+      "quantityKg": 22.0,
+      "date": "2026-11-12",
+      "sourceName": "The Samikhsya",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMU5ZaFRMM1AtT3VyZXZiWnowMXhOMS1CUjNHYzhlMFY3MUluSFNXVkZZalk0N25pVFBUdnh6Z19ZMzJmT2h6cE8xTmtYUUpjdTdwV0ZXY2RzZ19BVE5DZUhwOUowRGxLZzlxeFNBSFVoYU0zc1U0YXVkYVZLZFFWNk8tSktqVllBVGVxdHVLejRkNTVNVU95N0VFZTYxRFFVd3c4U3VsQ0k?oc=5",
+      "agency": "The Samikhsya",
+      "description": "22 Kg Cocaine Seized in Delhi from Passenger Arriving from Sierra Leone",
+      "images": [],
+      "id": "sz-1984a848",
+      "caseNo": "NK-2026-1984A8"
+    },
+    {
+      "city": "Kashmir",
+      "state": "Gujarat",
+      "lat": 20.997,
+      "lon": 73.687,
+      "drugType": "other",
+      "quantityKg": 20.0,
+      "date": "2026-11-11",
+      "sourceName": "Republic World",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPYUxvdzZYVHpvZmduOTN6T0hENFhIeS1IR0tyQndYcnhXcEVxQmdZZ243Vjd6Tmt5cWRuY3B5Z3U5VjZCa1N6Y0IzbFE0NEtpeWpUby00ZDFwbHMyU215anNHb1FtOTRGTHJaSFhWbWFTWHdJSVAwRjk5MG83c2xKcVRCMWV6dW9WOEFmNldNX0dPMVVHampsWUJSdEExT0tVV1lpZVF1Y0JGZVhhalVjYVpfYUFEemZraDVUTmZB0gHDAUFVX3lxTE1NZlRhaUktVXBWa3BySmNCbFRkaXc1U1EzX2RWcFlXWGgyLWhsa191UDBpdXA4V000WUhFNVF0TGZicHZDU1NLUUliTzlvQjZFQWZ3Z0tISjM0UDVNMl9Fb2l0Q1RzdGQ5czFsOTVETERQM3RRUkVQVUxJdG4zdm9JRF96enhkNDNVZzc4aGxxazVfYUFUT184T2M3bm0wT2hoUjh4TFg3TVpYQnl5WEtraFpQWFRxQWhuZFgweno0d1puQQ?oc=5",
+      "agency": "Republic World",
+      "description": "Four Drug Peddlers Arrested With Over 20 Kg of Narcotics in Kashmir",
+      "images": [],
+      "id": "sz-a1ad4520",
+      "caseNo": "NK-2026-A1AD45"
+    },
+    {
+      "city": "Amritsar",
+      "state": "Punjab",
+      "lat": 31.634,
+      "lon": 74.874,
+      "drugType": "other",
+      "quantityKg": 15.0,
+      "date": "2026-11-10",
+      "sourceName": "Punjab Newsline",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQbXJZVjBrbXJiZm1JNXRUcEV5am5iZjBSZ0R6bDJwemF4QmtWTHRrOXR1ajZMVHhfVk5WRGJEMXVMSlNOWk1KaWdHXzlGandid1pRSTZhVHZaT2l3WU1hd2hZaU1EbDZLQ2NfWlFxazdkdjItcTd6UEhmOW10anFYUXJMT3Y5LVpvaGVrSW5uZVE3MnZzR3J1TTVBMFBYZVNOVnA2OW9YVTl2WUVxVlNMWVdXcG1YWGc?oc=5",
+      "agency": "Punjab Newsline",
+      "description": "Amritsar arms-drug network exposed: 7 arrested, RPG launcher and 15 Kg of drugs seized",
+      "images": [],
+      "id": "sz-ce1adde6",
+      "caseNo": "NK-2026-CE1ADD"
+    },
+    {
+      "city": "Amritsar",
+      "state": "Punjab",
+      "lat": 31.634,
+      "lon": 74.874,
+      "drugType": "heroin",
+      "quantityKg": 8.0,
+      "date": "2026-11-09",
+      "sourceName": "The Tribune",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMilwFBVV95cUxORUZ6SFh4bTRpZGxXSU5lUlRna3VYOUhvNkNpQm9GZ25VZGU3QndIX2dGSG5fbl9QaF9yR2tNZWhtTkN1OXN2NU9VR0ZsejFoNTVjUzlQZ3c1TEs1NndkUFk1RlFGNlNRSm5OZmZpaDcwYlJuak1KTExrR2VLQmJRcWZESTdXc3V3UHNrRVJvTFJCajNtVE800gGXAUFVX3lxTE5FRnpIWHhtNGlkbFdJTmVSVGdrdVg5SG82Q2lCb0ZnblVkZTdCd0hfZ0ZIbl9uX1BoX3JHa01laG1OQ3U5c3Y1T1VHRmx6MWg1NWNTOVBndzVMSzU2d2RQWTVGUUY2U1FKbk5mZmloNzBiUm5qTUpMTGtHZUtCYlFxZkRJN1dzdXdQc2tFUm9MUkJqM21UTzQ?oc=5",
+      "agency": "The Tribune",
+      "description": "Over 8 kg of heroin seized by Amritsar police",
+      "images": [],
+      "id": "sz-8ebd71d9",
+      "caseNo": "NK-2026-8EBD71"
+    },
+    {
       "city": "Pune",
       "state": "Maharashtra",
       "lat": 18.52,
@@ -271,6 +479,38 @@
       "images": [],
       "id": "sz-456310ee",
       "caseNo": "NK-2026-456310"
+    },
+    {
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "lat": 13.082,
+      "lon": 80.27,
+      "drugType": "cannabis",
+      "quantityKg": 4.8,
+      "date": "2026-11-02",
+      "sourceName": "DT Next",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNRTVyWHY5ZDg4LTNnWEV6S3hrenFsRmFkbGpvelRJM3YxbUV4WWNrWS1ucGJZYnNoMmFGd3A1UEZmWWFHM19ZbTdpTWVpNlpLWFNqaVNOUVhGY0k4UkNITG9oeGlROVB3QVVuTHVubE42bm9rNFY0TXlGWU9RQm1RbmJ0MUZHandnZFpFMzJxemVxXzdJek9lc2tPak5NRjNJZ2FEN096eU1ZQl9RN0p0TTZMZkJJV2w5ek16WNIBygFBVV95cUxOeEJqMXpja0RnSVdNc3JOcjlPcTJ6T0V3M3h4d19CMFVNWDhIZkdmX09ZRV9JY0NxQm81NTU3Rjk2MXFoazZ0WmpEMW5QWmhjZUY4ZGY2eFhCeHFBOHQweDQzQmRnT3lySDdfeVZrQXBkQVduRUtnclhVUjc4MjVRVE9DOGxQeFdpTzljYzhZTDkzTjBCN2ZnMjFEUWRwOTlHTlJNZE5nU2NCdnV6cGNKOUlRWUp0bHZjUXViTUtaMFVFdm5LUHJscmtR?oc=5",
+      "agency": "DT Next",
+      "description": "Woman caught at Chennai airport with 4.8 kg of hydroponic Ganja smuggled from Malaysia",
+      "images": [],
+      "id": "sz-6d0f92fa",
+      "caseNo": "NK-2026-6D0F92"
+    },
+    {
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "lat": 17.385,
+      "lon": 78.485,
+      "drugType": "cannabis",
+      "quantityKg": 1.1,
+      "date": "2026-11-02",
+      "sourceName": "The Siasat Daily",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPcXRBNVpmUUJnMHVEVzlIX000aXZYMk43S0FXakRPbTJvMW1TSDE0bWJ3N2w2cEdNaWdNY2lZc3E2RG5VZWVVNk5JcjMzRllZZmhuZjVTNnB0bG16dGlFX0NFdlZ2SWROTXdqVWtjbElIYldSeTBqQ0lFb0RZYW1nNW5YRlBmRG8xemhRamZR0gGTAUFVX3lxTFA3Ymx3OGR2dEszWi1OTnRPRDlLQkluUUdSR2UwWkRlV2pCVnZtakZNeDU5b05INVZtNGRCNHJYeFZMTGVzdlpBMlZHREJ6RkpLOEY2Ulk1WkJFa0J6bHREdkhVeG5VaXlvOXJuRUlOSzlqdGYtYWZtT2JueWx1U0tZZ09faHk3czJ5dXA0c0lVN0dMWQ?oc=5",
+      "agency": "The Siasat Daily",
+      "description": "Hyderabad: Man arrested with 1.1 kg ganja in Balanagar",
+      "images": [],
+      "id": "sz-871ed0b4",
+      "caseNo": "NK-2026-871ED0"
     },
     {
       "city": "Cachar",
@@ -3282,27 +3522,27 @@
     }
   ],
   "stats": {
-    "total_seizures": 205,
-    "total_quantity_kg": 15137.46,
-    "raids_this_week": 21,
+    "total_seizures": 220,
+    "total_quantity_kg": 15499.66,
+    "raids_this_week": 13,
     "by_state": {
-      "Punjab": 31,
+      "Punjab": 35,
       "Maharashtra": 25,
-      "Delhi": 20,
+      "Delhi": 22,
+      "Gujarat": 15,
       "Assam": 14,
       "Uttar Pradesh": 13,
-      "Gujarat": 13,
-      "Jammu and Kashmir": 9,
+      "Jammu and Kashmir": 10,
+      "Telangana": 10,
+      "Tripura": 9,
+      "Tamil Nadu": 9,
       "Madhya Pradesh": 9,
       "Bihar": 8,
-      "Telangana": 8,
-      "Tamil Nadu": 8,
-      "Tripura": 8,
       "Kerala": 7,
+      "Rajasthan": 6,
+      "Haryana": 6,
       "Andhra Pradesh": 5,
-      "Haryana": 5,
       "Karnataka": 5,
-      "Rajasthan": 5,
       "West Bengal": 4,
       "Goa": 3,
       "Odisha": 2,
@@ -3311,12 +3551,12 @@
       "Nagaland": 1
     },
     "by_drug_type": {
-      "cannabis": 83,
-      "heroin": 48,
-      "meth": 36,
-      "other": 13,
-      "cocaine": 12,
-      "opium": 10,
+      "cannabis": 89,
+      "heroin": 52,
+      "meth": 37,
+      "other": 15,
+      "cocaine": 13,
+      "opium": 11,
       "mdma": 3
     },
     "by_month": {
@@ -3328,22 +3568,22 @@
       "2025-04": 17,
       "2026-09": 10,
       "2026-10": 100,
-      "2026-11": 21
+      "2026-11": 36
     },
     "top_locations": [
       {
         "location": "Delhi, Delhi",
         "city": "Delhi",
         "state": "Delhi",
-        "count": 20,
-        "kg": 814.11
+        "count": 22,
+        "kg": 838.36
       },
       {
         "location": "Amritsar, Punjab",
         "city": "Amritsar",
         "state": "Punjab",
-        "count": 16,
-        "kg": 263.63
+        "count": 19,
+        "kg": 290.63
       },
       {
         "location": "Mumbai, Maharashtra",
@@ -3353,6 +3593,13 @@
         "kg": 771.71
       },
       {
+        "location": "Hyderabad, Telangana",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "count": 10,
+        "kg": 203.8
+      },
+      {
         "location": "Guwahati, Assam",
         "city": "Guwahati",
         "state": "Assam",
@@ -3360,25 +3607,32 @@
         "kg": 379.02
       },
       {
-        "location": "Hyderabad, Telangana",
-        "city": "Hyderabad",
-        "state": "Telangana",
-        "count": 8,
-        "kg": 201.6
-      },
-      {
         "location": "Ahmedabad, Gujarat",
         "city": "Ahmedabad",
         "state": "Gujarat",
-        "count": 7,
-        "kg": 637.0
+        "count": 8,
+        "kg": 767.0
       },
       {
         "location": "Agartala, Tripura",
         "city": "Agartala",
         "state": "Tripura",
+        "count": 7,
+        "kg": 272.76
+      },
+      {
+        "location": "Ludhiana, Punjab",
+        "city": "Ludhiana",
+        "state": "Punjab",
         "count": 6,
-        "kg": 262.77
+        "kg": 305.47
+      },
+      {
+        "location": "Chennai, Tamil Nadu",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "count": 6,
+        "kg": 101.47
       },
       {
         "location": "Jammu, Jammu and Kashmir",
@@ -3386,22 +3640,8 @@
         "state": "Jammu and Kashmir",
         "count": 6,
         "kg": 46.9
-      },
-      {
-        "location": "Nagpur, Maharashtra",
-        "city": "Nagpur",
-        "state": "Maharashtra",
-        "count": 5,
-        "kg": 534.31
-      },
-      {
-        "location": "Ludhiana, Punjab",
-        "city": "Ludhiana",
-        "state": "Punjab",
-        "count": 5,
-        "kg": 289.0
       }
     ]
   },
-  "lastUpdated": "2026-11-08T17:59:54+00:00"
+  "lastUpdated": "2026-11-15T19:00:57+00:00"
 }
