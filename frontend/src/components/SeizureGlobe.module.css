@@ -31,6 +31,9 @@
   background: transparent;
   pointer-events: auto;
   cursor: pointer;
+  /* A finger pinch that starts on a marker must reach the globe, not zoom
+     the page (the canvas already has touch-action: none). */
+  touch-action: none;
 }
 
 /* Bigger hit area than the 9px square. */
@@ -38,6 +41,23 @@
   content: '';
   position: absolute;
   inset: -3px;
+}
+
+/* Fingers need a bigger target than the square: about 25px. */
+@media (pointer: coarse) {
+  .box::before {
+    inset: -9px;
+  }
+}
+
+/* Phones: smaller squares, packed tighter (COMPACT_WIDTH in SeizureGlobe.tsx). */
+@media (max-width: 599px) {
+  .marker:not([data-selected]) .box {
+    left: -4px;
+    top: -4px;
+    width: 7px;
+    height: 7px;
+  }
 }
 
 .marker[data-filled] .box {
@@ -106,6 +126,7 @@
 .marker[data-callout]:not([data-selected]) .label {
   pointer-events: auto;
   cursor: pointer;
+  touch-action: none;
 }
 
 .marker:hover,

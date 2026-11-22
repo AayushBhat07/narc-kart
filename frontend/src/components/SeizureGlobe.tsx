@@ -120,6 +120,11 @@ function toPins(seizures: Seizure[]): Pin[] {
 }
 
 const FAN_GAP = 16; // px between markers fanned out from one spot
+/** Below this width (phones) markers are smaller and pack tighter, and the
+    camera starts closer, so they don't spread over the whole screen. */
+const COMPACT_WIDTH = 600;
+const COMPACT_FAN_GAP = 9;
+const COMPACT_INDIA_ALTITUDE = 1.15;
 
 /** Two passes, run whenever the camera moves:
     1. Markers that land within a few pixels of each other on screen (same
@@ -128,6 +133,7 @@ const FAN_GAP = 16; // px between markers fanned out from one spot
     2. Labels are packed so none overlap: the selected seizure first, then
        the heaviest. */
 function declutter(globe: GlobeInstance, callouts: Callout[]) {
+  const gap = globe.width() < COMPACT_WIDTH ? COMPACT_FAN_GAP : FAN_GAP;
   const visible = callouts
     .filter((c) => c.el.style.display !== 'none')
     .sort((a, b) => Number(b.selected) - Number(a.selected) || b.kg - a.kg);
@@ -138,13 +144,13 @@ function declutter(globe: GlobeInstance, callouts: Callout[]) {
   for (const c of visible) {
     const p = globe.getScreenCoords(c.pin.lat, c.pin.lng, 0.002);
     anchor.set(c, p);
-    const near = clusters.find((k) => Math.hypot(k.x - p.x, k.y - p.y) < FAN_GAP - 4);
+    const near = clusters.find((k) => Math.hypot(k.x - p.x, k.y - p.y) < gap - 4);
     if (near) near.members.push(c);
     else clusters.push({ ...p, members: [c] });
   }
   for (const k of clusters) {
     const n = k.members.length;
-    const r = n > 1 ? Math.max(FAN_GAP * 0.75, (FAN_GAP * n) / (2 * Math.PI)) : 0;
+    const r = n > 1 ? Math.max(gap * 0.75, (gap * n) / (2 * Math.PI)) : 0;
     k.members.forEach((c, i) => {
       const a = (i / n) * 2 * Math.PI - Math.PI / 2;
       pos.set(c, { x: k.x + r * Math.cos(a), y: k.y + r * Math.sin(a) });
@@ -160,8 +166,8 @@ function declutter(globe: GlobeInstance, callouts: Callout[]) {
         const dx = pts[j].x - pts[i].x;
         const dy = pts[j].y - pts[i].y;
         const d = Math.hypot(dx, dy);
-        if (d >= FAN_GAP - 2) continue;
-        const push = (FAN_GAP - d) / 2;
+        if (d >= gap - 2) continue;
+        const push = (gap - d) / 2;
         const ux = d > 0.01 ? dx / d : 1;
         const uy = d > 0.01 ? dy / d : 0;
         pts[i].x -= ux * push; pts[i].y -= uy * push;
@@ -181,10 +187,13 @@ function declutter(globe: GlobeInstance, callouts: Callout[]) {
   // Boxes are obstacles too, so a label never hides another marker.
   const taken = [...pos.values()].map(({ x, y }) => ({ x0: x - 6, y0: y - 6, x1: x + 6, y1: y + 6 }));
   const shown = new Set<Callout>();
+  const right = globe.width();
   for (const c of visible) {
     if (!c.selected && c.kg <= 10) continue;
     const { x, y } = pos.get(c)!;
     const box = { x0: x + 20, y0: y - 26, x1: x + 26 + c.width, y1: y - 10 };
+    // A label that would run off the right edge stays hidden (narrow screens).
+    if (!c.selected && (box.x1 > right || box.y0 < 0)) continue;
     if (!c.selected && taken.some((t) => box.x0 < t.x1 && box.x1 > t.x0 && box.y0 < t.y1 && box.y1 > t.y0)) continue;
     taken.push(box);
     shown.add(c);
@@ -260,7 +269,7 @@ export function SeizureGlobe({ seizures, selected, onSelect, mode = 'main' }: Pr
       .atmosphereColor('#ffffff')
       .atmosphereAltitude(0.06)
       .globeMaterial(new THREE.MeshBasicMaterial({ color: 0x000000 }))
-      .pointOfView(INDIA_VIEW, 0);
+      .pointOfView(el.clientWidth < COMPACT_WIDTH ? { ...INDIA_VIEW, altitude: COMPACT_INDIA_ALTITUDE } : INDIA_VIEW, 0);
     globeRef.current = globe;
 
     const controls = globe.controls();
