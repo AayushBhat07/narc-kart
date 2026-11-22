@@ -43,10 +43,20 @@
   inset: -3px;
 }
 
-/* Fingers need a bigger target still: about 27px. */
+/* Fingers need a bigger target than the square: about 25px. */
 @media (pointer: coarse) {
   .box::before {
     inset: -9px;
+  }
+}
+
+/* Phones: smaller squares, packed tighter (COMPACT_WIDTH in SeizureGlobe.tsx). */
+@media (max-width: 599px) {
+  .marker:not([data-selected]) .box {
+    left: -4px;
+    top: -4px;
+    width: 7px;
+    height: 7px;
   }
 }
 
