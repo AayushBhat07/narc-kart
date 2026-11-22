@@ -31,6 +31,9 @@
   background: transparent;
   pointer-events: auto;
   cursor: pointer;
+  /* A finger pinch that starts on a marker must reach the globe, not zoom
+     the page (the canvas already has touch-action: none). */
+  touch-action: none;
 }
 
 /* Bigger hit area than the 9px square. */
@@ -38,6 +41,13 @@
   content: '';
   position: absolute;
   inset: -3px;
+}
+
+/* Fingers need a bigger target still: about 27px. */
+@media (pointer: coarse) {
+  .box::before {
+    inset: -9px;
+  }
 }
 
 .marker[data-filled] .box {
@@ -106,6 +116,7 @@
 .marker[data-callout]:not([data-selected]) .label {
   pointer-events: auto;
   cursor: pointer;
+  touch-action: none;
 }
 
 .marker:hover,

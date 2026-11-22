@@ -10,6 +10,9 @@
   height: 100vh;
   overflow: hidden;
   background: var(--bg-void);
+  /* No page-level pinch zoom from touch: it would scale the whole HUD and
+     push the case file off screen (the globe zooms itself). Scrolling stays. */
+  touch-action: pan-x pan-y;
 }
 
 /* ── Map Layer — base of everything ───────────────────── */
@@ -285,7 +288,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 380px;
+  /* Never wider than the space right of the nav rail (phones). */
+  width: min(380px, 100%);
   background: var(--bg-glass);
   border-left: 1px solid var(--border-dim);
   backdrop-filter: blur(20px) saturate(200%);
@@ -294,6 +298,7 @@
   transition: transform var(--dur-slow) var(--ease-out);
   z-index: 80;
   pointer-events: auto;
+  touch-action: pan-x pan-y;
 }
 
 /* ── Bottom Ticker ────────────────────────────────────── */
@@ -648,6 +653,7 @@
   z-index: 85;
   background: var(--bg-glass);
   border: 1px solid var(--border-mid);
+  touch-action: pan-x pan-y;
 }
 
 .shell[data-panel-open] .caseFile {
@@ -664,4 +670,50 @@
     bottom: 52px;
     max-height: 55%;
   }
+}
+
+/* ── Phones: fit the HUD bar ─────────────────────────────
+   Logo shrinks to its mark, the clock goes and ONLINE keeps only its dot,
+   so the stats fit beside them. The narrowest screens drop TOP STATE. */
+@media (max-width: 760px) {
+  .hudTop { padding: 0 var(--sp-2); }
+  .hudLogo { margin-right: var(--sp-2); }
+  .hudLogoText,
+  .hudClock { display: none; }
+  .hudStats { min-width: 0; justify-content: flex-start; }
+  .hudStat { padding: var(--sp-1) var(--sp-2); }
+  .hudRight { margin-left: var(--sp-2); }
+  .hudStatus { padding: var(--sp-1); }
+  .hudStatusText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .hudStat--accent { display: none; }
+}
+
+/* ── Short screens (phone landscape): keep every rail button reachable ── */
+@media (max-height: 520px) {
+  .iconRail {
+    padding: var(--sp-1) 0;
+    gap: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .iconRail::-webkit-scrollbar { display: none; }
+  /* Ten buttons fit in a 390px-tall landscape phone; shorter still scrolls. */
+  .railBtn {
+    width: 40px;
+    height: 28px;
+  }
+}
+
+/* Touch screens: a tap leaves :hover stuck on, so the tooltip would stay. */
+@media (hover: none) {
+  .railTooltip { display: none; }
 }

@@ -3,7 +3,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
-  min-width: 280px;
+  min-width: min(280px, 100%);
   max-width: 340px;
   font-family: var(--font-mono);
   position: relative;
@@ -28,10 +28,11 @@
 /* ── Header ───────────────────────────────────────────────── */
 .header {
   background: var(--bg-tertiary);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--sp-2) var(--sp-3);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--sp-2);
   position: relative;
   z-index: 1;
   border-bottom: 1px solid var(--border-subtle);
@@ -44,10 +45,18 @@
   color: var(--text-primary);
 }
 
+.caseLabel {
+  flex-shrink: 0;
+}
+
 .caseNo {
   font-size: var(--text-xs);
   color: var(--text-muted);
   letter-spacing: 0.05em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .closeBtn {
@@ -72,14 +81,14 @@
 
 /* ── Body ─────────────────────────────────────────────────── */
 .body {
-  padding: var(--space-3) var(--space-3);
+  padding: var(--sp-3) var(--sp-3);
   position: relative;
   z-index: 1;
 }
 
 /* ── Drug Badge ───────────────────────────────────────────── */
 .drugType {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--sp-3);
 }
 
 .badge {
@@ -112,7 +121,7 @@
 
 /* ── Image ────────────────────────────────────────────────── */
 .imageContainer {
-  margin: var(--space-2) 0;
+  margin: var(--sp-2) 0;
   border-radius: var(--radius-xs);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
@@ -130,14 +139,14 @@
 .dataGrid {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--sp-2);
 }
 
 .dataRow {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--sp-3);
   font-size: var(--text-sm);
   min-width: 0;
 }
@@ -181,8 +190,8 @@
 
 /* ── Description ──────────────────────────────────────────── */
 .description {
-  margin-top: var(--space-3);
-  padding-top: var(--space-2);
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-2);
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -190,14 +199,14 @@
   color: var(--text-secondary);
   font-size: var(--text-xs);
   line-height: 1.6;
-  margin-top: var(--space-1);
+  margin-top: var(--sp-1);
   word-break: break-word;
   overflow-wrap: break-word;
 }
 
 /* ── Footer ──────────────────────────────────────────────── */
 .footer {
-  padding: var(--space-2) var(--space-3);
+  padding: var(--sp-2) var(--sp-3);
   background: var(--bg-tertiary);
   border-top: 1px solid var(--border-subtle);
 }

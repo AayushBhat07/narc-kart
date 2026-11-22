@@ -181,10 +181,13 @@ function declutter(globe: GlobeInstance, callouts: Callout[]) {
   // Boxes are obstacles too, so a label never hides another marker.
   const taken = [...pos.values()].map(({ x, y }) => ({ x0: x - 6, y0: y - 6, x1: x + 6, y1: y + 6 }));
   const shown = new Set<Callout>();
+  const right = globe.width();
   for (const c of visible) {
     if (!c.selected && c.kg <= 10) continue;
     const { x, y } = pos.get(c)!;
     const box = { x0: x + 20, y0: y - 26, x1: x + 26 + c.width, y1: y - 10 };
+    // A label that would run off the right edge stays hidden (narrow screens).
+    if (!c.selected && (box.x1 > right || box.y0 < 0)) continue;
     if (!c.selected && taken.some((t) => box.x0 < t.x1 && box.x1 > t.x0 && box.y0 < t.y1 && box.y1 > t.y0)) continue;
     taken.push(box);
     shown.add(c);
